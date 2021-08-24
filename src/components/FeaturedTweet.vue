@@ -2,7 +2,7 @@
     <div>
         <div id="featuredDisplay">
             <img id="userImg" :src="featuredTweet.userImageUrl" alt="User Image">
-            <h5 id="username">{{featuredTweet.username}}</h5>
+            <h5 id="username" @click="goToProfile($event)">{{featuredTweet.username}}</h5>
             <p id="tweetContent">{{featuredTweet.content}}</p>
             <img id="tweetImg" v-if="featuredTweet.tweetImageUrl != ''" :src="featuredTweet.tweetImageUrl" alt="Tweet Image">
             <h6 id="createdDate">{{featuredTweet.createdAt}}</h6>
@@ -26,6 +26,11 @@ import axios from 'axios'
                     url: process.env.VUE_APP_API_SITE+'/api/tweets',
                     method: ""
                 })
+            },
+            //gets name clicked on and sends name to action to get user data
+            goToProfile(event) {
+                let clickedUserName = event.srcElement.innerText;
+                return this.$store.dispatch('dataOfClickedName', clickedUserName);
             }
         }
     }
@@ -54,6 +59,9 @@ import axios from 'axios'
                 grid-column: 1;
                 grid-row: 1;
                 margin: 2vh 0 0 20vw;
+                color: #023E8A; 
+                font-size: 1em;
+                text-decoration: underline;
             }
 
             #tweetContent {

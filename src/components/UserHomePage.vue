@@ -5,7 +5,7 @@
             <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl != undefined" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
             <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
         </div>
-        <h2 id="userName">{{userDataInfo.username}}</h2>
+        <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
         <p id="bioParagraph">{{userDataInfo.bio}}</p>
         <aside id="drawer">
             <v-navigation-drawer
@@ -129,7 +129,13 @@ import router from '../router'
                 if (itemTitle == "My Profile") {
                     return this.$store.commit('loadUserProfile', true);
                 }
+            },
+            //gets name clicked on and sends name to action to get user data
+            goToProfile(event) {
+                let clickedUserName = event.srcElement.innerText;
+                return this.$store.dispatch('dataOfClickedName', clickedUserName)
             }
+            
         }
     }
 </script>

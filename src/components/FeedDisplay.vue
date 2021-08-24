@@ -14,7 +14,7 @@
         </div>
         <div id="tweetDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
             <img id="userImg" :src="tweetInfo.userImageUrl" alt="User Image">
-            <h5 id="username">{{tweetInfo.username}}</h5>
+            <h5 id="username" @click="goToProfile($event)">{{tweetInfo.username}}</h5>
             <p id="tweetContent">{{tweetInfo.content}}</p>
             <img id="tweetImg" v-if="tweetInfo.tweetImageUrl != ''" :src="tweetInfo.tweetImageUrl" alt="Tweet Image">
             <h6 id="createdDate">{{tweetInfo.createdAt}}</h6>
@@ -87,6 +87,11 @@ import cookies from 'vue-cookies'
             },
             changeToFollowingTweets() {
                 this.displayFeedOption = false;
+            },
+            //gets name clicked on and sends name to action to get user data
+            goToProfile(event) {
+                let clickedUserName = event.srcElement.innerText;
+                return this.$store.dispatch('dataOfClickedName', clickedUserName);
             }
             
         }
@@ -137,6 +142,9 @@ import cookies from 'vue-cookies'
                 grid-column: 1;
                 grid-row: 1;
                 margin: 2vh 0 0 20vw;
+                color: #023E8A; 
+                font-size: 1em;
+                text-decoration: underline;
             }
 
             #tweetContent {
