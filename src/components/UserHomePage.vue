@@ -1,13 +1,16 @@
 <template>
     <div id="userContainer">
+        <v-app-bar-nav-icon id="hamburgerIcon" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="imageContainer">
             <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl != undefined" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
             <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
         </div>
         <h2 id="userName">{{userDataInfo.username}}</h2>
         <p id="bioParagraph">{{userDataInfo.bio}}</p>
+        <aside id="drawer">
             <v-navigation-drawer
             v-model="drawer"
+            color="#CAF0F8"
             absolute
             temporary
             >
@@ -28,6 +31,8 @@
                 <v-list-item
                 v-for="item in items"
                 :key="item.title"
+                :to="item.route"
+                @click="checkForLogout(item.title), clickedUserProfile(item.title)"
                 link
                 >
                 <v-list-item-icon>
@@ -35,26 +40,29 @@
                 </v-list-item-icon>
 
                 <v-list-item-content>
-                    <v-list-item-title>{{ item.title }}</v-list-item-title>
+                    <v-list-item-title >{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
                 </v-list-item>
             </v-list>
             </v-navigation-drawer>
-            <v-app-bar-nav-icon id="hamburgerIcon" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        </aside>
     </div>
 </template>
 
 <script>
 import cookies from 'vue-cookies'
 import axios from 'axios'
+import router from '../router'
 
     export default {
         name: "HomeFeed",
+        //gets user info from ID before mounting
         beforeMount() {
             let theUserId = cookies.get('userId');
             this.requestCurrentUserInfo(theUserId);
         },
         computed: {
+            //gets all current user data
             userDataInfo() {
                 return this.$store.state.currentUser;
             }
@@ -62,9 +70,13 @@ import axios from 'axios'
         data () {
             return {
                 drawer: null,
+                //items inside the side menu
                 items: [
-                { title: 'Home', icon: 'mdi-view-dashboard' },
-                { title: 'About', icon: 'mdi-forum' },
+                { title: 'Home', icon: 'dashboard', route: '/home' },
+                { title: 'My Profile', icon: 'account_circle', route: '/profile' },
+                { title: 'Discover', icon: 'explore', route: '/discover' },
+                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
+                { title: 'Log Out', icon: 'logout' },
                 ],
             }
         },
@@ -75,7 +87,8 @@ import axios from 'axios'
                     url: process.env.VUE_APP_API_SITE+'/api/users',
                     method: "GET",
                     headers: {
-                        'X-Api-Key': process.env.VUE_APP_API_KEY
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
                     },
                     params: {
                         userId: userId
@@ -85,6 +98,37 @@ import axios from 'axios'
                 }).catch((error) => {
                     console.log(error);
                 })
+            },
+            //checks if logout button clicked. if so, removes cookies and sends API call to clear login token
+            checkForLogout(itemTitle) {
+                if (itemTitle == "Log Out") {
+
+                    cookies.remove('loginToken');
+
+                    axios.request({
+                        url: process.env.VUE_APP_API_SITE+'/api/login',
+                        method: 'DELETE',
+                        headers: {
+                            'X-Api-Key': process.env.VUE_APP_API_KEY,
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            'loginToken': process.env.VUE_APP_API_KEY
+                        }
+                    }).then((response) => {
+                        console.log(response + ' Success');
+                    }).catch((error) => {
+                        console.log(error + ' error');
+                    })
+
+                    router.push('/')
+                }
+            },
+            //goes to user profile page when clicked
+            clickedUserProfile(itemTitle) {
+                if (itemTitle == "My Profile") {
+                    return this.$store.commit('loadUserProfile', true);
+                }
             }
         }
     }
@@ -104,7 +148,7 @@ import axios from 'axios'
             width: 50%;
 
             img {
-                width: 100%;
+                height: 90%;
                 object-fit: cover;
                 margin-left: 2vw;
                 margin-top: 1vh;
@@ -112,23 +156,22 @@ import axios from 'axios'
         }
 
         #userName {
-            grid-column: 1;
-            grid-row: 2;
+            grid-column: 2 / 5;
+            grid-row: 1;
             justify-self: center;
             align-self: end;
             color: #023E8A; 
-            margin-left: 2vw;
-            margin-bottom: 1vh;
+            margin: 0 4vw 1vh 0;
         }
 
         #bioParagraph {
-            grid-row: 1;
+            grid-row: 2;
             grid-column: 2 / 5;
             justify-self: center;
-            align-self: end;
+            align-self: start;
             font-size: 1.3em;
             font-style: italic;
-            margin-bottom: 0;
+            margin: 0 0 0 10vw;
         }
 
         #hamburgerIcon {
@@ -136,5 +179,6 @@ import axios from 'axios'
             grid-row: 1;
             margin-right: 1vw;
         }
+
     }
 </style>

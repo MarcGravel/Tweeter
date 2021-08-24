@@ -6,8 +6,11 @@
     <aside id="sideBar">
 
     </aside>
+    <div id="tweetInputContainer">
+      <UserTweetInput />
+    </div>
     <main id="mainFeed">
-
+      <FeedDisplay />
     </main>
   </div>
 </template>
@@ -16,18 +19,22 @@
 import cookies from 'vue-cookies'
 import router from '../router'
 import UserHomePage from '../components/UserHomePage.vue'
+import UserTweetInput from '../components/UserTweetInput.vue'
+import FeedDisplay from '../components/FeedDisplay.vue'
 
   export default {
     name: 'Home',
     components: {
-        UserHomePage
+        UserHomePage,
+        UserTweetInput,
+        FeedDisplay
     },
     computed: {
       getLoginToken() {
         return cookies.get('loginToken') 
       },
     },
-    //if login token not there, this will not allow home page to mount
+    //if login token not there, this will not allow home page to loat and will redirect to login
     beforeMount() {
         if (this.getLoginToken === null) {
           router.push('/');
@@ -41,12 +48,12 @@ import UserHomePage from '../components/UserHomePage.vue'
       width: 100vw;
       height: 100vh;
       display: grid;
-      grid-template-rows: 20% 80%;
+      grid-template-rows: 15% 20% 65%;
 
       #userInfo {
         height: 100%;
         width: 100%;
-        background-color: rgb(106, 160, 179);
+        background-color: #0096C7;
         grid-row: 1;
       }
 
@@ -54,11 +61,17 @@ import UserHomePage from '../components/UserHomePage.vue'
         display: none;
       }
 
-      #mainFeed {
-        height: 100%;
-        width: 100%;
-        background-color: rgb(193, 228, 240);
+      #tweetInputContainer {
         grid-row: 2; 
+        background-color: #ADE8F4;
+      }
+
+      #mainFeed {
+        height: fit-content;
+        width: 100%;
+        background-color: rgb(63, 63, 63);
+        grid-row: 3; 
+        overflow: scroll;
       }
 
     }

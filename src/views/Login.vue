@@ -1,7 +1,7 @@
 <template>
     <div id="loginView">
         <h1 id="siteName">Tweeter</h1>
-        <img id="tweeterLogo" src="@/assets/Tweeter.png" alt="Tweeter Logo">
+        <img id="tweeterLogo" src="@/assets/TweeterLogoLarge.png" alt="Tweeter Logo">
         <div id="formsContainer">
         <div v-if="!displaySignUpOrLogin">
             <LoginPage id="theLogin" />
@@ -20,6 +20,7 @@ import SignUpPage from '../components/SignUpPage.vue'
     export default {
         name: 'Login',
         computed: {
+            //checks value and displays either signup or login page pending button click for signup
             displaySignUpOrLogin() {
                 return this.$store.state.signUpBtnValue;
             },

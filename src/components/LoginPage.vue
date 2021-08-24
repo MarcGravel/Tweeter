@@ -58,9 +58,11 @@ import router from '../router'
             }
         },    
         methods: {
+            //shows user signup page when button clicked
             sendForSignUpPage() {
                 return this.$store.commit('signUpBtnClicked');
             },
+            //API call to check login info
             loginRequest() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/login',

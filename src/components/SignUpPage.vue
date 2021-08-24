@@ -85,6 +85,7 @@ import router from '../router'
             }
         },
         methods: {
+            //API call to send signup data
             signUpRequest() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/users',

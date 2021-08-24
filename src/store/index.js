@@ -1,35 +1,31 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import router from '../router'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
     signUpBtnValue: false,
-    currentUser: {
-      email: '',
-      username: '',
-      userId: '',
-      birthdate: '',
-      bio: '',
-      bannerUrl: '',
-      imageUrl: ''
-    }
+    currentUser: [],
+    otherUser: [],
+    featuredTweet: [],
+    isUserProfile: true,
   },
   mutations: {
     signUpBtnClicked(state) {
       state.signUpBtnValue = true;
     },
     userData(state, dataArray) {
-      state.currentUser.email = dataArray.email;
-      state.currentUser.username = dataArray.username;
-      state.currentUser.userId = dataArray.userId;
-      state.currentUser.birthdate = dataArray.birthdate;
-      state.currentUser.bio = dataArray.bio;
-      state.currentUser.bannerUrl = dataArray.bannerUrl;
-      state.currentUser.imageUrl - dataArray.imageUrl;
-      console.log(state.currentUser);
-    }
+      state.currentUser = dataArray;
+    },
+    loadUserProfile(state, bool) {
+      state.isUserProfile = bool;
+      router.push('/profile');
+    },
+    featuredTweet(state, tweet) {
+      state.featuredTweet = tweet
+    } 
   },
   actions: {
   },
