@@ -1,12 +1,12 @@
 <template>
     <div>
-        <h1>Others Profile</h1>
+        <h1>follows and followers</h1>
     </div>
 </template>
 
 <script>
     export default {
-        name: "OthersProfilePage",
+        name: "FollowersAndFollowing"
     }
 </script>
 

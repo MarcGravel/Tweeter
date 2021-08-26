@@ -1,7 +1,8 @@
 <template>
     <div id="dicoverContainer">
         <div id="discoverDisplay" v-for="tweetInfo in discoverTweets" :key="tweetInfo.tweetId">
-            <img id="userImg" :src="tweetInfo.userImageUrl" alt="User Image">
+            <img id="userImg" v-if="tweetInfo.userImageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="User Image">
+            <img id="userImg" v-else :src="tweetInfo.userImageUrl" alt="User Image">
             <h5 id="username" @click="goToProfile($event)">{{tweetInfo.username}}</h5>
             <p id="tweetContent">{{tweetInfo.content}}</p>
             <img id="tweetImg" v-if="tweetInfo.tweetImageUrl != ''" :src="tweetInfo.tweetImageUrl" alt="Tweet Image">

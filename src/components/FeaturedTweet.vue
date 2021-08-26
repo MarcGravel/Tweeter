@@ -1,7 +1,8 @@
 <template>
     <div>
         <div id="featuredDisplay">
-            <img id="userImg" :src="featuredTweet.userImageUrl" alt="User Image">
+            <img id="userImg" v-if="featuredTweet.userImageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="User Image">
+            <img id="userImg" v-else :src="featuredTweet.userImageUrl" alt="User Image">
             <h5 id="username" @click="goToProfile($event)">{{featuredTweet.username}}</h5>
             <p id="tweetContent">{{featuredTweet.content}}</p>
             <img id="tweetImg" v-if="featuredTweet.tweetImageUrl != ''" :src="featuredTweet.tweetImageUrl" alt="Tweet Image">

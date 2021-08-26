@@ -1,38 +1,54 @@
 <template>
-    <div>
-        <div id="userProfile" v-if="isUserProfile">
+    <div id="profileContainer">
+        <div id="userProfile">
             <UserProfilePage />
         </div>            
-        <div id="othersProfile" v-else>
-            <OthersProfilePage />
+        <div id="userEditInfo">
+            <FeedDisplay />
         </div>
-        <h3 @click="getValue($event)">This Is The Value</h3>
+
     </div>
 </template>
 
 <script>
 import UserProfilePage from '@/components/UserProfilePage.vue'
-import OthersProfilePage from '../components/OthersProfilePage.vue';
+import FeedDisplay from '../components/FeedDisplay.vue'
+import cookies from 'vue-cookies'
+import router from '../router'
 
     export default {
         name: "Profile",
         components: {
             UserProfilePage,
-            OthersProfilePage,
+            FeedDisplay,
         },
         computed: {
             isUserProfile() {
                 return this.$store.state.isUserProfile;
+            },
+            getLoginToken() {
+                return cookies.get('loginToken');
             }
         },
-        methods: {
-            getValue(event) {
-                console.log(event.srcElement.innerText);
+        beforeMount() {
+            if (this.getLoginToken === null) {
+                router.push('/');
             }
         }
     }
 </script>
 
 <style lang="scss" scoped>
+    #profileContainer {
+        display: grid;
+        grid-template-rows: 50vh 50vh;
 
+        #userProfile, #othersProfile {
+            grid-row: 1;
+        }
+
+        #userEditInfo, #othersTweetDisplay {
+            grid-row: 2;
+        }
+    }
 </style>

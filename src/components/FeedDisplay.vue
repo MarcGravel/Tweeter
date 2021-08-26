@@ -13,7 +13,8 @@
             </v-btn>
         </div>
         <div id="tweetDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
-            <img id="userImg" :src="tweetInfo.userImageUrl" alt="User Image">
+            <img id="userImg" v-if="tweetInfo.userImageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="User Image">
+            <img id="userImg" v-else :src="tweetInfo.userImageUrl" alt="User Image">
             <h5 id="username" @click="goToProfile($event)">{{tweetInfo.username}}</h5>
             <p id="tweetContent">{{tweetInfo.content}}</p>
             <img id="tweetImg" v-if="tweetInfo.tweetImageUrl != ''" :src="tweetInfo.tweetImageUrl" alt="Tweet Image">
@@ -25,12 +26,18 @@
 <script>
 import axios from 'axios'
 import cookies from 'vue-cookies'
+import { eventBus } from '../main'
 
     export default {
         name: 'FeedDisplay',
         beforeMount() {
             let theUserId = cookies.get('userId');
             this.loadUserTweets(theUserId);
+        },
+        created() {
+            eventBus.$on('updateFeed', () => {
+                this.loadUserTweets(cookies.get('userId'));
+            }) 
         },
         computed: {
             //used to display either user tweets or follow tweets depending on button choice

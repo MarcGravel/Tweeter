@@ -3,7 +3,7 @@
         <v-form id="signUpForm">
             <v-text-field
                 v-model="email"
-                :rules="emailRules"
+                :rules="[emailRules.required, emailRules.valid]"
                 label="Your Email"
                 required
             ></v-text-field>
@@ -24,7 +24,7 @@
             ></v-text-field>
             <v-text-field
                 v-model="bio"
-                :rules="bioRules"
+                :rules="[bioRules.required, bioRules.min]"
                 label="Give us a short bio"
                 required
             ></v-text-field>
@@ -57,10 +57,10 @@ import router from '../router'
         data () {
             return {
                 email: '',
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                    ],
+                emailRules: {
+                    required: v => !!v || 'E-mail is required',
+                    valid: v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                },
                 show1: false,
                 show2: true,
                 show3: false,
@@ -75,9 +75,10 @@ import router from '../router'
                     v => !!v || 'Username is required'
                 ],
                 bio: '',
-                bioRules: [
-                    v => !!v || 'Please write a short bio'
-                ],
+                bioRules: {
+                    required: v => !!v || 'Please write a short bio',
+                    max: v => v.length  <= 50 || 'Max 50 characters',
+                },
                 datePick: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                 dateRules: [
                     v => !!v || 'Please enter your birthdate'
@@ -100,8 +101,6 @@ import router from '../router'
                         "password": this.password,
                         "bio": this.bio,
                         "birthdate": this.datePick,
-                        "imageUrl": "https://image.flaticon.com/icons/png/512/847/847969.png",
-                        "bannerUrl":  "https://images.unsplash.com/photo-1475598322381-f1b499717dda?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1055&q=80"
                     }
                 }).then((response) => {
                     console.log(response);

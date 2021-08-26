@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import Login from '../views/Login.vue'
 import Discover from '../views/Discover.vue'
 import Profile from '../views/Profile.vue'
+import Users from '../views/Users.vue'
 
 Vue.use(VueRouter)
 
@@ -25,9 +26,16 @@ const routes = [
   },
   {
     path: '/profile',
-    name: "Profile",
+    name: 'Profile',
     component: Profile
   },
+  //props for dynamic routing
+  {
+    path: '/users/:username',
+    name: 'Users',
+    props: true,
+    component: Users
+  }
 ]
 
 const router = new VueRouter({

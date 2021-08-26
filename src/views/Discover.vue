@@ -20,6 +20,8 @@
 import DiscoverUsers from '../components/DiscoverUsers.vue'
 import UserHomePage from '../components/UserHomePage.vue'
 import FeaturedTweet from '../components/FeaturedTweet.vue'
+import cookies from 'vue-cookies'
+import router from '../router'
 
     export default {
         name: "Discover",
@@ -28,6 +30,16 @@ import FeaturedTweet from '../components/FeaturedTweet.vue'
             UserHomePage,
             FeaturedTweet
         },
+        computed: {
+            getLoginToken() {
+                return cookies.get('loginToken');
+            }
+        },
+        beforeMount() {
+            if (this.getLoginToken === null) {
+                router.push('/');
+            }
+        }
     }
 </script>
 

@@ -3,7 +3,7 @@
         <v-form id="loginForm">
             <v-text-field
                 v-model="email"
-                :rules="emailRules"
+                :rules="[emailRules.required, emailRules.valid]"
                 label="Email"
                 required
             ></v-text-field>
@@ -41,10 +41,10 @@ import router from '../router'
         data () {
             return {
                 email: '',
-                emailRules: [
-                    v => !!v || 'E-mail is required',
-                    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-                    ],
+                emailRules: {
+                    required: v => !!v || 'E-mail is required',
+                    valid: v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+                },
                 show1: false,
                 show2: true,
                 show3: false,

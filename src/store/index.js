@@ -13,6 +13,7 @@ export default new Vuex.Store({
     otherUser: [],
     featuredTweet: [],
     isUserProfile: true,
+    othersUsername: null,
   },
   mutations: {
     signUpBtnClicked(state) {
@@ -32,19 +33,23 @@ export default new Vuex.Store({
     //if user not current user, update state with clicked user data and go to profile
     clickedUsername(state, user) {
       if(user.userId == cookies.get('userId')) {
-        state.isUserProfile = true;
-        router.push('/profile')
+        if(window.location.hash == "#/profile") {
+          router.go()
+        } else {
+          router.push('/profile');
+        }
       } else {
         state.otherUser = user;
-        state.isUserProfile = false;
-        router.push('/profile')
+        router.push(`/users/${user.username}`);
       }
+    },
+    usernameLink(state, username) {
+      state.othersUsername = username
     } 
   },
   actions: {
     //gets user data of passed username and passes to mutation
     dataOfClickedName(state, username) {
-      console.log(username);
       axios.request({
           url: process.env.VUE_APP_API_SITE+'/api/users',
           method: "GET",

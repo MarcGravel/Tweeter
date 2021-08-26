@@ -8,6 +8,10 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
 
+//event bus for passing data using global events
+// https://v3.vuejs.org/guide/migration/events-api.html#overview
+export const eventBus = new Vue()
+
 new Vue({
   router,
   store,

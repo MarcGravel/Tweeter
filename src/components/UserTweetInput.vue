@@ -36,6 +36,7 @@
 <script>
 import axios from 'axios'
 import cookies from 'vue-cookies'
+import { eventBus }  from '../main'
 
     export default {
         name: "UserTweetInput",
@@ -65,8 +66,9 @@ import cookies from 'vue-cookies'
                             "content": tweet,
                             "imageUrl": imgLink
                         }
-                    }).then((response) => {
-                        console.log(response);
+                    }).then(() => {
+                        //sends event to listener in feed display to update tweets on the page in real time
+                        eventBus.$emit('updateFeed');
                     }).catch((error) => {
                         console.log(error);
                     })

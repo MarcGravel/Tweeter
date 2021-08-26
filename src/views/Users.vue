@@ -1,12 +1,20 @@
+<!--This view is purposely a different format that the others, just trying to
+build views in a few different ways to practice structure-->
+
 <template>
-    <div id="userContainer">
+    <div id="othersContainer">
         <v-app-bar-nav-icon id="hamburgerIcon" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <div id="imageContainer">
-            <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
-            <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
+        <div id="bannerContainer">
+            <img v-if="othersData.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
+            <img v-else :src="othersData.bannerUrl" alt="Users Image">
         </div>
-        <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
-        <p id="bioParagraph">{{userDataInfo.bio}}</p>
+        <div id="imageContainer">
+            <img @click.stop="drawer = !drawer" v-if="othersData.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
+            <img @click.stop="drawer = !drawer" v-else :src="othersData.imageUrl" alt="Users Image">
+        </div>
+        <h2 id="userName" @click="goToProfile($event)">{{othersData.username}}</h2>
+        <p id="bioParagraph">{{othersData.bio}}</p>
+        <p id="birthdate">Birthday: {{othersData.birthdate}}</p>
         <aside id="drawer">
             <v-navigation-drawer
             v-model="drawer"
@@ -50,25 +58,30 @@
 </template>
 
 <script>
-import cookies from 'vue-cookies'
 import axios from 'axios'
+import cookies from 'vue-cookies'
 import router from '../router'
 
     export default {
-        name: "HomeFeed",
-        //gets user info from ID before mounting
-        beforeMount() {
-            let theUserId = cookies.get('userId');
-            this.requestCurrentUserInfo(theUserId);
-        },
+        name: "Users",
+        props: ['username'],
         computed: {
-            //gets all current user data
-            userDataInfo() {
-                return this.$store.state.currentUser;
+            getLoginToken() {
+                return cookies.get('loginToken');
             }
         },
-        data () {
+        beforeMount() {
+            this.getOthersData();
+            this.userDataInfo();
+            if (this.getLoginToken === null) {
+                router.push('/');
+            }
+        },
+        data() {
             return {
+                othersData: {
+
+                },
                 drawer: null,
                 //items inside the side menu
                 items: [
@@ -81,25 +94,32 @@ import router from '../router'
             }
         },
         methods: {
-            //this request returns user info to computed: userDataInfo()
-            requestCurrentUserInfo(userId) {
+            getOthersData() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/users',
                     method: "GET",
                     headers: {
                         'X-Api-Key': process.env.VUE_APP_API_KEY,
                         'Content-Type': 'application/json'
-                    },
-                    params: {
-                        userId: userId
                     }
                 }).then((response) => {
-                    return this.$store.commit('userData', response.data[0])
+                    for(let i=0; i<response.data.length; i++) {
+                        if(response.data[i].username == this.username) {
+                            this.othersData = response.data[i];
+                        }
+                    }
                 }).catch((error) => {
                     console.log(error);
                 })
             },
-            //checks if logout button clicked. if so, removes cookies and sends API call to clear login token
+            userDataInfo() {
+                return this.$store.currentUser;
+            },
+            //gets name clicked on and sends name to action to get user data
+            goToProfile(event) {
+                let clickedUserName = event.srcElement.innerText;
+                return this.$store.dispatch('dataOfClickedName', clickedUserName)
+            },
             checkForLogout(itemTitle) {
                 if (itemTitle == "Log Out") {
 
@@ -123,60 +143,81 @@ import router from '../router'
                     router.push('/')
                 }
             },
-            //goes to user profile page when clicked
-            clickedUserProfile(itemTitle) {
-                if (itemTitle == "My Profile") {
-                    return this.$store.commit('loadUserProfile', true);
-                }
-            },
-            //gets name clicked on and sends name to action to get user data
-            goToProfile(event) {
-                let clickedUserName = event.srcElement.innerText;
-                return this.$store.dispatch('dataOfClickedName', clickedUserName)
-            }
-            
         }
     }
 </script>
 
 <style lang="scss" scoped>
-    #userContainer {
+    #othersContainer {
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
 
-        #imageContainer {
-            grid-column: 1 / 3;
-            grid-row: 1 / 3;
-            width: 50%;
+        #bannerContainer {
+            width: 100vw;
+            height: fit-content;
+            grid-column: 1 / 4;
+            grid-row: 1;
 
             img {
-                height: 90%;
+                width: 100vw;
+                height: 15vh;
+                object-fit: cover;
+            }
+        }
+
+        #imageContainer {
+            grid-column: 1;
+            grid-row: 2;
+            width: fit-content;
+            height: fit-content;
+
+            img {
+                height: 15vh;
                 object-fit: cover;
                 margin-left: 2vw;
                 margin-top: 1vh;
             }
         }
 
+        #editBtn {
+            width: fit-content;
+            grid-column: 2 / 4;
+            grid-row: 2;
+            justify-self: end;
+            align-self: center;
+        }
+
         #userName {
-            grid-column: 2 / 5;
-            grid-row: 1;
-            justify-self: center;
+            grid-column: 1 / 5;
+            grid-row: 3;
+            justify-self: start;
             align-self: end;
-            color: #023E8A; 
-            margin: 0 4vw 1vh 0;
+            color: white; 
+            margin: 0 0 0 2vw;
         }
 
         #bioParagraph {
-            grid-row: 2;
-            grid-column: 2 / 5;
-            justify-self: center;
-            align-self: start;
+            grid-row: 4;
+            grid-column: 1 / 5;
+            justify-self: start;
+            align-self: center;
             font-size: 1.3em;
             font-style: italic;
-            margin: 0 0 0 10vw;
+            color: white; 
+            margin: 0 0 0 2vw;
+        }
+
+        #birthdate{
+            grid-row: 5;
+            grid-column: 1 / 5;
+            justify-self: start;
+            align-self: start;
+            font-size: 1.1em;
+            color: white; 
+            margin: 0 0 0 2vw;
         }
 
         #hamburgerIcon {
