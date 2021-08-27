@@ -56,6 +56,10 @@ import axios from 'axios'
                     console.log(error);
                 })
             },
+            goToProfile(event) {
+                let clickedUserName = event.srcElement.innerText;
+                return this.$store.dispatch('dataOfClickedName', clickedUserName);
+            },
         }
 
     }

@@ -33,6 +33,7 @@ import { eventBus } from '../main'
         beforeMount() {
             let theUserId = cookies.get('userId');
             this.loadUserTweets(theUserId);
+            this.loadAllTweets();
             this.loadFollowers();
         },
         created() {
@@ -47,7 +48,7 @@ import { eventBus } from '../main'
                 if(this.displayFeedOption == true) {
                     return this.userTweets;
                 } else {
-                    return this.mockData;
+                    return this.followingTweets;
                 }
             }
         },
@@ -60,6 +61,9 @@ import { eventBus } from '../main'
                 },
                 followingIds: [],
                 allTweets: {
+
+                },
+                followingTweets: {
 
                 },
                 mockData: {
@@ -106,6 +110,20 @@ import { eventBus } from '../main'
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
             },
+            loadAllTweets() {
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/tweets',
+                    method: "GET",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
+                    this.allTweets = response.data;
+                }).catch((error) => {
+                    console.log(error);
+                })
+            },
             loadFollowers() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/follows',
@@ -121,29 +139,16 @@ import { eventBus } from '../main'
                     for(let i=0; i<response.data.length; i++) {
                         this.followingIds.push(response.data[i].userId)
                     }
-                    this.loadAllTweets();
+                    this.filterTweets();
                 }).catch((error) => {
                     console.log(error);
-                })
+                });
             },
-            loadAllTweets() {
-                axios.request({
-                    url: process.env.VUE_APP_API_SITE+'/api/tweets',
-                    method: "GET",
-                    headers: {
-                        'X-Api-Key': process.env.VUE_APP_API_KEY,
-                        'Content-Type': 'application/json'
-                    }
-                }).then((response) => {
-                   this.allTweets = response.data;
-                   let filteredArray = this.allTweets.filter( el =>
-                   this.filteredArray.indexOf(el) === 0)
-
-                    console.log(filteredArray);
-                }).catch((error) => {
-                    console.log(error);
-                })
-            },
+            filterTweets() {
+                let parsedFollowing = JSON.parse(JSON.stringify(this.followingIds))
+                let allFollowingTweets = this.allTweets.filter(tweet => parsedFollowing.includes(tweet.userId))
+                this.followingTweets = allFollowingTweets;
+            }
             
         }
     }

@@ -35,13 +35,13 @@
                 v-model="updatedUserData.userUrl"
                 :rules="validateUrl"
                 :label="userDataInfo.imageUrl"
-                hint="must be a valid https:// URL link"
+                hint="A photo of yourself. Must be a valid https:// URL"
             ></v-text-field>
             <v-text-field
                 v-model="updatedUserData.bannerUrl"
                 :rules="validateUrl"
                 :label="userDataInfo.bannerUrl"
-                hint="must be a valid https:// URL link"
+                hint="Your Banner Image. Must be a valid https:// URL link"
             ></v-text-field>
             <v-text-field
                 v-model="updatedUserData.username"
@@ -294,9 +294,8 @@ import router from '../router'
                         'Content-Type': 'application/json'
                     },
                     data: parseUserData
-                }).then((response) => {
-                    console.log(response);
-
+                }).then(() => {
+                    router.go();
                 }).catch((error) => {
                     console.log(error.response);
                 }) 
