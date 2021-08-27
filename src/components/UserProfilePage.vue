@@ -32,7 +32,7 @@
                 :label="userDataInfo.email"
             ></v-text-field>
             <v-text-field
-                v-model="updatedUserData.userUrl"
+                v-model="updatedUserData.imageUrl"
                 :rules="validateUrl"
                 :label="userDataInfo.imageUrl"
                 hint="A photo of yourself. Must be a valid https:// URL"
@@ -124,7 +124,7 @@
                 v-for="item in items"
                 :key="item.title"
                 :to="item.route"
-                @click="checkForLogout(item.title), clickedUserProfile(item.title)"
+                @click="checkForLogout(item.title), checkDiscover(item.title)"
                 link
                 >
                 <v-list-item-icon>
@@ -179,7 +179,7 @@ import router from '../router'
                 ],
                 updatedUserData: {
                     email: '',
-                    userUrl: '',
+                    imageUrl: '',
                     bannerUrl: '',
                     username: '',
                     bio: '',
@@ -262,6 +262,12 @@ import router from '../router'
                     })
 
                     router.push('/')
+                }
+            },
+            checkDiscover(itemTitle) {
+                if(itemTitle == 'Discover') {
+                    console.log("test");
+                    return this.$store.commit('changeFlagState');
                 }
             },
             sendUpdatedData(userData) {
@@ -352,9 +358,11 @@ import router from '../router'
 
             img {
                 height: 15vh;
+                width: 15vh;
                 object-fit: cover;
                 margin-left: 2vw;
                 margin-top: 1vh;
+                border-radius: 50%;
             }
         }
 

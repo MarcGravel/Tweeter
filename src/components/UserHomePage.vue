@@ -153,10 +153,12 @@ import router from '../router'
             width: 50%;
 
             img {
-                height: 90%;
+                height: 13vh;
+                width: 13vh;
                 object-fit: cover;
                 margin-left: 2vw;
                 margin-top: 1vh;
+                border-radius: 50%;
             }
         }
 

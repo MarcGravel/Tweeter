@@ -8,6 +8,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    flagState: true,
     signUpBtnValue: false,
     currentUser: [],
     otherUser: [],
@@ -41,10 +42,15 @@ export default new Vuex.Store({
       } else {
         state.otherUser = user;
         router.push(`/users/${user.username}`);
+        router.go();
       }
     },
     usernameLink(state, username) {
       state.othersUsername = username
+    },
+    changeFlagState(state) {
+      state.flagState = !state.flagState;
+      console.log(state.flagState);
     } 
   },
   actions: {

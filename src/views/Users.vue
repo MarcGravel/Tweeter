@@ -278,9 +278,11 @@ import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
 
                 img {
                     height: 15vh;
+                    width: 15vh;
                     object-fit: cover;
                     margin-left: 2vw;
                     margin-top: 1vh;
+                    border-radius: 50%;
                 }
             }
 

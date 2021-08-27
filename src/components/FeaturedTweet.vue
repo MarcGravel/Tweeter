@@ -1,12 +1,60 @@
 <template>
     <div>
-        <div id="featuredDisplay">
-            <img id="userImg" v-if="featuredTweet.userImageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="User Image">
-            <img id="userImg" v-else :src="featuredTweet.userImageUrl" alt="User Image">
-            <h5 id="username" @click="goToProfile($event)">{{featuredTweet.username}}</h5>
-            <p id="tweetContent">{{featuredTweet.content}}</p>
-            <img id="tweetImg" v-if="featuredTweet.tweetImageUrl != ''" :src="featuredTweet.tweetImageUrl" alt="Tweet Image">
-            <h6 id="createdDate">{{featuredTweet.createdAt}}</h6>
+        <div id="featTweeterDisplay">
+            <v-card
+                id="tweeterCard"
+                class="mx-auto"
+                color="#26c6da"
+                dark
+                width="400"
+            >
+                <v-card-title>
+                    <v-list-item-avatar color="grey darken-3">
+                    <v-img
+                        v-if="featuredTweet.userImageUrl == undefined"
+                        class="elevation-6"
+                        alt=""
+                        src="https://image.flaticon.com/icons/png/512/847/847969.png"
+                    ></v-img>
+                    <v-img
+                        v-else
+                        class="elevation-6"
+                        alt=""
+                        :src="featuredTweet.userImageUrl"
+                    ></v-img>
+                    </v-list-item-avatar>
+                    <span 
+                        class="text-h6 font-weight-light"
+                        @click="goToProfile($event)"
+                            >{{featuredTweet.username}}</span>
+                </v-card-title>
+
+                <v-card-text class="text-h5 font-weight-bold">
+                {{featuredTweet.content}}
+                </v-card-text>
+
+                <img id="tweeterImg" v-if="featuredTweet.tweetImageUrl != ''" :src="featuredTweet.tweetImageUrl" alt="Tweet Image">
+
+                <v-card-actions>
+                <v-list-item class="grow">
+                <img id="cardLogo" src="@/assets/TweeterLogo.png" alt="TweeterLogo">    
+                <v-list-item-content>
+                    <v-list-item-title
+                    id="createdAtDate">{{featuredTweet.createdAt}}</v-list-item-title>
+                </v-list-item-content>
+
+                    <v-row
+                    align="center"
+                    justify="end"
+                    >
+                    <v-icon class="mr-1">
+                        mdi-heart
+                    </v-icon>
+                    <span class="subheading mr-2">0</span>
+                    </v-row>
+                </v-list-item>
+                </v-card-actions>
+            </v-card>
         </div>
     </div>
 </template>
@@ -38,50 +86,27 @@ import axios from 'axios'
 </script>
 
 <style lang="scss" scoped>
-    #featuredDisplay {
+        #featTweeterDisplay {
             margin: 1vh 0 1vh 0;
-            height: auto;
-            justify-self: center;
-            background-color: #ADE8F4;
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto;
-            border-radius: 20px;
 
-            #userImg {
-                grid-column: 1;
-                grid-row: 1;
-                width: 60px;
-                margin: 1vh 0 0 1vw;
+            #tweeterCard {
+                display: grid;
+                
+                #createdAtDate {
+                    font-size: 0.8em;
+                }
 
-            }
+                #cardLogo {
+                    width: 50px;
+                    margin-right: 2vw;
+                }
 
-            #username {
-                grid-column: 1;
-                grid-row: 1;
-                margin: 2vh 0 0 20vw;
-                color: #023E8A; 
-                font-size: 1em;
-                text-decoration: underline;
-            }
-
-            #tweetContent {
-                grid-column: 1 / 3;
-                grid-row: 2;
-                margin: 2vh 0 2vh 3vw;
-            }
-
-            #tweetImg {
-                grid-column: 1 / 3;
-                grid-row: 3;
-                height: 20vh;
-                justify-self: center;
-            }
-
-            #createdDate {
-                grid-column: 1;
-                grid-row: 4;
-                margin: 2vh 0 0 3vw;
+                #tweeterImg {
+                    height: 25vh;
+                    width: 25vh;
+                    object-fit: cover;
+                    justify-self: center;
+                }
             }
         }
 </style>
