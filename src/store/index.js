@@ -35,14 +35,14 @@ export default new Vuex.Store({
     clickedUsername(state, user) {
       if(user.userId == cookies.get('userId')) {
         if(window.location.hash == "#/profile") {
-          router.go()
+          //do nothing
         } else {
+          state.flagState = !state.flagState
           router.push('/profile');
         }
       } else {
         state.otherUser = user;
         router.push(`/users/${user.username}`);
-        router.go();
       }
     },
     usernameLink(state, username) {

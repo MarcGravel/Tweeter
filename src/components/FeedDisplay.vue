@@ -91,6 +91,9 @@ import { eventBus } from '../main'
                 this.loadUserTweets(cookies.get('userId'));
             }) 
         },
+        updated(){
+            this.updateDOM;
+        },
         computed: {
             //used to display either user tweets or follow tweets depending on button choice
             theDisplayStatus() {
@@ -99,6 +102,13 @@ import { eventBus } from '../main'
                 } else {
                     return this.followingTweets;
                 }
+            },
+            updateDOM() {
+                let theUserId = cookies.get('userId');
+                this.loadUserTweets(theUserId);
+                this.loadAllTweets();
+                this.loadFollowers();
+                return this.$store.state.flagState;
             }
         },
         data() {

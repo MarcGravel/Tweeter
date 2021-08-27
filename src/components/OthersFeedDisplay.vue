@@ -71,10 +71,13 @@ import axios from 'axios'
         mounted() {
             this.callForTweets(this.othersId);
         },
+        updated() {
+            this.updateProp;
+        },
         computed: {
             updateProp() {
                 this.callForTweets(this.othersId)
-                return this.othersId;
+                return this.$store.state.otherUser;
             }
         },
         data() {

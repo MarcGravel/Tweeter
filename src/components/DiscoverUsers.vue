@@ -70,6 +70,9 @@ import cookies from 'vue-cookies'
             this.loadAllTweets();
             this.loadFollowers();
         },
+        updated(){
+            this.updateDOM;
+        },
         computed: {
             discoverTweets() {
                 return this.discoverTweetArray
