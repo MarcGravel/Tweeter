@@ -76,7 +76,6 @@ import router from '../router'
                         'password': this.password
                     }
                 }).then((response) => {
-                    console.log(response);
                     cookies.set('loginToken', response.data.loginToken);
                     cookies.set('userId', response.data.userId);
                     router.push('Home');

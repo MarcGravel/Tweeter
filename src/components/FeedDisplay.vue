@@ -109,9 +109,7 @@ import { eventBus } from '../main'
                     
                 },
                 followingIds: [],
-                allTweets: {
-
-                },
+                allTweets: [],
                 followingTweets: {
 
                 },

@@ -86,9 +86,7 @@ import cookies from 'vue-cookies'
 
                 },
                 followingIds: [],
-                allTweets: {
-
-                },
+                allTweets: [],
                 followingTweets: {
 
                 },
