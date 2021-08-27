@@ -37,7 +37,7 @@
 
                 <v-card-actions>
                 <v-list-item class="grow">
-                <img id="cardLogo" src="@/assets/TweeterLogo.png" alt="TweeterLogo">    
+                <img id="cardLogo" src="@/assets/TweeterLogoWhite.png" alt="TweeterLogo">    
                 <v-list-item-content>
                     <v-list-item-title
                     id="createdAtDate">{{featuredTweet.createdAt}}</v-list-item-title>
