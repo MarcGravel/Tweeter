@@ -75,16 +75,16 @@ import router from '../router'
           grid-row: 3;
 
           #discoverBanner {
-              background-color: #0096C7;
-              height: 8vh;
-              display: grid;
-              justify-items: center;
-              align-items: center;
-              box-shadow: 0 10px 20px #03045E ;
-              
-              h1 {
-                  color: white;
-              }
+            background-color: #0096C7;
+            height: 8vh;
+            display: grid;
+            justify-items: center;
+            align-items: center;
+            box-shadow: 0 10px 20px #03045E ;
+            
+            h1 {
+                color: white;
+            }
           }
       }
     }

@@ -33,8 +33,10 @@ import { eventBus } from '../main'
         beforeMount() {
             let theUserId = cookies.get('userId');
             this.loadUserTweets(theUserId);
+            this.loadFollowers();
         },
         created() {
+            //updates the feed without page refresh
             eventBus.$on('updateFeed', () => {
                 this.loadUserTweets(cookies.get('userId'));
             }) 
@@ -55,6 +57,10 @@ import { eventBus } from '../main'
                 displayFeedOption: true,
                 userTweets: {
                     
+                },
+                followingIds: [],
+                allTweets: {
+
                 },
                 mockData: {
                     tweet1: {
@@ -99,7 +105,45 @@ import { eventBus } from '../main'
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
-            }
+            },
+            loadFollowers() {
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/follows',
+                    method: "GET",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    params: {
+                        "userId": cookies.get('userId')
+                    }
+                }).then((response) => {
+                    for(let i=0; i<response.data.length; i++) {
+                        this.followingIds.push(response.data[i].userId)
+                    }
+                    this.loadAllTweets();
+                }).catch((error) => {
+                    console.log(error);
+                })
+            },
+            loadAllTweets() {
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/tweets',
+                    method: "GET",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    }
+                }).then((response) => {
+                   this.allTweets = response.data;
+                   let filteredArray = this.allTweets.filter( el =>
+                   this.filteredArray.indexOf(el) === 0)
+
+                    console.log(filteredArray);
+                }).catch((error) => {
+                    console.log(error);
+                })
+            },
             
         }
     }

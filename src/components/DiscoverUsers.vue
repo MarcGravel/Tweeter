@@ -67,10 +67,27 @@ import cookies from 'vue-cookies'
                         this.removedFollowedArray = allTweets.data;
                         this.removeUsersTweets(this.removedFollowedArray)
                     } else {
-                        for(let i=0; i<allTweets.data.length; i++) {
-                           if (followed.data[i].userId != allTweets.data[i].userId) {
-                               this.removedFollowedArray.push(allTweets.data[i])
-                           }
+                        let followedIds = [];
+                        for(let i=0; i<followed.data.length; i++) {
+                            followedIds.push(followed.data[i].userId)
+                        }
+                        for(let i=0; i<followed.data.length; i++) {
+                           axios.request({
+                            url: process.env.VUE_APP_API_SITE+'/api/tweets',
+                            method: "GET",
+                            headers: {
+                                'X-Api-Key': process.env.VUE_APP_API_KEY,
+                                'Content-Type': 'application/json'
+                            },
+                            params: {
+                                "userId": followedIds[i]
+                                
+                            }
+                        }).then((response) => {
+                            console.log(response);
+                        }).catch((error) => {
+                            console.log(error);
+                        })
                         }
                         this.removeUsersTweets(this.removedFollowedArray)
                     }

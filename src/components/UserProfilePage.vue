@@ -293,14 +293,12 @@ import router from '../router'
                         'X-Api-Key': process.env.VUE_APP_API_KEY,
                         'Content-Type': 'application/json'
                     },
-                    data: {
-                        parseUserData
-                    }
+                    data: parseUserData
                 }).then((response) => {
                     console.log(response);
 
                 }).catch((error) => {
-                    console.log(error);
+                    console.log(error.response);
                 }) 
             }, 
             deleteAccount() {
