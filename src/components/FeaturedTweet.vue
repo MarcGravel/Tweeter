@@ -1,70 +1,19 @@
 <template>
     <div>
         <div id="featTweeterDisplay">
-            <v-card
-                id="tweeterCard"
-                class="mx-auto"
-                color="#26c6da"
-                dark
-                width="400"
-            >
-                <v-card-title>
-                    <v-list-item-avatar color="grey darken-3">
-                    <v-img
-                        v-if="featuredTweet.userImageUrl == undefined"
-                        class="elevation-6"
-                        alt=""
-                        src="https://image.flaticon.com/icons/png/512/847/847969.png"
-                    ></v-img>
-                    <v-img
-                        v-else
-                        class="elevation-6"
-                        alt=""
-                        :src="featuredTweet.userImageUrl"
-                    ></v-img>
-                    </v-list-item-avatar>
-                    <span 
-                        class="text-h6 font-weight-light"
-                        @click="goToProfile($event)"
-                            >{{featuredTweet.username}}</span>
-                </v-card-title>
-
-                <v-card-text class="text-h5 font-weight-bold">
-                {{featuredTweet.content}}
-                </v-card-text>
-
-                <img id="tweeterImg" v-if="featuredTweet.tweetImageUrl != ''" :src="featuredTweet.tweetImageUrl" alt="Tweet Image">
-
-                <v-card-actions>
-                <v-list-item class="grow">
-                <img id="cardLogo" src="@/assets/TweeterLogoWhite.png" alt="TweeterLogo">    
-                <v-list-item-content>
-                    <v-list-item-title
-                    id="createdAtDate">{{featuredTweet.createdAt}}</v-list-item-title>
-                </v-list-item-content>
-
-                    <v-row
-                    align="center"
-                    justify="end"
-                    >
-                    <v-icon 
-                        class="mr-1"
-                        @click="likeTweet(tweetInfo.tweetId)">
-                        mdi-heart
-                    </v-icon>
-                    <span class="subheading mr-2">0</span>
-                    </v-row>
-                </v-list-item>
-                </v-card-actions>
-            </v-card>
+            <TweetCard :tweetInfo="featuredTweet" />
         </div>
     </div>
 </template>
 
 <script>
+import TweetCard from './TweetCard.vue'
 
     export default {
         name: "FeaturedTweet",
+        components: {
+            TweetCard,
+        },
         computed: {
             featuredTweet() {
                 return this.$store.state.featuredTweet;
