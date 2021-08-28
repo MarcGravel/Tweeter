@@ -68,7 +68,10 @@
                     align="center"
                     justify="end"
                     >
-                    <v-icon class="mr-1">
+                    <v-icon 
+                        class="mr-1"
+                        @click="likeTweet(tweetInfo.tweetId)"
+                        >
                         mdi-heart
                     </v-icon>
                     <span class="subheading mr-2">0</span>
@@ -286,8 +289,10 @@ import TweeterFooter from './TweeterFooter.vue';
                 }).catch((error) => {
                     console.log(error);
                 })
-            }
-            
+            },
+            likeTweet(tweetId) {
+                return this.$store.dispatch('getLikedTweets', tweetId);
+            },  
         }
     }
 </script>

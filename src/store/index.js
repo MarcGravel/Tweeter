@@ -63,8 +63,7 @@ export default new Vuex.Store({
 
     followLinkClick(state, infoArray) {
       state.followsPageUserId = infoArray[1];
-      //adding whitespace after followers as there is one on the folowers link btn
-      if(infoArray[0] == "Followers ") {
+      if(infoArray[0] == "Followers") {
         state.followsPageFlag = false;
         router.push('/follows')
       } else {
@@ -137,6 +136,69 @@ export default new Vuex.Store({
         console.log(error);
     })
     },
+
+    // tweet likes and unlikes
+    getLikedTweets(state, tweetId) {
+      //getTweetLikes
+      axios.request({
+          url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
+          method: "GET",
+          headers: {
+              'X-Api-Key': process.env.VUE_APP_API_KEY,
+              'Content-Type': 'application/json'
+          },
+          params: {
+              "tweetId": tweetId
+          }
+      }).then((response) => {
+          let passedData = [response.data, tweetId]
+          return this.dispatch('updateTweetLikes', passedData)
+      }).catch((error) => {
+          console.log(error);
+      })
+  },
+  updateTweetLikes(state, passedData) {
+    //check if user already liked the tweet
+    let userLiked = passedData[0].filter(tweet => tweet.userId == cookies.get('userId'));
+    //conditional depending if userLike is populated(meaning tweet has already been liked)
+    if(userLiked.length == 0) {
+        //post tweet like 
+        axios.request({
+            url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
+            method: "POST",
+            headers: {
+                'X-Api-Key': process.env.VUE_APP_API_KEY,
+                'Content-Type': 'application/json'
+            },
+            data: {
+                "loginToken": cookies.get('loginToken'),
+                "tweetId": passedData[1]
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })               
+    } else {
+        //delete tweet like
+        axios.request({
+            url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
+            method: "DELETE",
+            headers: {
+                'X-Api-Key': process.env.VUE_APP_API_KEY,
+                'Content-Type': 'application/json'
+            },
+            data: {
+                "loginToken": cookies.get('loginToken'),
+                "tweetId": passedData[1]
+            }
+        }).then((response) => {
+            console.log(response);
+        }).catch((error) => {
+            console.log(error);
+        })
+    }
+  },
 
     //LogsOut if logout button is clicked
     logout(state, itemTitle) {

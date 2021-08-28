@@ -47,7 +47,9 @@
                     align="center"
                     justify="end"
                     >
-                    <v-icon class="mr-1">
+                    <v-icon 
+                        class="mr-1"
+                        @click="likeTweet(tweetInfo.tweetId)">
                         mdi-heart
                     </v-icon>
                     <span class="subheading mr-2">0</span>
@@ -73,7 +75,10 @@
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
-            }
+            },
+            likeTweet(tweetId) {
+                return this.$store.dispatch('getLikedTweets', tweetId);
+            },
         }
     }
 </script>

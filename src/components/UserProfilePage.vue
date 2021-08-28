@@ -13,9 +13,9 @@
         <p id="bioParagraph">{{userDataInfo.bio}}</p>
         <p id="birthdate">Birthday: {{userDataInfo.birthdate}}</p>
         <div id="followFollowerBtns">
-            <a @click="sendToFollowPage($event, userDataInfo.userId)">Followers </a> 
+            <a @click="sendToFollowPage($event, userDataInfo.userId)">Followers</a> {{followersCount}} 
             <span class="mr-1">·</span>
-            <a @click="sendToFollowPage($event, userDataInfo.userId)">Following</a>
+            <a @click="sendToFollowPage($event, userDataInfo.userId)">Following</a> {{followsCount}}
         </div>
         <v-btn id="editBtn"
             color="error"
@@ -156,11 +156,16 @@ import axios from 'axios'
         beforeMount() {
             let theUserId = cookies.get('userId');
             this.requestCurrentUserInfo(theUserId);
+            this.getFollowCounts();
         },
         computed: {
             //gets all current user data
             userDataInfo() {
                 return this.$store.state.currentUser;
+            },
+            updateDOM() {
+                this.getFollowCounts();
+                return this.$store.state.followsPageFlag;
             }
         },
         data () {
@@ -203,6 +208,8 @@ import axios from 'axios'
                 passwordRules: [
                     value => !!value || 'Required.'
                 ],
+                followsCount: 0,
+                followersCount: 0,
             }
         },
         methods: {
@@ -278,6 +285,41 @@ import axios from 'axios'
             sendToFollowPage(event, userId) {
                 let passedData = [event.srcElement.innerText, userId];
                 return this.$store.commit('followLinkClick', passedData);
+            },
+            getFollowCounts() {
+                //follows count
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/follows',
+                    method: "GET",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    params: {
+                        "userId": cookies.get('userId')
+                    }
+                }).then((response) => {
+                    this.followsCount = response.data.length;
+                }).catch((error) => {
+                    console.log(error);
+                });
+
+                //followers count
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/followers',
+                    method: "GET",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    params: {
+                        "userId": cookies.get('userId')
+                    }
+                }).then((response) => {
+                    this.followersCount = response.data.length;
+                }).catch((error) => {
+                    console.log(error);
+                });
             }
         }
     }

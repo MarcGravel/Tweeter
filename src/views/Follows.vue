@@ -113,7 +113,7 @@ import TweeterFooter from '../components/TweeterFooter.vue'
         },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
-            this.getFollowerData(this.$store.state.followsPageUserId)
+            this.getFollowerData(this.$store.state.followsPageUserId);
         },
         computed: {
             userDataInfo() {
@@ -121,7 +121,7 @@ import TweeterFooter from '../components/TweeterFooter.vue'
             },
             updateDOM() {
                 this.getFollowData(this.$store.state.followsPageUserId);
-                this.getFollowerData(this.$store.state.followsPageUserId)
+                this.getFollowerData(this.$store.state.followsPageUserId);
                 return this.$store.state.followsPageFlag;
             },
             theDisplayStatus() {
