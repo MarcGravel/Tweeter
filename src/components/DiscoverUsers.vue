@@ -23,7 +23,7 @@
                         :src="tweetInfo.userImageUrl"
                     ></v-img>
                     </v-list-item-avatar>
-                    <span 
+                    <span
                         class="text-h6 font-weight-light"
                         @click="goToProfile($event)"
                         >

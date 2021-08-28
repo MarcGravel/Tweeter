@@ -138,6 +138,22 @@ export default new Vuex.Store({
     })
     },
 
+    updateTweetData(state, tweetData) {
+      axios.request({
+        url: process.env.VUE_APP_API_SITE+'/api/tweets',
+        method: "PATCH",
+        headers: {
+            'X-Api-Key': process.env.VUE_APP_API_KEY,
+            'Content-Type': 'application/json'
+        },
+        data: tweetData
+    }).then(() => {
+        router.go();
+    }).catch((error) => {
+        console.log(error.response);
+    })
+    },
+
     //LogsOut if logout button is clicked
     logout(state, itemTitle) {
       if (itemTitle == "Log Out") {

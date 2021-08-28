@@ -40,6 +40,14 @@
                         @click="goToProfile($event)"
                         >
                         {{tweetInfo.username}}</span>
+                    <v-col 
+                        v-if="displayFeedOption == true" 
+                        class="text-right"
+                        @click="editTweet(tweetInfo), overlay = !overlay">
+                        <v-icon class="mr-1">
+                            edit
+                        </v-icon>
+                    </v-col> 
                 </v-card-title>
 
                 <v-card-text class="text-h5 font-weight-bold">
@@ -69,6 +77,28 @@
                 </v-card-actions>
             </v-card>
         </div>
+        <v-overlay
+                :absolute="absolute"
+                :value="overlay"
+                :opacity="opacity">
+                <v-form id=editTweetForm>
+                    <h3>Change any field below to update it</h3>
+                    <v-text-field
+                        v-model="updatedTweetContent"
+                        :label="clickedTweetEditData.content"
+                    ></v-text-field>
+                    <v-btn id="saveTweetBtn"
+                        color="primary" 
+                        @click="sendTweetUpdatedData(updatedTweetContent, clickedTweetEditData.tweetId), overlay = !overlay">
+                        Save
+                    </v-btn>
+                    <v-btn id="deleteTweetBtn"
+                        color="error"
+                        @click="deleteTweet(clickedTweetEditData.tweetId), overlay = !overlay">
+                        Delete Tweet
+                    </v-btn>
+                </v-form>
+            </v-overlay>
         <TweeterFooter />
     </div>
 </template>
@@ -76,6 +106,7 @@
 <script>
 import axios from 'axios'
 import cookies from 'vue-cookies'
+import router from '../router'
 import { eventBus } from '../main'
 import TweeterFooter from './TweeterFooter.vue';
 
@@ -128,6 +159,15 @@ import TweeterFooter from './TweeterFooter.vue';
                 followingTweets: {
 
                 },
+                overlay: false,
+                opacity: 0.9,
+                absolute: true,
+                clickedTweetEditData: {
+                    content: '',
+                    tweetImageUrl: '',
+                    tweetId: '',
+                },
+                updatedTweetContent: '',  
             }
         },
         methods: {
@@ -200,6 +240,52 @@ import TweeterFooter from './TweeterFooter.vue';
                 let allFollowingTweets = this.allTweets.filter(tweet => parsedFollowing.includes(tweet.userId))
                 //adds filtered array to data(). also reverses so newest tweets are first
                 this.followingTweets = allFollowingTweets.reverse();
+            },
+            editTweet(tweetInfo) {
+                this.clickedTweetEditData.content = tweetInfo.content;
+                this.clickedTweetEditData.tweetImageUrl = tweetInfo.tweetImageUrl;
+                this.clickedTweetEditData.tweetId = tweetInfo.tweetId;
+            },
+            sendTweetUpdatedData(content, tweetId) {
+                console.log(content, tweetId);
+                if (content != '') {
+                    axios.request({
+                        url: process.env.VUE_APP_API_SITE+'/api/tweets',
+                        method: "PATCH",
+                        headers: {
+                            'X-Api-Key': process.env.VUE_APP_API_KEY,
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            'loginToken': cookies.get('loginToken'),
+                            'tweetId': tweetId,
+                            'content': content
+                        }
+                    }).then(() => {
+                        router.go();
+                    }).catch((error) => {
+                        console.log(error.response);
+                    })
+                }
+            },
+            deleteTweet(tweetId) {
+                console.log(tweetId);
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE +'/api/tweets',
+                    method: "DELETE",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    data: {
+                        "loginToken": cookies.get('loginToken'),
+                        "tweetId": tweetId
+                    }
+                }).then(() => {
+                    router.go();
+                }).catch((error) => {
+                    console.log(error);
+                })
             }
             
         }
@@ -248,6 +334,23 @@ import TweeterFooter from './TweeterFooter.vue';
                     object-fit: cover;
                     justify-self: center;
                 }
+            }
+        }
+
+        #editTweetForm {
+            width: 90vw;
+            display: grid;
+
+            #saveTweetBtn {
+                width: fit-content;
+                display: inline;
+            }
+
+            #deleteTweetBtn {
+                justify-self: end;
+                display: inline;
+                position: relative;
+                bottom: 4.2vh;
             }
         }
     }
