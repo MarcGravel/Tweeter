@@ -77,7 +77,7 @@ import router from '../router'
                 bio: '',
                 bioRules: {
                     required: v => !!v || 'Please write a short bio',
-                    max: v => v.length  <= 50 || 'Max 50 characters',
+                    max: v => v.length  <= 70 || 'Max 70 characters',
                 },
                 datePick: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
                 dateRules: [

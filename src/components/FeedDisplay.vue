@@ -113,7 +113,7 @@ import TweeterFooter from './TweeterFooter.vue';
     export default {
         name: 'FeedDisplay',
         components: {
-            TweeterFooter
+            TweeterFooter,
         },
         beforeMount() {
             let theUserId = cookies.get('userId');

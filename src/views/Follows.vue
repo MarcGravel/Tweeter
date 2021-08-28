@@ -6,15 +6,15 @@
             <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
         </div>
         <div id="displayBtns">
-            <v-btn id="myFeed"
-                tile
-                @click="showFollows"
-                >You Follow
-            </v-btn>
             <v-btn id="mainFeed" 
                 tile
                 @click="showFollowers"
                 >Your Followers
+            </v-btn>
+            <v-btn id="myFeed"
+                tile
+                @click="showFollows"
+                >You Follow
             </v-btn>
         </div>
         <div id="followDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
@@ -68,7 +68,7 @@
             >
             <v-list-item>
                 <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl != undefined" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
+                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
                 <v-img v-else :src="userDataInfo.imageUrl"></v-img>
                 </v-list-item-avatar>
 

@@ -16,7 +16,7 @@
             >
             <v-list-item>
                 <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl != undefined" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
+                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
                 <v-img v-else :src="userDataInfo.imageUrl"></v-img>
                 </v-list-item-avatar>
 

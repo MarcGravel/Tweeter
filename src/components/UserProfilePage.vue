@@ -31,77 +31,77 @@
             :opacity="opacity">
             <v-form id="editForm">
                 <h3>Change any field below to update it</h3>
-            <v-text-field
-                v-model="updatedUserData.email"
-                :rules="emailRules"
-                :label="userDataInfo.email"
-            ></v-text-field>
-            <v-text-field
-                v-model="updatedUserData.imageUrl"
-                :rules="validateUrl"
-                :label="userDataInfo.imageUrl"
-                hint="A photo of yourself. Must be a valid https:// URL"
-            ></v-text-field>
-            <v-text-field
-                v-model="updatedUserData.bannerUrl"
-                :rules="validateUrl"
-                :label="userDataInfo.bannerUrl"
-                hint="Your Banner Image. Must be a valid https:// URL link"
-            ></v-text-field>
-            <v-text-field
-                v-model="updatedUserData.username"
-                :label="userDataInfo.username"
-            ></v-text-field>
-            <v-text-field
-                v-model="updatedUserData.bio"
-                :rules="bioRules"
-                :label="userDataInfo.bio"
-            ></v-text-field>
-            <label id="birthdayLabel" for="datePicker">Enter Birthday</label>
-            <v-date-picker id="datePicker" 
-                elevation="15"
-                width="70%"
-                v-model="updatedUserData.birthdate"
-                color="#0096C7"
-            ></v-date-picker>
-            <v-btn id="saveUpdateBtn"
-                color="primary" 
-                @click="sendUpdatedData(updatedUserData), overlay = !overlay">
-                    Save
-            </v-btn>
-            <v-btn id="firstOverlaybackBtn"
-                color="primary" 
-                @click="overlay = !overlay">
-                    Back
-            </v-btn>
-            <v-btn id="deleteBtn"
-                color="error" 
-                @click="overlayDelAcc = !overlayDelAcc">
-                    Delete Account
-            </v-btn>
-            <v-overlay
-                :value="overlayDelAcc"
-                :opacity="opacity">
                 <v-text-field
-                v-model="deleteAccountPass"
-                :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="passwordRules"
-                :type="show1 ? 'text' : 'password'"
-                label="Enter Your Password"
-                hint="Deleting your account is permanent"
-                @click:append="show1 = !show1"
-            ></v-text-field>
-            <v-btn id="backBtn"
-                color="primary" 
-                @click="overlayDelAcc = !overlayDelAcc">
-                    Back
-            </v-btn>
-            <v-btn id="confirmDeleteBtn"
-                color="error" 
-                @click="deleteAccount()">
-                    Confirm Delete
-            </v-btn>
-            </v-overlay>
+                    v-model="updatedUserData.email"
+                    :rules="emailRules"
+                    :label="userDataInfo.email"
+                ></v-text-field>
+                <v-text-field
+                    v-model="updatedUserData.imageUrl"
+                    :rules="validateUrl"
+                    :label="userDataInfo.imageUrl"
+                    hint="A photo of yourself. Must be a valid https:// URL"
+                ></v-text-field>
+                <v-text-field
+                    v-model="updatedUserData.bannerUrl"
+                    :rules="validateUrl"
+                    :label="userDataInfo.bannerUrl"
+                    hint="Your Banner Image. Must be a valid https:// URL link"
+                ></v-text-field>
+                <v-text-field
+                    v-model="updatedUserData.username"
+                    :label="userDataInfo.username"
+                ></v-text-field>
+                <v-text-field
+                    v-model="updatedUserData.bio"
+                    :rules="bioRules"
+                    :label="userDataInfo.bio"
+                ></v-text-field>
+                <label id="birthdayLabel" for="datePicker">Enter Birthday</label>
+                <v-date-picker id="datePicker" 
+                    elevation="15"
+                    width="70%"
+                    v-model="updatedUserData.birthdate"
+                    color="#0096C7"
+                ></v-date-picker>
+                <v-btn id="saveUpdateBtn"
+                    color="primary" 
+                    @click="sendUpdatedData(updatedUserData), overlay = !overlay">
+                        Save
+                </v-btn>
+                <v-btn id="firstOverlaybackBtn"
+                    color="primary" 
+                    @click="overlay = !overlay">
+                        Back
+                </v-btn>
+                <v-btn id="deleteBtn"
+                    color="error" 
+                    @click="overlayDelAcc = !overlayDelAcc">
+                        Delete Account
+                </v-btn>
+                <v-overlay
+                    :value="overlayDelAcc"
+                    :opacity="opacity">
+                    <v-text-field
+                    v-model="deleteAccountPass"
+                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                    :rules="passwordRules"
+                    :type="show1 ? 'text' : 'password'"
+                    label="Enter Your Password"
+                    hint="Deleting your account is permanent"
+                    @click:append="show1 = !show1"
+                ></v-text-field>
+                <v-btn id="backBtn"
+                    color="primary" 
+                    @click="overlayDelAcc = !overlayDelAcc">
+                        Back
+                </v-btn>
+                <v-btn id="confirmDeleteBtn"
+                    color="error" 
+                    @click="deleteAccount()">
+                        Confirm Delete
+                </v-btn>
+                </v-overlay>
         </v-form>
         </v-overlay>
         <aside id="drawer">
@@ -113,7 +113,7 @@
             >
             <v-list-item>
                 <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl != undefined" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
+                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
                 <v-img v-else :src="userDataInfo.imageUrl"></v-img>
                 </v-list-item-avatar>
 
@@ -193,7 +193,7 @@ import axios from 'axios'
                     v => /.+@.+\..+/.test(v) || 'E-mail must be valid'
                 ],
                 bioRules: [
-                    v => v.length  <= 50 || 'Max 50 characters'
+                    v => v.length  <= 70 || 'Max 70 characters'
                 ],
                 deleteAccountPass: '',
                 show1: false,

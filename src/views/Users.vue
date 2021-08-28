@@ -4,7 +4,7 @@ build views in a few different ways to practice structure-->
 <template>
     <div id="userPageContainer">
         <div id="othersContainer">
-            <v-app-bar-nav-icon id="hamburgerIcon" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <div id="bannerContainer">
                 <img v-if="othersData.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
                 <img v-else :src="othersData.bannerUrl" alt="Users Image">
@@ -158,28 +158,9 @@ import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName)
             },
+            //checks if logout button clicked. if so, sends data to store for logout
             checkForLogout(itemTitle) {
-                if (itemTitle == "Log Out") {
-
-                    axios.request({
-                        url: process.env.VUE_APP_API_SITE+'/api/login',
-                        method: 'DELETE',
-                        headers: {
-                            'X-Api-Key': process.env.VUE_APP_API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        data: {
-                            'loginToken': cookies.get('loginToken')
-                        }
-                    }).then(() => {
-                        cookies.remove('loginToken');
-                        cookies.remove('userId');
-                    }).catch((error) => {
-                        console.log(error + ' error');
-                    })
-
-                    router.push('/')
-                }
+                return this.$store.dispatch('logout', itemTitle);
             },
             followClickedUser() {
                 axios.request({
@@ -334,10 +315,10 @@ import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
             }
 
             #hamburgerIcon {
-                grid-column: 5;
-                grid-row: 1;
-                margin-right: 1vw;
-            }
+            grid-column: 5;
+            grid-row: 2;
+            margin-right: 1vw;
+        }
         }
 
         #displayBanner {
