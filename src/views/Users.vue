@@ -2,47 +2,51 @@
 build views in a few different ways to practice structure-->
 
 <template>
-    <div id="userPageContainer" @click="flipMenu">
-        <div id="othersContainer">
-            <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-            <div id="bannerContainer">
-                <img v-if="othersData.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
-                <img v-else :src="othersData.bannerUrl" alt="Users Image">
-            </div>
-            <div id="imageContainer">
-                <img @click.stop="drawer = !drawer" v-if="othersData.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
-                <img @click.stop="drawer = !drawer" v-else :src="othersData.imageUrl" alt="Users Image">
-            </div>
-            <h2 id="userName" @click="goToProfile($event)">{{othersData.username}}</h2>
-            <p id="bioParagraph">{{othersData.bio}}</p>
-            <p id="birthdate">Birthday: {{othersData.birthdate}}</p>
-            <v-btn id="followBtn"
-            v-if="!isFollowing"
-            color="primary"
-            @click="followClickedUser()"
-            >
-                <v-icon left>
-                    follow_the_signs
-                </v-icon>
-            Follow
-            </v-btn>
-            <v-btn id="unfollowBtn"
-            v-else
-            color="error"
-            @click="unfollowClickedUser()"
-            >
-                <v-icon left>
-                    follow_the_signs
-                </v-icon>
-            Unfollow
-            </v-btn>
-            <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
+    <div id="usersPage">
+        <div id="navBar">
+            <NavBar />
         </div>
-        <div id="displayBanner">
-            <h4>See what {{othersData.username}} is talking about</h4>
-        </div>
-        <div id="feedDisplay">
-            <OthersFeedDisplay :othersId="othersData.userId" />
+        <div id="userPageContainer" @click="flipMenu">
+            <div id="othersContainer">
+                <div id="bannerContainer">
+                    <img v-if="othersData.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
+                    <img v-else :src="othersData.bannerUrl" alt="Users Image">
+                </div>
+                <div id="imageContainer">
+                    <img @click.stop="drawer = !drawer" v-if="othersData.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
+                    <img @click.stop="drawer = !drawer" v-else :src="othersData.imageUrl" alt="Users Image">
+                </div>
+                <h2 id="userName" @click="goToProfile($event)">{{othersData.username}}</h2>
+                <p id="bioParagraph">{{othersData.bio}}</p>
+                <p id="birthdate">Birthday: {{othersData.birthdate}}</p>
+                <v-btn id="followBtn"
+                v-if="!isFollowing"
+                color="primary"
+                @click="followClickedUser()"
+                >
+                    <v-icon left>
+                        follow_the_signs
+                    </v-icon>
+                Follow
+                </v-btn>
+                <v-btn id="unfollowBtn"
+                v-else
+                color="error"
+                @click="unfollowClickedUser()"
+                >
+                    <v-icon left>
+                        follow_the_signs
+                    </v-icon>
+                Unfollow
+                </v-btn>
+                <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
+            </div>
+            <div id="displayBanner">
+                <h4>See what {{othersData.username}} is talking about</h4>
+            </div>
+            <div id="feedDisplay">
+                <OthersFeedDisplay :othersId="othersData.userId" />
+            </div>
         </div>
     </div>
 </template>
@@ -53,12 +57,14 @@ import cookies from 'vue-cookies'
 import router from '../router'
 import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
 import AsideMenu from '../components/AsideMenu.vue'
+import NavBar from '../components/NavBar.vue'
 
     export default {
         name: "Users",
         components: {
             OthersFeedDisplay,
-            AsideMenu
+            AsideMenu,
+            NavBar
         },
         props: ['username'],
         computed: {
@@ -187,7 +193,16 @@ import AsideMenu from '../components/AsideMenu.vue'
 </script>
 
 <style lang="scss" scoped>
+
+    #navBar {
+      position: fixed;
+      z-index: 99;
+      grid-row: 1;
+      height: 56px;
+    }
+
     #userPageContainer {
+        margin-top: 56px;
         width: 100%;
         height: 100%;
         display: grid;
@@ -234,7 +249,7 @@ import AsideMenu from '../components/AsideMenu.vue'
                 width: fit-content;
                 grid-column: 2 / 4;
                 grid-row: 2;
-                justify-self: end;
+                justify-self: center;
                 align-self: center;
             }
 
@@ -242,7 +257,7 @@ import AsideMenu from '../components/AsideMenu.vue'
                 width: fit-content;
                 grid-column: 2 / 4;
                 grid-row: 2;
-                justify-self: end;
+                justify-self: center;
                 align-self: center;
             }
 
@@ -275,12 +290,6 @@ import AsideMenu from '../components/AsideMenu.vue'
                 color: white; 
                 margin: 0 0 0 2vw;
             }
-
-            #hamburgerIcon {
-            grid-column: 5;
-            grid-row: 2;
-            margin-right: 1vw;
-        }
         }
 
         #displayBanner {

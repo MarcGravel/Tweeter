@@ -1,6 +1,5 @@
 <template>
     <div id="userContainer" @click="flipMenu">
-        <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="imageContainer">
             <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
             <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
@@ -106,12 +105,6 @@ import AsideMenu from './AsideMenu.vue'
             font-size: 1.3em;
             font-style: italic;
             margin: 0 0 0 10vw;
-        }
-
-        #hamburgerIcon {
-            grid-column: 5;
-            grid-row: 1;
-            margin-right: 1vw;
         }
     }
 </style>

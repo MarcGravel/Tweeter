@@ -35,12 +35,14 @@
                 <v-list-item-content>
                     <v-list-item-title >{{ item.title }}</v-list-item-title>
                 </v-list-item-content>
-                </v-list-item>
+            </v-list-item>
             </v-list>
             </v-navigation-drawer>
         </aside>
     </div>
 </template>
+
+<!-- <v-app-bar-nav-icon id="hamburgerIcon" color="black" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>-->
 
 <script>
     export default {

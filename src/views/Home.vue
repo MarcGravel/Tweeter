@@ -1,17 +1,22 @@
 <template>
-  <div id="homePageContainer">
-    <div id="userInfo">
-      <UserHomePage />
+  <div id="homePage">
+    <div id="navBar">
+      <NavBar />
     </div>
-    <aside id="sideBar">
+    <div id="homePageContainer">
+      <div id="userInfo">
+        <UserHomePage />
+      </div>
+      <aside id="sideBar">
 
-    </aside>
-    <div id="tweetInputContainer">
-      <UserTweetInput />
+      </aside>
+      <div id="tweetInputContainer">
+        <UserTweetInput />
+      </div>
+      <main id="mainFeed">
+        <FeedDisplay />
+      </main>
     </div>
-    <main id="mainFeed">
-      <FeedDisplay />
-    </main>
   </div>
 </template>
 
@@ -21,13 +26,15 @@ import router from '../router'
 import UserHomePage from '../components/UserHomePage.vue'
 import UserTweetInput from '../components/UserTweetInput.vue'
 import FeedDisplay from '../components/FeedDisplay.vue'
+import NavBar from '../components/NavBar.vue'
 
   export default {
     name: 'Home',
     components: {
         UserHomePage,
         UserTweetInput,
-        FeedDisplay
+        FeedDisplay,
+        NavBar
     },
     computed: {
       getLoginToken() {
@@ -44,7 +51,17 @@ import FeedDisplay from '../components/FeedDisplay.vue'
 </script>
 
 <style lang="scss" scoped>
+
+    #navBar {
+      position: fixed;
+      z-index: 99;
+      grid-row: 1;
+      height: 56px;
+    }
+
     #homePageContainer {
+      margin-top: 56px;
+      grid-row: 2;
       width: 100vw;
       height: 100vh;
       display: grid;

@@ -102,8 +102,4 @@ import TweetCard from './TweetCard.vue'
             }
         }
     }
-    
-    #testGetId {
-        color: white;
-    }
 </style>

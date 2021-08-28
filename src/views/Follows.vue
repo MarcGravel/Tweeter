@@ -1,66 +1,70 @@
 <template>
-    <div id='followsContainer' @click="flipMenu">
-        <v-app-bar-nav-icon id="hamburgerIcon" color="black" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
-        <div id="bannerContainer">
-            <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
-            <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
+    <div id="followsPage">
+        <div id="navBar">
+            <NavBar />
         </div>
-        <div id="displayBtns">
-            <v-btn id="mainFeed" 
-                tile
-                @click="showFollowers"
-                >Your Followers
-            </v-btn>
-            <v-btn id="myFeed"
-                tile
-                @click="showFollows"
-                >You Follow
-            </v-btn>
-            <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
-        </div>
-        <div id="followDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
-            <v-card
-                id="followCard"
-                class="mx-auto"
-                color="#1da7b9"
-                dark
-                width="100vw"
-            >
-                <v-card-title>
-                    <v-list-item-avatar color="grey darken-3">
-                    <v-img
-                        v-if="tweetInfo.imageUrl == null"
-                        class="elevation-6"
-                        alt=""
-                        src="https://image.flaticon.com/icons/png/512/847/847969.png"
-                    ></v-img>
-                    <v-img
-                        v-else
-                        class="elevation-6"
-                        alt=""
-                        :src="tweetInfo.imageUrl"
-                    ></v-img>
-                    </v-list-item-avatar>
-                    <span 
-                        class="text-h6 font-weight-light"
-                        @click="goToProfile($event)"
-                        >
-                        {{tweetInfo.username}}</span>
-                    <v-col class="text-right">
-                        <v-btn
-                        color="primary"
-                        @click="goToFollowProfile(tweetInfo.username)">
-                            Visit Profile
-                        </v-btn>
-                    </v-col>    
-                </v-card-title>
+        <div id='followsContainer' @click="flipMenu">
+            <div id="bannerContainer">
+                <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
+                <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
+            </div>
+            <div id="displayBtns">
+                <v-btn id="mainFeed" 
+                    tile
+                    @click="showFollowers"
+                    >Your Followers
+                </v-btn>
+                <v-btn id="myFeed"
+                    tile
+                    @click="showFollows"
+                    >You Follow
+                </v-btn>
+                <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
+            </div>
+            <div id="followDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
+                <v-card
+                    id="followCard"
+                    class="mx-auto"
+                    color="#1da7b9"
+                    dark
+                    width="100vw"
+                >
+                    <v-card-title>
+                        <v-list-item-avatar color="grey darken-3">
+                        <v-img
+                            v-if="tweetInfo.imageUrl == null"
+                            class="elevation-6"
+                            alt=""
+                            src="https://image.flaticon.com/icons/png/512/847/847969.png"
+                        ></v-img>
+                        <v-img
+                            v-else
+                            class="elevation-6"
+                            alt=""
+                            :src="tweetInfo.imageUrl"
+                        ></v-img>
+                        </v-list-item-avatar>
+                        <span 
+                            class="text-h6 font-weight-light"
+                            @click="goToProfile($event)"
+                            >
+                            {{tweetInfo.username}}</span>
+                        <v-col class="text-right">
+                            <v-btn
+                            color="primary"
+                            @click="goToFollowProfile(tweetInfo.username)">
+                                Visit Profile
+                            </v-btn>
+                        </v-col>    
+                    </v-card-title>
 
-                <v-card-text class="text-h5 font-weight-bold">
-                {{tweetInfo.bio}}
-                </v-card-text>
-            </v-card>
+                    <v-card-text class="text-h5 font-weight-bold">
+                    {{tweetInfo.bio}}
+                    </v-card-text>
+                </v-card>
+            </div>
+            <TweeterFooter />
         </div>
-        <TweeterFooter />
     </div>
 </template>
 
@@ -68,12 +72,14 @@
 import axios from 'axios'
 import TweeterFooter from '../components/TweeterFooter.vue'
 import AsideMenu from '../components/AsideMenu.vue'
+import NavBar from '../components/NavBar.vue'
 
     export default {
         name: "Follows",
         components: {
             TweeterFooter,
             AsideMenu,
+            NavBar
         },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
@@ -171,7 +177,16 @@ import AsideMenu from '../components/AsideMenu.vue'
 
 <style lang="scss" scoped>
 
+    #navBar {
+      position: fixed;
+      z-index: 99;
+      grid-row: 1;
+      height: 56px;
+    }
+
     #followsContainer {
+        margin-top: 56px;
+        grid-row: 2;
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-rows: 3fr 1fr auto;
@@ -187,14 +202,6 @@ import AsideMenu from '../components/AsideMenu.vue'
                 height: 15vh;
                 object-fit: cover;
             }
-        }
-
-        #hamburgerIcon {
-            grid-row: 1;
-            grid-column: 1;
-            justify-self: end;
-            margin-right: 1vw;
-            position: relative;
         }
 
         #displayBtns {

@@ -1,6 +1,5 @@
 <template>
     <div id="userContainer" @click="flipMenu">
-        <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="bannerContainer">
             <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
             <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
@@ -329,7 +328,7 @@ import AsideMenu from './AsideMenu.vue'
             width: fit-content;
             grid-column: 2 / 4;
             grid-row: 2;
-            justify-self: end;
+            justify-self: center;
             align-self: center;
         }
 
@@ -366,6 +365,7 @@ import AsideMenu from './AsideMenu.vue'
         #followFollowerBtns {
             grid-column: 2 / 5;
             justify-self: end;
+            margin-right: 4vw;
             grid-row: 5;
             color: white;
 
@@ -373,12 +373,6 @@ import AsideMenu from './AsideMenu.vue'
                 color: whitesmoke;
                 text-decoration: underline;
             }
-        }
-
-        #hamburgerIcon {
-            grid-column: 5;
-            grid-row: 2;
-            margin-right: 1vw;
         }
 
         #saveUpdateBtn, #firstOverlaybackBtn {
@@ -403,6 +397,7 @@ import AsideMenu from './AsideMenu.vue'
 
             #editBtn {
             align-self: start;
+            justify-self: start;
             position: relative;
             left: 11vw;
             }

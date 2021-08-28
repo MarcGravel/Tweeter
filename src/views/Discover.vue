@@ -1,17 +1,22 @@
 <template>
-    <div id="discoverContainer">
-        <div id="userInfo">
-            <UserHomePage />
+    <div id="dicoverPage">
+        <div id="navBar">
+            <NavBar />
         </div>
-        <div id="featuredTweet">
-            <h3>Featured Tweet</h3>
-            <FeaturedTweet />
-        </div>
-        <div id="discoverUsersContainer">
-            <div id="discoverBanner">
-                <h1>Explore new content!</h1>
+        <div id="discoverContainer">
+            <div id="userInfo">
+                <UserHomePage />
             </div>
-            <DiscoverUsers />
+            <div id="featuredTweet">
+                <h3>Featured Tweet</h3>
+                <FeaturedTweet />
+            </div>
+            <div id="discoverUsersContainer">
+                <div id="discoverBanner">
+                    <h1>Explore new content!</h1>
+                </div>
+                <DiscoverUsers />
+            </div>
         </div>
     </div>
 </template>
@@ -20,6 +25,7 @@
 import DiscoverUsers from '../components/DiscoverUsers.vue'
 import UserHomePage from '../components/UserHomePage.vue'
 import FeaturedTweet from '../components/FeaturedTweet.vue'
+import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
 
@@ -28,7 +34,8 @@ import router from '../router'
         components: {
             DiscoverUsers,
             UserHomePage,
-            FeaturedTweet
+            FeaturedTweet,
+            NavBar
         },
         computed: {
             getLoginToken() {
@@ -44,11 +51,21 @@ import router from '../router'
 </script>
 
 <style lang="scss" scoped>
+
+    #navBar {
+      position: fixed;
+      z-index: 99;
+      grid-row: 1;
+      height: 56px;
+    }
+    
     #discoverContainer {
-      width: 100vw;
-      height: 100vh;
-      display: grid;
-      grid-template-rows: 15vh auto 45%;
+        grid-row: 2;
+        margin-top: 56px;
+        width: 100vw;
+        height: 100vh;
+        display: grid;
+        grid-template-rows: 15vh auto 45%;
 
         #userInfo {
             height: 100%;
