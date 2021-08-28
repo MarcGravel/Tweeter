@@ -57,14 +57,19 @@
                 </v-card-actions>
             </v-card>
         </div>
+        <TweeterFooter />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import TweeterFooter from './TweeterFooter.vue';
 
     export default {
         name: "OthersFeedDisplay",
+        components: {
+            TweeterFooter
+        },
         props: {
             'othersId': Number
         },

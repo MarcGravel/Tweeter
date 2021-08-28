@@ -1,6 +1,6 @@
 <template>
     <div id="userContainer">
-        <v-app-bar-nav-icon id="hamburgerIcon" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="bannerContainer">
             <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
             <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
@@ -12,6 +12,11 @@
         <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
         <p id="bioParagraph">{{userDataInfo.bio}}</p>
         <p id="birthdate">Birthday: {{userDataInfo.birthdate}}</p>
+        <div id="followFollowerBtns">
+            <a @click="sendToFollowPage($event, userDataInfo.userId)">Followers </a> 
+            <span class="mr-1">·</span>
+            <a @click="sendToFollowPage($event, userDataInfo.userId)">Following</a>
+        </div>
         <v-btn id="editBtn"
             color="error"
             @click="overlay = !overlay"
@@ -124,7 +129,7 @@
                 v-for="item in items"
                 :key="item.title"
                 :to="item.route"
-                @click="checkForLogout(item.title), checkDiscover(item.title)"
+                @click="checkForLogout(item.title)"
                 link
                 >
                 <v-list-item-icon>
@@ -264,12 +269,6 @@ import router from '../router'
                     router.push('/')
                 }
             },
-            checkDiscover(itemTitle) {
-                if(itemTitle == 'Discover') {
-                    console.log("test");
-                    return this.$store.commit('changeFlagState');
-                }
-            },
             sendUpdatedData(userData) {
 
                 //if birthdate is unchanged, change userData birthdays to '' to work with forEach statement below
@@ -324,6 +323,10 @@ import router from '../router'
                 }).catch((error) => {
                     console.log(error);
                 }) 
+            },
+            sendToFollowPage(event, userId) {
+                let passedData = [event.srcElement.innerText, userId];
+                return this.$store.commit('followLinkClick', passedData);
             }
         }
     }
@@ -404,9 +407,21 @@ import router from '../router'
             margin: 0 0 0 2vw;
         }
 
+        #followFollowerBtns {
+            grid-column: 2 / 5;
+            justify-self: end;
+            grid-row: 5;
+            color: white;
+
+            a {
+                color: whitesmoke;
+                text-decoration: underline;
+            }
+        }
+
         #hamburgerIcon {
             grid-column: 5;
-            grid-row: 1;
+            grid-row: 2;
             margin-right: 1vw;
         }
 

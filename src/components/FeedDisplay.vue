@@ -69,6 +69,7 @@
                 </v-card-actions>
             </v-card>
         </div>
+        <TweeterFooter />
     </div>
 </template>
 
@@ -76,9 +77,13 @@
 import axios from 'axios'
 import cookies from 'vue-cookies'
 import { eventBus } from '../main'
+import TweeterFooter from './TweeterFooter.vue';
 
     export default {
         name: 'FeedDisplay',
+        components: {
+            TweeterFooter
+        },
         beforeMount() {
             let theUserId = cookies.get('userId');
             this.loadUserTweets(theUserId);

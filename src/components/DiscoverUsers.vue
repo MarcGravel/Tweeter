@@ -57,15 +57,20 @@
                 </v-card-actions>
             </v-card>
         </div>
+        <TweeterFooter />
     </div>
 </template>
 
 <script>
 import axios from 'axios'
 import cookies from 'vue-cookies'
+import TweeterFooter from './TweeterFooter.vue';
 
     export default {
         name: "DiscoverUsers",
+        components: {
+            TweeterFooter
+        },
         beforeMount() {
             this.loadAllTweets();
             this.loadFollowers();

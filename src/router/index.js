@@ -5,6 +5,7 @@ import Login from '../views/Login.vue'
 import Discover from '../views/Discover.vue'
 import Profile from '../views/Profile.vue'
 import Users from '../views/Users.vue'
+import Follows from '../views/Follows.vue'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     name: 'Users',
     props: true,
     component: Users
+  },
+  {
+    path: '/follows',
+    name: "Follows",
+    component: Follows
   }
 ]
 

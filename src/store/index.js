@@ -15,6 +15,8 @@ export default new Vuex.Store({
     featuredTweet: [],
     isUserProfile: true,
     othersUsername: null,
+    followsPageFlag: true,
+    followsPageUserId: 0,
   },
   mutations: {
     signUpBtnClicked(state) {
@@ -51,7 +53,21 @@ export default new Vuex.Store({
     changeFlagState(state) {
       state.flagState = !state.flagState;
       console.log(state.flagState);
-    } 
+    },
+    followLinkClick(state, infoArray) {
+      state.followsPageUserId = infoArray[1];
+      //adding whitespace after followers as there is one on the folowers link btn
+      if(infoArray[0] == "Followers ") {
+        state.followsPageFlag = true;
+        router.push('/follows')
+      } else {
+        state.followsPageFlag = false;
+        router.push('/follows')
+      }
+    },
+    followsPageBtns(state, boolVal) {
+      state.followsPageFlag = boolVal;
+    },
   },
   actions: {
     //gets user data of passed username and passes to mutation
@@ -72,7 +88,7 @@ export default new Vuex.Store({
       }).catch((error) => {
           console.log(error);
       })
-  }
+    },
   },
   modules: {
   }
