@@ -22,16 +22,20 @@ export default new Vuex.Store({
     signUpBtnClicked(state) {
       state.signUpBtnValue = true;
     },
+
     userData(state, dataArray) {
       state.currentUser = dataArray;
     },
+
     loadUserProfile(state, bool) {
       state.isUserProfile = bool;
       router.push('/profile');
     },
+
     featuredTweet(state, tweet) {
       state.featuredTweet = tweet
     },
+
     //if user is current user, go to profile
     //if user not current user, update state with clicked user data and go to profile
     clickedUsername(state, user) {
@@ -47,29 +51,118 @@ export default new Vuex.Store({
         router.push(`/users/${user.username}`);
       }
     },
+
     usernameLink(state, username) {
       state.othersUsername = username
     },
+
     changeFlagState(state) {
       state.flagState = !state.flagState;
       console.log(state.flagState);
     },
+
     followLinkClick(state, infoArray) {
       state.followsPageUserId = infoArray[1];
       //adding whitespace after followers as there is one on the folowers link btn
       if(infoArray[0] == "Followers ") {
-        state.followsPageFlag = true;
+        state.followsPageFlag = false;
         router.push('/follows')
       } else {
-        state.followsPageFlag = false;
+        state.followsPageFlag = true;
         router.push('/follows')
       }
     },
+
     followsPageBtns(state, boolVal) {
       state.followsPageFlag = boolVal;
     },
   },
   actions: {
+    // /users GET - user data
+    getUserInfo(state, userId) {
+      axios.request({
+        url: process.env.VUE_APP_API_SITE+'/api/users',
+        method: "GET",
+        headers: {
+            'X-Api-Key': process.env.VUE_APP_API_KEY,
+            'Content-Type': 'application/json'
+        },
+        params: {
+            userId: userId
+        }
+    }).then((response) => {
+      return this.commit('userData', response.data[0])
+    }).catch((error) => {
+        console.log(error);
+    })
+    },
+
+    //users GET - all Users
+
+    // /user PATCH - user data
+    updateUserData(state, userData) {
+      axios.request({
+        url: process.env.VUE_APP_API_SITE+'/api/users',
+        method: "PATCH",
+        headers: {
+            'X-Api-Key': process.env.VUE_APP_API_KEY,
+            'Content-Type': 'application/json'
+        },
+        data: userData
+    }).then(() => {
+        router.go();
+    }).catch((error) => {
+        console.log(error.response);
+    })
+    },
+
+    //user DELETE - user data
+    deleteUser(state, pass) {
+      axios.request({
+        url: process.env.VUE_APP_API_SITE +'/api/users',
+        method: "DELETE",
+        headers: {
+            'X-Api-Key': process.env.VUE_APP_API_KEY,
+            'Content-Type': 'application/json'
+        },
+        data: {
+            "loginToken": cookies.get('loginToken'),
+            "password": pass
+        }
+    }).then(() => {
+        cookies.remove('loginToken');
+        cookies.remove('userId');
+        router.push('/');
+    }).catch((error) => {
+        console.log(error);
+    })
+    },
+
+    //LogsOut if logout button is clicked
+    logout(state, itemTitle) {
+      if (itemTitle == "Log Out") {
+
+        axios.request({
+            url: process.env.VUE_APP_API_SITE+'/api/login',
+            method: 'DELETE',
+            headers: {
+                'X-Api-Key': process.env.VUE_APP_API_KEY,
+                'Content-Type': 'application/json'
+            },
+            data: {
+                'loginToken': cookies.get('loginToken')
+            }
+        }).then(() => {
+            cookies.remove('loginToken');
+            cookies.remove('userId');
+        }).catch((error) => {
+            console.log(error + ' error');
+        })
+
+        router.push('/')
+      }
+    },
+
     //gets user data of passed username and passes to mutation
     dataOfClickedName(state, username) {
       axios.request({

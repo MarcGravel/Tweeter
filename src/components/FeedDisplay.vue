@@ -114,7 +114,7 @@ import TweeterFooter from './TweeterFooter.vue';
                 this.loadAllTweets();
                 this.loadFollowers();
                 return this.$store.state.flagState;
-            }
+            },
         },
         data() {
             return {

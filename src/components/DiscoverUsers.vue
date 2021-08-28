@@ -154,14 +154,6 @@ import TweeterFooter from './TweeterFooter.vue';
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
             },
-            checkTest() {
-                let arrayOne = [1,3,5,7]
-                let arrayTwo = [1,2,3,4,5,6,7,8,9,10]
-
-                let theFilter = arrayTwo.filter(two => !arrayOne.includes(two))
-
-                console.log(theFilter);
-            }
         }
     }
 </script>

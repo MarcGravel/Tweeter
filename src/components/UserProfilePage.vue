@@ -149,7 +149,6 @@
 <script>
 import cookies from 'vue-cookies'
 import axios from 'axios'
-import router from '../router'
 
     export default {
         name: "UserProfilePage",
@@ -207,7 +206,7 @@ import router from '../router'
             }
         },
         methods: {
-            //this request returns user info to computed: userDataInfo()
+            //axios request done here as date-picker not accepting birthdate from store
             requestCurrentUserInfo(userId) {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/users',
@@ -246,28 +245,9 @@ import router from '../router'
                 return url.protocol == "http:" || url.protocol == "https:";
             },
             //checks if logout button clicked. if so, removes cookies and sends API call to clear login token
+            //checks if logout button clicked. if so, sends data to store for logout
             checkForLogout(itemTitle) {
-                if (itemTitle == "Log Out") {
-
-                    axios.request({
-                        url: process.env.VUE_APP_API_SITE+'/api/login',
-                        method: 'DELETE',
-                        headers: {
-                            'X-Api-Key': process.env.VUE_APP_API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        data: {
-                            'loginToken': cookies.get('loginToken')
-                        }
-                    }).then(() => {
-                        cookies.remove('loginToken');
-                        cookies.remove('userId');
-                    }).catch((error) => {
-                        console.log(error + ' error');
-                    })
-
-                    router.push('/')
-                }
+                return this.$store.dispatch('logout', itemTitle);
             },
             sendUpdatedData(userData) {
 
@@ -288,41 +268,12 @@ import router from '../router'
 
                 //parse object wrapped in observer to passable JSON for axios request 
                 var parseUserData = JSON.parse(JSON.stringify(userData))
-                console.log(parseUserData);
                 
-                //Patch update request
-                axios.request({
-                    url: process.env.VUE_APP_API_SITE+'/api/users',
-                    method: "PATCH",
-                    headers: {
-                        'X-Api-Key': process.env.VUE_APP_API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    data: parseUserData
-                }).then(() => {
-                    router.go();
-                }).catch((error) => {
-                    console.log(error.response);
-                }) 
+                //send patch request to store for API call
+                return this.$store.dispatch('updateUserData', parseUserData)
             }, 
             deleteAccount() {
-                axios.request({
-                    url: process.env.VUE_APP_API_SITE +'/api/users',
-                    method: "DELETE",
-                    headers: {
-                        'X-Api-Key': process.env.VUE_APP_API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    data: {
-                        "loginToken": cookies.get('loginToken'),
-                        "password": this.deleteAccountPass
-                    }
-                }).then(() => {
-                    cookies.remove('loginToken');
-                    router.push('/');
-                }).catch((error) => {
-                    console.log(error);
-                }) 
+                return this.$store.dispatch('deleteUser', this.deleteAccountPass); 
             },
             sendToFollowPage(event, userId) {
                 let passedData = [event.srcElement.innerText, userId];

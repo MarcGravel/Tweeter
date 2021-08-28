@@ -60,7 +60,6 @@
 </template>
 
 <script>
-import axios from 'axios'
 
     export default {
         name: "FeaturedTweet",
@@ -70,12 +69,6 @@ import axios from 'axios'
             },
         },
         methods: {
-            callTweetsPickOne() {
-                axios.request({
-                    url: process.env.VUE_APP_API_SITE+'/api/tweets',
-                    method: ""
-                })
-            },
             //gets name clicked on and sends name to action to get user data
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;

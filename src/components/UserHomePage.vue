@@ -51,8 +51,6 @@
 
 <script>
 import cookies from 'vue-cookies'
-import axios from 'axios'
-import router from '../router'
 
     export default {
         name: "HomeFeed",
@@ -83,45 +81,11 @@ import router from '../router'
         methods: {
             //this request returns user info to computed: userDataInfo()
             requestCurrentUserInfo(userId) {
-                axios.request({
-                    url: process.env.VUE_APP_API_SITE+'/api/users',
-                    method: "GET",
-                    headers: {
-                        'X-Api-Key': process.env.VUE_APP_API_KEY,
-                        'Content-Type': 'application/json'
-                    },
-                    params: {
-                        userId: userId
-                    }
-                }).then((response) => {
-                    return this.$store.commit('userData', response.data[0])
-                }).catch((error) => {
-                    console.log(error);
-                })
+                return this.$store.dispatch('getUserInfo', userId);
             },
-            //checks if logout button clicked. if so, removes cookies and sends API call to clear login token
+            //checks if logout button clicked. if so, sends data to store for logout
             checkForLogout(itemTitle) {
-                if (itemTitle == "Log Out") {
-
-                    axios.request({
-                        url: process.env.VUE_APP_API_SITE+'/api/login',
-                        method: 'DELETE',
-                        headers: {
-                            'X-Api-Key': process.env.VUE_APP_API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        data: {
-                            'loginToken': cookies.get('loginToken')
-                        }
-                    }).then(() => {
-                        cookies.remove('loginToken');
-                        cookies.remove('userId');
-                    }).catch((error) => {
-                        console.log(error + ' error');
-                    })
-
-                    router.push('/')
-                }
+                return this.$store.dispatch('logout', itemTitle);
             },
             //goes to user profile page when clicked
             clickedUserProfile(itemTitle) {

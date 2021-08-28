@@ -84,6 +84,7 @@
                 v-for="item in items"
                 :key="item.title"
                 :to="item.route"
+                @click="checkForLogout(item.title)"
                 link
                 >
                 <v-list-item-icon>
@@ -102,9 +103,7 @@
 </template>
 
 <script>
-import cookies from 'vue-cookies'
 import axios from 'axios'
-import router from '../router'
 import TweeterFooter from '../components/TweeterFooter.vue'
 
     export default {
@@ -193,29 +192,9 @@ import TweeterFooter from '../components/TweeterFooter.vue'
             showFollowers() {
                 return this.$store.commit('followsPageBtns', false);
             },
-            //checks if logout button clicked. if so, removes cookies and sends API call to clear login token
+            //checks if logout button clicked. if so, sends data to store for logout
             checkForLogout(itemTitle) {
-                if (itemTitle == "Log Out") {
-
-                    axios.request({
-                        url: process.env.VUE_APP_API_SITE+'/api/login',
-                        method: 'DELETE',
-                        headers: {
-                            'X-Api-Key': process.env.VUE_APP_API_KEY,
-                            'Content-Type': 'application/json'
-                        },
-                        data: {
-                            'loginToken': cookies.get('loginToken')
-                        }
-                    }).then(() => {
-                        cookies.remove('loginToken');
-                        cookies.remove('userId');
-                    }).catch((error) => {
-                        console.log(error + ' error');
-                    })
-
-                    router.push('/')
-                }
+                return this.$store.dispatch('logout', itemTitle);
             },
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;

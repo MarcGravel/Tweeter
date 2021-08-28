@@ -100,7 +100,7 @@ import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
         computed: {
             getLoginToken() {
                 return cookies.get('loginToken');
-            }
+            },
         },
         beforeMount() {
             this.getOthersData();
@@ -131,6 +131,7 @@ import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
             }
         },
         methods: {
+            //gets data of user based on username passed by parent
             getOthersData() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/users',
