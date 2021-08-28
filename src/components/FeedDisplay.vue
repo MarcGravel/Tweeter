@@ -23,7 +23,7 @@
 import axios from 'axios'
 import cookies from 'vue-cookies'
 import { eventBus } from '../main'
-import TweeterFooter from './TweeterFooter.vue';
+import TweeterFooter from './TweeterFooter.vue'
 import TweetCard from './TweetCard.vue'
 
     export default {

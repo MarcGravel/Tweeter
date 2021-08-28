@@ -1,5 +1,5 @@
 <template>
-    <div id="userContainer">
+    <div id="userContainer" @click="flipMenu">
         <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="bannerContainer">
             <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
@@ -104,54 +104,20 @@
                 </v-overlay>
         </v-form>
         </v-overlay>
-        <aside id="drawer">
-            <v-navigation-drawer
-            v-model="drawer"
-            color="#CAF0F8"
-            absolute
-            temporary
-            >
-            <v-list-item>
-                <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                <v-img v-else :src="userDataInfo.imageUrl"></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-divider></v-divider>
-
-            <v-list dense>
-                <v-list-item
-                v-for="item in items"
-                :key="item.title"
-                :to="item.route"
-                @click="checkForLogout(item.title)"
-                link
-                >
-                <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                    <v-list-item-title >{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-                </v-list-item>
-            </v-list>
-            </v-navigation-drawer>
-        </aside>
+        <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
     </div>
 </template>
 
 <script>
 import cookies from 'vue-cookies'
 import axios from 'axios'
+import AsideMenu from './AsideMenu.vue'
 
     export default {
         name: "UserProfilePage",
+        components: {
+            AsideMenu,
+        },
         //gets user info from ID before mounting
         beforeMount() {
             let theUserId = cookies.get('userId');
@@ -171,15 +137,6 @@ import axios from 'axios'
         data () {
             return {
                 drawer: null,
-                //items inside the side menu
-                items: [
-                { title: 'Home', icon: 'dashboard', route: '/home' },
-                { title: 'My Profile', icon: 'account_circle', route: '/profile' },
-                { title: 'Discover', icon: 'explore', route: '/discover' },
-                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
-                { title: 'Log Out', icon: 'logout' },
-                ],
-                absolute: true,
                 overlay: false,
                 overlayDelAcc: false,
                 opacity: 0.95,
@@ -213,6 +170,12 @@ import axios from 'axios'
             }
         },
         methods: {
+            //flips drawer flag back on click to close aside menu
+            flipMenu() {
+                if(this.drawer == true) {
+                    this.drawer = !this.drawer;
+                }
+            },
             //axios request done here as date-picker not accepting birthdate from store
             requestCurrentUserInfo(userId) {
                 axios.request({
@@ -320,7 +283,7 @@ import axios from 'axios'
                 }).catch((error) => {
                     console.log(error);
                 });
-            }
+            },
         }
     }
 </script>

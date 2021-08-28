@@ -61,7 +61,7 @@
                         >
                         mdi-heart
                     </v-icon>
-                    <span class="subheading mr-2">{{tweetLikeCount(tweetInfo.tweetId)}}</span>
+                    <span class="subheading mr-2">{{likeCount}}</span>
                     </v-row>
                 </v-list-item>
                 </v-card-actions>
@@ -95,10 +95,20 @@
 import cookies from 'vue-cookies'
 import axios from 'axios'
 import router from '../router'
+import { eventBus } from '../main'
 
     export default {
         name: "TweetCard",
         props: ['tweetInfo'],
+        beforeMount() {
+            this.tweetLikeCount();
+        },
+        created() {
+            //listens to API call of like button click and updatesto display correct likes
+            eventBus.$on('updateLikes', () => {
+                this.tweetLikeCount();
+            }) 
+        },
         data() {
             return {
                 userId: cookies.get('userId'),
@@ -167,7 +177,7 @@ import router from '../router'
             likeTweet(tweetId) {
                 return this.$store.dispatch('getLikedTweets', tweetId);
             },
-            tweetLikeCount(tweetId) {
+            tweetLikeCount() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
                     method: "GET",
@@ -176,7 +186,7 @@ import router from '../router'
                         'Content-Type': 'application/json'
                     },
                     params: {
-                        "tweetId": tweetId
+                        "tweetId": this.tweetInfo.tweetId
                     }
                 }).then((response) => {
                     this.likeCount = response.data.length;

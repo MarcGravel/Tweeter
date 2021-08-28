@@ -1,5 +1,5 @@
 <template>
-    <div id="userContainer">
+    <div id="userContainer" @click="flipMenu">
         <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="imageContainer">
             <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
@@ -7,53 +7,19 @@
         </div>
         <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
         <p id="bioParagraph">{{userDataInfo.bio}}</p>
-        <aside id="drawer">
-            <v-navigation-drawer
-            v-model="drawer"
-            color="#CAF0F8"
-            absolute
-            temporary
-            >
-            <v-list-item>
-                <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                <v-img v-else :src="userDataInfo.imageUrl"></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-divider></v-divider>
-
-            <v-list dense>
-                <v-list-item
-                v-for="item in items"
-                :key="item.title"
-                :to="item.route"
-                @click="checkForLogout(item.title), clickedUserProfile(item.title)"
-                link
-                >
-                <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                    <v-list-item-title >{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-                </v-list-item>
-            </v-list>
-            </v-navigation-drawer>
-        </aside>
+        <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
     </div>
 </template>
 
 <script>
 import cookies from 'vue-cookies'
+import AsideMenu from './AsideMenu.vue'
 
     export default {
         name: "HomeFeed",
+        components: {
+            AsideMenu,
+        },
         //gets user info from ID before mounting
         beforeMount() {
             let theUserId = cookies.get('userId');
@@ -68,17 +34,15 @@ import cookies from 'vue-cookies'
         data () {
             return {
                 drawer: null,
-                //items inside the side menu
-                items: [
-                { title: 'Home', icon: 'dashboard', route: '/home' },
-                { title: 'My Profile', icon: 'account_circle', route: '/profile' },
-                { title: 'Discover', icon: 'explore', route: '/discover' },
-                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
-                { title: 'Log Out', icon: 'logout' },
-                ],
             }
         },
         methods: {
+            //flips drawer flag back on click to close aside menu
+            flipMenu() {
+                if(this.drawer == true) {
+                    this.drawer = !this.drawer;
+                }
+            },
             //this request returns user info to computed: userDataInfo()
             requestCurrentUserInfo(userId) {
                 return this.$store.dispatch('getUserInfo', userId);
@@ -97,8 +61,7 @@ import cookies from 'vue-cookies'
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName)
-            }
-            
+            },
         }
     }
 </script>

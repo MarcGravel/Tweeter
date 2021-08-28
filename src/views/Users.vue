@@ -2,7 +2,7 @@
 build views in a few different ways to practice structure-->
 
 <template>
-    <div id="userPageContainer">
+    <div id="userPageContainer" @click="flipMenu">
         <div id="othersContainer">
             <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
             <div id="bannerContainer">
@@ -36,45 +36,7 @@ build views in a few different ways to practice structure-->
                 </v-icon>
             Unfollow
             </v-btn>
-            <aside id="drawer">
-                <v-navigation-drawer
-                v-model="drawer"
-                color="#CAF0F8"
-                absolute
-                temporary
-                >
-                <v-list-item>
-                    <v-list-item-avatar>
-                    <v-img v-if="userDataInfo.imageUrl != undefined" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                    <v-img v-else :src="userDataInfo.imageUrl"></v-img>
-                    </v-list-item-avatar>
-
-                    <v-list-item-content>
-                    <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
-                    </v-list-item-content>
-                </v-list-item>
-
-                <v-divider></v-divider>
-
-                <v-list dense>
-                    <v-list-item
-                    v-for="item in items"
-                    :key="item.title"
-                    :to="item.route"
-                    @click="checkForLogout(item.title), clickedUserProfile(item.title)"
-                    link
-                    >
-                    <v-list-item-icon>
-                        <v-icon>{{ item.icon }}</v-icon>
-                    </v-list-item-icon>
-
-                    <v-list-item-content>
-                        <v-list-item-title >{{ item.title }}</v-list-item-title>
-                    </v-list-item-content>
-                    </v-list-item>
-                </v-list>
-                </v-navigation-drawer>
-            </aside>
+            <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
         </div>
         <div id="displayBanner">
             <h4>See what {{othersData.username}} is talking about</h4>
@@ -90,11 +52,13 @@ import axios from 'axios'
 import cookies from 'vue-cookies'
 import router from '../router'
 import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
+import AsideMenu from '../components/AsideMenu.vue'
 
     export default {
         name: "Users",
         components: {
             OthersFeedDisplay,
+            AsideMenu
         },
         props: ['username'],
         computed: {
@@ -119,18 +83,16 @@ import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
 
                 },
                 drawer: null,
-                //items inside the side menu
-                items: [
-                { title: 'Home', icon: 'dashboard', route: '/home' },
-                { title: 'My Profile', icon: 'account_circle', route: '/profile' },
-                { title: 'Discover', icon: 'explore', route: '/discover' },
-                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
-                { title: 'Log Out', icon: 'logout' },
-                ],
                 isFollowing: null
             }
         },
         methods: {
+            //flips drawer flag back on click to close aside menu
+            flipMenu() {
+                if(this.drawer == true) {
+                    this.drawer = !this.drawer;
+                }
+            },
             //gets data of user based on username passed by parent
             getOthersData() {
                 axios.request({

@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import router from '../router'
 import cookies from 'vue-cookies'
 import axios from 'axios'
+import { eventBus }  from '../main'
 
 Vue.use(Vuex)
 
@@ -150,12 +151,12 @@ export default new Vuex.Store({
           params: {
               "tweetId": tweetId
           }
-      }).then((response) => {
-          let passedData = [response.data, tweetId]
-          return this.dispatch('updateTweetLikes', passedData)
-      }).catch((error) => {
-          console.log(error);
-      })
+          }).then((response) => {
+              let passedData = [response.data, tweetId]
+              return this.dispatch('updateTweetLikes', passedData)
+          }).catch((error) => {
+              console.log(error);
+          })
   },
   updateTweetLikes(state, passedData) {
     //check if user already liked the tweet
@@ -174,8 +175,8 @@ export default new Vuex.Store({
                 "loginToken": cookies.get('loginToken'),
                 "tweetId": passedData[1]
             }
-        }).then((response) => {
-            console.log(response);
+        }).then(() => {
+            eventBus.$emit('updateLikes');
         }).catch((error) => {
             console.log(error);
         })               
@@ -192,8 +193,8 @@ export default new Vuex.Store({
                 "loginToken": cookies.get('loginToken'),
                 "tweetId": passedData[1]
             }
-        }).then((response) => {
-            console.log(response);
+        }).then(() => {
+            eventBus.$emit('updateLikes');
         }).catch((error) => {
             console.log(error);
         })

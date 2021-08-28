@@ -1,6 +1,6 @@
 <template>
-    <div id='followsContainer'>
-        <v-app-bar-nav-icon id="hamburgerIcon" color="white" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
+    <div id='followsContainer' @click="flipMenu">
+        <v-app-bar-nav-icon id="hamburgerIcon" color="black" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>
         <div id="bannerContainer">
             <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
             <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
@@ -16,6 +16,7 @@
                 @click="showFollows"
                 >You Follow
             </v-btn>
+            <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
         </div>
         <div id="followDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
             <v-card
@@ -59,45 +60,6 @@
                 </v-card-text>
             </v-card>
         </div>
-        <aside id="drawer">
-            <v-navigation-drawer
-            v-model="drawer"
-            color="#CAF0F8"
-            absolute
-            temporary
-            >
-            <v-list-item>
-                <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                <v-img v-else :src="userDataInfo.imageUrl"></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-divider></v-divider>
-
-            <v-list dense>
-                <v-list-item
-                v-for="item in items"
-                :key="item.title"
-                :to="item.route"
-                @click="checkForLogout(item.title)"
-                link
-                >
-                <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
-
-                <v-list-item-content>
-                    <v-list-item-title >{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-                </v-list-item>
-            </v-list>
-            </v-navigation-drawer>
-        </aside>
         <TweeterFooter />
     </div>
 </template>
@@ -105,11 +67,13 @@
 <script>
 import axios from 'axios'
 import TweeterFooter from '../components/TweeterFooter.vue'
+import AsideMenu from '../components/AsideMenu.vue'
 
     export default {
         name: "Follows",
         components: {
-            TweeterFooter
+            TweeterFooter,
+            AsideMenu,
         },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
@@ -135,14 +99,6 @@ import TweeterFooter from '../components/TweeterFooter.vue'
         data() {
             return {
                 drawer: null,
-                //items inside the side menu
-                items: [
-                { title: 'Home', icon: 'dashboard', route: '/home' },
-                { title: 'My Profile', icon: 'account_circle', route: '/profile' },
-                { title: 'Discover', icon: 'explore', route: '/discover' },
-                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
-                { title: 'Log Out', icon: 'logout' },
-                ],
                 followsUsers: {
 
                 },
@@ -152,6 +108,12 @@ import TweeterFooter from '../components/TweeterFooter.vue'
             }
         },
         methods: {
+            //flips drawer flag back on click to close aside menu
+            flipMenu() {
+                if(this.drawer == true) {
+                    this.drawer = !this.drawer;
+                }
+            },
             getFollowData(userId){
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/follows',
@@ -229,7 +191,7 @@ import TweeterFooter from '../components/TweeterFooter.vue'
 
         #hamburgerIcon {
             grid-row: 1;
-            grid-column: 2;
+            grid-column: 1;
             justify-self: end;
             margin-right: 1vw;
             position: relative;

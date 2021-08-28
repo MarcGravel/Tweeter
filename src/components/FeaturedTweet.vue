@@ -25,9 +25,6 @@ import TweetCard from './TweetCard.vue'
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
             },
-            likeTweet(tweetId) {
-                return this.$store.dispatch('getLikedTweets', tweetId);
-            },
         }
     }
 </script>
