@@ -25,7 +25,7 @@
                 v-for="item in items"
                 :key="item.title"
                 :to="item.route"
-                @click="checkForLogout(item.title), clickedUserProfile(item.title)"
+                @click="redirectPendingTitleName(item.title)"
                 link
                 >
                 <v-list-item-icon>
@@ -61,21 +61,25 @@
                 { title: 'Home', icon: 'dashboard', route: '/home' },
                 { title: 'My Profile', icon: 'account_circle', route: '/profile' },
                 { title: 'Discover', icon: 'explore', route: '/discover' },
-                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
+                { title: 'Follows', icon: 'follow_the_signs' },
                 { title: 'Log Out', icon: 'logout' },
                 ],
                 absolute: true,
             }
         },
         methods: {
-            //checks if logout button clicked. if so, sends data to store for logout
-            checkForLogout(itemTitle) {
-                return this.$store.dispatch('logout', itemTitle);
-            },
-            //goes to user profile page when clicked
-            clickedUserProfile(itemTitle) {
-                if (itemTitle == "My Profile") {
-                    return this.$store.commit('loadUserProfile', true);
+            redirectPendingTitleName(itemTitle) {
+                if (itemTitle == 'Log Out') {
+                    //checks if logout button clicked. if so, sends data to store for logout
+                    return this.$store.dispatch('logout', itemTitle);
+                } else if (itemTitle == 'Follows') {
+                    //if follows button is clicked, sends data to store. this data is hard coded as 'follows'
+                    //as it is using the same follow request as on the profile page
+                    let passedData = ["Follows", this.userDataInfo.userId];
+                    return this.$store.commit('followLinkClick', passedData);
+                } else if (itemTitle == "My Profile") {
+                    //goes to user profile page when clicked
+                     return this.$store.commit('loadUserProfile', true);
                 }
             },
         }
@@ -83,5 +87,7 @@
 </script>
 
 <style lang="scss" scoped>
-
+    #drawer {
+        margin-top: 56px;
+    }
 </style>

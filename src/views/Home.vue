@@ -13,10 +13,10 @@
       <div id="tweetInputContainer">
         <UserTweetInput />
       </div>
-      <main id="mainFeed">
-        <FeedDisplay />
-      </main>
     </div>
+    <main id="mainFeed">
+        <FeedDisplay />
+    </main>
   </div>
 </template>
 
@@ -52,20 +52,17 @@ import NavBar from '../components/NavBar.vue'
 
 <style lang="scss" scoped>
 
-    #navBar {
-      position: fixed;
-      z-index: 99;
-      grid-row: 1;
-      height: 56px;
-    }
+ #homePage {
+   display: grid;
+   grid-template-rows: auto auto;
 
-    #homePageContainer {
-      margin-top: 56px;
-      grid-row: 2;
-      width: 100vw;
-      height: 100vh;
-      display: grid;
-      grid-template-rows: 15% 20% 65%;
+   #homePageContainer {
+    margin-top: 56px;
+    grid-row: 1;
+    width: 100vw;
+    height: fit-content;
+    display: grid;
+    grid-template-rows: 15vh 21vh;
 
       #userInfo {
         height: 100%;
@@ -82,22 +79,62 @@ import NavBar from '../components/NavBar.vue'
         grid-row: 2; 
         background-color: #ADE8F4;
       }
+  }
+ }
 
-      #mainFeed {
+  #navBar {
+    position: fixed;
+    z-index: 99;
+    grid-row: 1;
+    height: 56px;
+  }
+
+  #homePageContainer {
+    margin-top: 56px;
+    grid-row: 2;
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    grid-template-rows: 80% 20%;
+
+      #userInfo {
+        height: 100%;
+        width: 100%;
+        background-color: #0096C7;
+        grid-row: 1;
+      }
+
+      #sideBar {
+        display: none;
+      }
+
+      #tweetInputContainer {
+        grid-row: 2; 
+        background-color: #ADE8F4;
+      }
+  }
+
+  #mainFeed {
         height: fit-content;
         width: 100%;
-        background-color: rgb(63, 63, 63);
-        grid-row: 3; 
+        background-color: rgb(63, 63, 63); 
         overflow: scroll;
       }
 
-    }
+  @media screen and (min-width: 768px) {
 
-    @media screen and (min-width: 500px) {
-       
-    }
+        #homePage {
+          display: grid;
+          justify-items: center;
 
-    @media screen and (min-width: 900px) {
-       
-    }
+          #homePageContainer, #tweetInputContainer{
+            width: 768px;
+          }
+
+          #homePageContainer {
+            grid-template-rows: 25vh 21vh;
+          }
+        }
+  }
+    
 </style>

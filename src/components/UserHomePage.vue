@@ -107,4 +107,31 @@ import AsideMenu from './AsideMenu.vue'
             margin: 0 0 0 10vw;
         }
     }
+
+    @media screen and (min-width: 768px) {
+        #userContainer {
+        width: 768px;
+
+            #imageContainer {
+
+                img {
+                    height: 23vh;
+                    width: 23vh;
+                }
+            }
+
+            #userName {
+                font-size: 2.5em;
+                margin: 0 4vw 1vh 0;
+            }
+
+            #bioParagraph {
+                grid-column: 1 / 5;
+                font-size: 1.6em;
+                margin: 0 0 0 27vw;
+
+            }
+        }
+    }
+    
 </style>

@@ -5,7 +5,6 @@
                 class="mx-auto"
                 color="#26c6da"
                 dark
-                width="400"
             >
                 <v-card-title>
                     <v-list-item-avatar color="grey darken-3">
@@ -65,6 +64,16 @@
                     </v-row>
                 </v-list-item>
                 </v-card-actions>
+                <v-btn id="commentButton"
+                    color="primary"
+                    @click="showHideComments(tweetInfo.tweetId)"
+                    >
+                    Comments
+                </v-btn>
+                <!--v-show will show the tweet comment of button with tweetID that matches-->
+                <div v-show="tweetInfo.tweetId == activeComment && isActive" :id="tweetInfo.tweetId">
+                    <TweetComments :tweetId="tweetInfo.tweetId"/>
+                </div>
             </v-card>
             <v-overlay
                 :absolute="absolute"
@@ -96,9 +105,13 @@ import cookies from 'vue-cookies'
 import axios from 'axios'
 import router from '../router'
 import { eventBus } from '../main'
+import TweetComments from './TweetComments.vue'
 
     export default {
         name: "TweetCard",
+        components: {
+            TweetComments,
+        },
         props: ['tweetInfo'],
         beforeMount() {
             this.tweetLikeCount();
@@ -122,6 +135,8 @@ import { eventBus } from '../main'
                 overlay: false,
                 opacity: 0.9,
                 absolute: true,
+                activeComment: null,
+                isActive: false,
             }
         },
         methods: {
@@ -193,6 +208,15 @@ import { eventBus } from '../main'
                 }).catch((error) => {
                     console.log(error);
                 })
+            },
+            //checks to ensure isActive is true and then sets active comment to 
+            //tweet id that matches clicked tweet. once activeComment is set
+            //and isActive is true, comments for clicked tweet will display
+            showHideComments(tweetId) {
+                this.isActive = !this.isActive;
+                if(this.isActive == true) {
+                    this.activeComment = tweetId;
+                }
             }
         }
     }
@@ -201,6 +225,7 @@ import { eventBus } from '../main'
 <style lang="scss" scoped>
     #tweeterCard {
         display: grid;
+        width: 80vw;
         
         #createdAtDate {
             font-size: 0.8em;
@@ -234,5 +259,28 @@ import { eventBus } from '../main'
                 position: relative;
                 bottom: 4.2vh;
             }
+    }
+
+    @media screen and (min-width: 600px) {
+        #tweeterCard {
+        display: grid;
+        width: 500px;
+        
+        #createdAtDate {
+            font-size: 0.8em;
         }
+
+        #cardLogo {
+            width: 50px;
+            margin-right: 2vw;
+        }
+
+        #tweeterImg {
+            height: 25vh;
+            width: 25vh;
+            object-fit: cover;
+            justify-self: center;
+        }
+    }
+    }
 </style>

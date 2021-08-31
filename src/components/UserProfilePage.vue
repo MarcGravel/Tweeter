@@ -1,109 +1,111 @@
 <template>
-    <div id="userContainer" @click="flipMenu">
-        <div id="bannerContainer">
-            <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
-            <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
-        </div>
-        <div id="imageContainer">
-            <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
-            <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
-        </div>
-        <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
-        <p id="bioParagraph">{{userDataInfo.bio}}</p>
-        <p id="birthdate">Birthday: {{userDataInfo.birthdate}}</p>
-        <div id="followFollowerBtns">
-            <a @click="sendToFollowPage($event, userDataInfo.userId)">Followers</a> {{followersCount}} 
-            <span class="mr-1">·</span>
-            <a @click="sendToFollowPage($event, userDataInfo.userId)">Following</a> {{followsCount}}
-        </div>
-        <v-btn id="editBtn"
-            color="error"
-            @click="overlay = !overlay"
-            >
-                <v-icon left>
-                    mdi-pencil
-                </v-icon>
-            Edit Profile
-        </v-btn>
-        <v-overlay
-            :value="overlay" 
-            :opacity="opacity">
-            <v-form id="editForm">
-                <h3>Change any field below to update it</h3>
-                <v-text-field
-                    v-model="updatedUserData.email"
-                    :rules="emailRules"
-                    :label="userDataInfo.email"
-                ></v-text-field>
-                <v-text-field
-                    v-model="updatedUserData.imageUrl"
-                    :rules="validateUrl"
-                    :label="userDataInfo.imageUrl"
-                    hint="A photo of yourself. Must be a valid https:// URL"
-                ></v-text-field>
-                <v-text-field
-                    v-model="updatedUserData.bannerUrl"
-                    :rules="validateUrl"
-                    :label="userDataInfo.bannerUrl"
-                    hint="Your Banner Image. Must be a valid https:// URL link"
-                ></v-text-field>
-                <v-text-field
-                    v-model="updatedUserData.username"
-                    :label="userDataInfo.username"
-                ></v-text-field>
-                <v-text-field
-                    v-model="updatedUserData.bio"
-                    :rules="bioRules"
-                    :label="userDataInfo.bio"
-                ></v-text-field>
-                <label id="birthdayLabel" for="datePicker">Enter Birthday</label>
-                <v-date-picker id="datePicker" 
-                    elevation="15"
-                    width="70%"
-                    v-model="updatedUserData.birthdate"
-                    color="#0096C7"
-                ></v-date-picker>
-                <v-btn id="saveUpdateBtn"
-                    color="primary" 
-                    @click="sendUpdatedData(updatedUserData), overlay = !overlay">
-                        Save
-                </v-btn>
-                <v-btn id="firstOverlaybackBtn"
-                    color="primary" 
-                    @click="overlay = !overlay">
-                        Back
-                </v-btn>
-                <v-btn id="deleteBtn"
-                    color="error" 
-                    @click="overlayDelAcc = !overlayDelAcc">
-                        Delete Account
-                </v-btn>
-                <v-overlay
-                    :value="overlayDelAcc"
-                    :opacity="opacity">
+    <div id="userPage">
+        <div id="userContainer" @click="flipMenu">
+            <div id="bannerContainer">
+                <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
+                <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
+            </div>
+            <div id="imageContainer">
+                <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
+                <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
+            </div>
+            <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
+            <p id="bioParagraph">{{userDataInfo.bio}}</p>
+            <p id="birthdate">Birthday: {{userDataInfo.birthdate}}</p>
+            <div id="followFollowerBtns">
+                <a @click="sendToFollowPage($event, userDataInfo.userId)">Followers</a> {{followersCount}} 
+                <span class="mr-1">·</span>
+                <a @click="sendToFollowPage($event, userDataInfo.userId)">Following</a> {{followsCount}}
+            </div>
+            <v-btn id="editBtn"
+                color="error"
+                @click="overlay = !overlay"
+                >
+                    <v-icon left>
+                        mdi-pencil
+                    </v-icon>
+                Edit Profile
+            </v-btn>
+            <v-overlay
+                :value="overlay" 
+                :opacity="opacity">
+                <v-form id="editForm">
+                    <h3>Change any field below to update it</h3>
                     <v-text-field
-                    v-model="deleteAccountPass"
-                    :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                    :rules="passwordRules"
-                    :type="show1 ? 'text' : 'password'"
-                    label="Enter Your Password"
-                    hint="Deleting your account is permanent"
-                    @click:append="show1 = !show1"
-                ></v-text-field>
-                <v-btn id="backBtn"
-                    color="primary" 
-                    @click="overlayDelAcc = !overlayDelAcc">
-                        Back
-                </v-btn>
-                <v-btn id="confirmDeleteBtn"
-                    color="error" 
-                    @click="deleteAccount()">
-                        Confirm Delete
-                </v-btn>
-                </v-overlay>
-        </v-form>
-        </v-overlay>
-        <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
+                        v-model="updatedUserData.email"
+                        :rules="emailRules"
+                        :label="userDataInfo.email"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="updatedUserData.imageUrl"
+                        :rules="validateUrl"
+                        :label="userDataInfo.imageUrl"
+                        hint="A photo of yourself. Must be a valid https:// URL"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="updatedUserData.bannerUrl"
+                        :rules="validateUrl"
+                        :label="userDataInfo.bannerUrl"
+                        hint="Your Banner Image. Must be a valid https:// URL link"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="updatedUserData.username"
+                        :label="userDataInfo.username"
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="updatedUserData.bio"
+                        :rules="bioRules"
+                        :label="userDataInfo.bio"
+                    ></v-text-field>
+                    <label id="birthdayLabel" for="datePicker">Enter Birthday</label>
+                    <v-date-picker id="datePicker" 
+                        elevation="15"
+                        width="70%"
+                        v-model="updatedUserData.birthdate"
+                        color="#0096C7"
+                    ></v-date-picker>
+                    <v-btn id="saveUpdateBtn"
+                        color="primary" 
+                        @click="sendUpdatedData(updatedUserData), overlay = !overlay">
+                            Save
+                    </v-btn>
+                    <v-btn id="firstOverlaybackBtn"
+                        color="primary" 
+                        @click="overlay = !overlay">
+                            Back
+                    </v-btn>
+                    <v-btn id="deleteBtn"
+                        color="error" 
+                        @click="overlayDelAcc = !overlayDelAcc">
+                            Delete Account
+                    </v-btn>
+                    <v-overlay
+                        :value="overlayDelAcc"
+                        :opacity="opacity">
+                        <v-text-field
+                        v-model="deleteAccountPass"
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :rules="passwordRules"
+                        :type="show1 ? 'text' : 'password'"
+                        label="Enter Your Password"
+                        hint="Deleting your account is permanent"
+                        @click:append="show1 = !show1"
+                    ></v-text-field>
+                    <v-btn id="backBtn"
+                        color="primary" 
+                        @click="overlayDelAcc = !overlayDelAcc">
+                            Back
+                    </v-btn>
+                    <v-btn id="confirmDeleteBtn"
+                        color="error" 
+                        @click="deleteAccount()">
+                            Confirm Delete
+                    </v-btn>
+                    </v-overlay>
+            </v-form>
+            </v-overlay>
+            <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
+        </div>
     </div>
 </template>
 
@@ -296,7 +298,7 @@ import AsideMenu from './AsideMenu.vue'
         grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
 
         #bannerContainer {
-            width: 100vw;
+            width: 100%;
             height: fit-content;
             grid-column: 1 / 4;
             grid-row: 1;
@@ -392,7 +394,7 @@ import AsideMenu from './AsideMenu.vue'
         }
     }
 
-    @media screen and (max-width: 360px) {
+    @media screen and (max-width: 400px) {
         #userContainer {
 
             #editBtn {
@@ -400,6 +402,66 @@ import AsideMenu from './AsideMenu.vue'
             justify-self: start;
             position: relative;
             left: 11vw;
+            }
+
+            #followFollowerBtns {
+                grid-column: 1 / 5;
+                position: relative;
+                bottom: 15vh;
+            }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+
+        #userPage {
+            display: grid;
+
+            #userContainer {
+                width: 768px;
+                height: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
+                justify-self: center;
+
+                #bannerContainer {
+                    width: 100%;
+
+                    img {
+                        width: 768px;
+                    }
+                }
+
+                #imageContainer {
+                    grid-column: 1 / 5;
+                    justify-self: center;
+
+                    img {
+                        height: 18vh;
+                        width: 18vh;
+                    }
+                }
+
+                #userName {
+                    justify-self: center;
+                    margin: 0 0 0 3vw;
+                }
+
+                #bioParagraph {
+                    grid-row: 4;
+                    grid-column: 1 / 5;
+                    justify-self: center;
+                }
+
+                #editBtn {
+                    width: fit-content;
+                    grid-column: 3 / 5;
+                    grid-row: 2;
+                    justify-self: end;
+                    align-self: start;
+                    margin-top: 1vh;
+                }
             }
         }
     }

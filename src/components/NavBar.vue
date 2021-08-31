@@ -11,7 +11,7 @@
                 v-for="item in items"
                 :key="item.title"
                 :to="item.route"
-                @click="checkForLogout(item.title)"
+                @click="redirectPendingTitleName(item.title)"
                 link
                 >
                 <v-btn id="buttons">
@@ -38,15 +38,22 @@ import router from '../router';
                 items: [
                 { title: 'Home', icon: 'dashboard', route: '/home' },
                 { title: 'Discover', icon: 'explore', route: '/discover' },
-                { title: 'Follows', icon: 'follow_the_signs', route: '/follows' },
+                { title: 'Follows', icon: 'follow_the_signs' },
                 { title: 'Log Out', icon: 'logout' },
                 ],
             }
         },
         methods: {
-            //checks if logout button clicked. if so, sends data to store for logout
-            checkForLogout(itemTitle) {
-                return this.$store.dispatch('logout', itemTitle);
+            redirectPendingTitleName(itemTitle) {
+                if (itemTitle == 'Log Out') {
+                    //checks if logout button clicked. if so, sends data to store for logout
+                    return this.$store.dispatch('logout', itemTitle);
+                } else if (itemTitle == 'Follows') {
+                    //if follows button is clicked, sends data to store. this data is hard coded as 'follows'
+                    //as it is using the same follow request as on the profile page
+                    let passedData = ["Follows", this.userDataInfo.userId];
+                    return this.$store.commit('followLinkClick', passedData);
+                }
             },
             //goes to user profile page when clicked
             routeToProfile() {

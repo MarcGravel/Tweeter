@@ -103,6 +103,17 @@ import router from '../router'
                 color: white;
             }
           }
-      }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        #discoverContainer {
+            grid-template-rows: 25vh auto 45%;
+
+            #userInfo{
+                width: 768px;
+                justify-self: center;
+            }
+        }
     }
 </style>

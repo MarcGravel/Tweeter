@@ -44,9 +44,9 @@ build views in a few different ways to practice structure-->
             <div id="displayBanner">
                 <h4>See what {{othersData.username}} is talking about</h4>
             </div>
-            <div id="feedDisplay">
-                <OthersFeedDisplay :othersId="othersData.userId" />
-            </div>
+        </div>
+        <div id="feedDisplay">
+            <OthersFeedDisplay :othersId="othersData.userId" />
         </div>
     </div>
 </template>
@@ -201,113 +201,195 @@ import NavBar from '../components/NavBar.vue'
       height: 56px;
     }
 
-    #userPageContainer {
-        margin-top: 56px;
-        width: 100%;
-        height: 100%;
+    #usersPage {
         display: grid;
-        grid-template-rows: 1fr 8vh auto;
         
-        #othersContainer {
-            grid-row: 1;
+        #feedDisplay {
+            margin-top: 7vh;
+        }
+
+        #userPageContainer {
+            margin-top: 56px;
             width: 100%;
             height: 100%;
             display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
-
-            #bannerContainer {
-                width: 100vw;
-                height: fit-content;
-                grid-column: 1 / 4;
+            grid-template-rows: 1fr 8vh auto;
+            
+            #othersContainer {
                 grid-row: 1;
+                width: 100%;
+                height: 100%;
+                display: grid;
+                grid-template-columns: 1fr 1fr 1fr;
+                grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
 
-                img {
+                #bannerContainer {
                     width: 100vw;
-                    height: 15vh;
-                    object-fit: cover;
+                    height: fit-content;
+                    grid-column: 1 / 4;
+                    grid-row: 1;
+
+                    img {
+                        width: 100vw;
+                        height: 15vh;
+                        object-fit: cover;
+                    }
+                }
+
+                #imageContainer {
+                    grid-column: 1;
+                    grid-row: 2;
+                    width: fit-content;
+                    height: fit-content;
+
+                    img {
+                        height: 15vh;
+                        width: 15vh;
+                        object-fit: cover;
+                        margin-left: 2vw;
+                        margin-top: 1vh;
+                        border-radius: 50%;
+                    }
+                }
+
+                #followBtn {
+                    width: fit-content;
+                    grid-column: 2 / 4;
+                    grid-row: 2;
+                    justify-self: center;
+                    align-self: center;
+                }
+
+                #unfollowBtn {
+                    width: fit-content;
+                    grid-column: 2 / 4;
+                    grid-row: 2;
+                    justify-self: center;
+                    align-self: center;
+                }
+
+                #userName {
+                    grid-column: 1 / 5;
+                    grid-row: 3;
+                    justify-self: start;
+                    align-self: end;
+                    color: white; 
+                    margin: 0 0 0 2vw;
+                }
+
+                #bioParagraph {
+                    grid-row: 4;
+                    grid-column: 1 / 5;
+                    justify-self: start;
+                    align-self: center;
+                    font-size: 1.3em;
+                    font-style: italic;
+                    color: white; 
+                    margin: 0 0 0 2vw;
+                }
+
+                #birthdate{
+                    grid-row: 5;
+                    grid-column: 1 / 5;
+                    justify-self: start;
+                    align-self: start;
+                    font-size: 1.1em;
+                    color: white; 
+                    margin: 0 0 0 2vw;
                 }
             }
 
-            #imageContainer {
-                grid-column: 1;
+            #displayBanner {
                 grid-row: 2;
-                width: fit-content;
-                height: fit-content;
-
-                img {
-                    height: 15vh;
-                    width: 15vh;
-                    object-fit: cover;
-                    margin-left: 2vw;
-                    margin-top: 1vh;
-                    border-radius: 50%;
+                background-color: #0096C7;
+                height: 8vh;
+                display: grid;
+                justify-items: center;
+                align-items: center;
+                box-shadow: 0 10px 20px #03045E ;
+                
+                h4 {
+                    color: white;
                 }
-            }
-
-            #followBtn {
-                width: fit-content;
-                grid-column: 2 / 4;
-                grid-row: 2;
-                justify-self: center;
-                align-self: center;
-            }
-
-            #unfollowBtn {
-                width: fit-content;
-                grid-column: 2 / 4;
-                grid-row: 2;
-                justify-self: center;
-                align-self: center;
-            }
-
-            #userName {
-                grid-column: 1 / 5;
-                grid-row: 3;
-                justify-self: start;
-                align-self: end;
-                color: white; 
-                margin: 0 0 0 2vw;
-            }
-
-            #bioParagraph {
-                grid-row: 4;
-                grid-column: 1 / 5;
-                justify-self: start;
-                align-self: center;
-                font-size: 1.3em;
-                font-style: italic;
-                color: white; 
-                margin: 0 0 0 2vw;
-            }
-
-            #birthdate{
-                grid-row: 5;
-                grid-column: 1 / 5;
-                justify-self: start;
-                align-self: start;
-                font-size: 1.1em;
-                color: white; 
-                margin: 0 0 0 2vw;
             }
         }
+    }
 
-        #displayBanner {
-            grid-row: 2;
-            background-color: #0096C7;
-            height: 8vh;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-            box-shadow: 0 10px 20px #03045E ;
-            
-            h4 {
-                color: white;
+
+        @media screen and (max-width: 400px) {
+        #userPageContainer {
+
+            #followFollowerBtns {
+            align-self: start;
+            justify-self: start;
+            position: relative;
+            left: 11vw;
             }
-          }
 
-        #feedDisplay {
-            grid-row: 3;
+            #followFollowerBtns {
+                grid-column: 1 / 5;
+                position: relative;
+                bottom: 15vh;
+            }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+
+        #usersPage {
+            display: grid;
+
+            #userPageContainer {
+                width: 768px;
+                justify-self: center;
+                grid-template-rows: 1fr 8vh;
+                
+                #othersContainer {
+                    width: 768px;
+                    justify-items: center;
+
+                    #imageContainer {
+                        grid-column: 2;
+                        grid-row: 2;
+
+                        img {
+                            height: 18vh;
+                            width: 18vh;
+                            margin-left: 0;
+                        }
+                    }
+
+                    #followBtn {
+                        grid-column: 3 / 5;
+                        grid-row: 2;
+                        justify-self: end;
+                        align-self: start;
+                    }
+
+                    #unfollowBtn {
+                        grid-column: 3 / 5;
+                        grid-row: 2;
+                        justify-self: end;
+                        align-self: start;
+                    }
+
+                    #userName {
+                        justify-self: center;
+                        align-self: end;
+                        color: white;                            margin: 0 0 0 0;
+                    }
+
+                    #bioParagraph {
+                        grid-row: 4;
+                        grid-column: 1 / 5;
+                        justify-self: center;
+                    }
+
+                    #birthdate{
+                        justify-self: center;
+                    }
+                }
+            }
         }
     }
 </style>

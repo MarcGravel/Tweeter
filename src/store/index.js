@@ -59,7 +59,6 @@ export default new Vuex.Store({
 
     changeFlagState(state) {
       state.flagState = !state.flagState;
-      console.log(state.flagState);
     },
 
     followLinkClick(state, infoArray) {

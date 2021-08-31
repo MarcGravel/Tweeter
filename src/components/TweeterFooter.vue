@@ -12,20 +12,22 @@
 </script>
 
 <style lang="scss" scoped>
+    
     #tweeterFooter {
-            justify-self: center;
-            display: grid;
-            justify-items: center;
-            height: fit-content;
-            width: 100vw;
+        justify-self: center;
+        display: grid;
+        justify-items: center;
+        height: fit-content;
+        width: 100vw;
 
-            #logoFooter {
-            width: 30vw;
-            margin-top: 5vh;
-            }
-
-            h4 {
-                color: whitesmoke;
-            }
+        #logoFooter {
+        width: 30vw;
+        max-width: 200px;
+        margin-top: 5vh;
         }
+
+        h4 {
+            color: whitesmoke;
+        }
+    }
 </style>

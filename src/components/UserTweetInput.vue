@@ -115,12 +115,19 @@ import { eventBus }  from '../main'
         }
 
         #tweetBtn {
-            cursor: pointer;
             grid-column: 2;
             grid-row: 3;
             width: 30vw;
             justify-self: end;
             margin-right: 4vw;
         }
+    }
+
+    @media screen and (min-width: 768px) {
+        #tweetContainer 
+
+            #tweetBtn {
+                width: 80%;
+            }
     }
 </style>
