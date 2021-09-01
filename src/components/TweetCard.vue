@@ -66,13 +66,13 @@
                 </v-card-actions>
                 <v-btn id="commentButton"
                     color="primary"
-                    @click="showHideComments(tweetInfo.tweetId)"
+                    @click="showHideComments"
                     >
                     Comments
                 </v-btn>
                 <!--v-show will show the tweet comment of button with tweetID that matches-->
                 <div v-show="tweetInfo.tweetId == activeComment && isActive" :id="tweetInfo.tweetId">
-                    <TweetComments :tweetId="tweetInfo.tweetId"/>
+                    <TweetComments v-if="isActive" :tweetId="tweetInfo.tweetId"/>
                 </div>
             </v-card>
             <v-overlay
@@ -117,7 +117,7 @@ import TweetComments from './TweetComments.vue'
             this.tweetLikeCount();
         },
         created() {
-            //listens to API call of like button click and updatesto display correct likes
+            //listens to API call of like button click and updates to display correct likes
             eventBus.$on('updateLikes', () => {
                 this.tweetLikeCount();
             }) 
@@ -171,7 +171,6 @@ import TweetComments from './TweetComments.vue'
                 }
             },
             deleteTweet(tweetId) {
-                console.log(tweetId);
                 axios.request({
                     url: process.env.VUE_APP_API_SITE +'/api/tweets',
                     method: "DELETE",
@@ -212,10 +211,10 @@ import TweetComments from './TweetComments.vue'
             //checks to ensure isActive is true and then sets active comment to 
             //tweet id that matches clicked tweet. once activeComment is set
             //and isActive is true, comments for clicked tweet will display
-            showHideComments(tweetId) {
+            showHideComments() {
                 this.isActive = !this.isActive;
                 if(this.isActive == true) {
-                    this.activeComment = tweetId;
+                    this.activeComment = this.tweetInfo.tweetId;
                 }
             }
         }
