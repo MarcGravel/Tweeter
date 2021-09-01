@@ -124,12 +124,6 @@ import CommentsContainer from './CommentsContainer.vue'
         beforeMount() {
             this.tweetLikeCount();
         },
-        created() {
-            //listens to API call of like button click and updates to display correct likes
-            eventBus.$on('updateLikes', () => {
-                this.tweetLikeCount();
-            }) 
-        },
         data() {
             return {
                 userId: cookies.get('userId'),
@@ -197,7 +191,64 @@ import CommentsContainer from './CommentsContainer.vue'
                 })
             },
             likeTweet(tweetId) {
-                return this.$store.dispatch('getLikedTweets', tweetId);
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
+                    method: "GET",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    params: {
+                        "tweetId": tweetId
+                    }
+                }).then((response) => {
+                    let passedData = [response.data, tweetId];
+                    this.updateTweetLikes(passedData);
+                }).catch((error) => {
+                    console.log(error);
+                })
+            },
+            updateTweetLikes(passedData) {
+                //check if user already liked the tweet
+                let userLiked = passedData[0].filter(tweet => tweet.userId == cookies.get('userId'));
+                //conditional depending if userLike is populated(meaning tweet has already been liked)
+                if(userLiked.length == 0) {
+                    //post tweet like 
+                    axios.request({
+                        url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
+                        method: "POST",
+                        headers: {
+                            'X-Api-Key': process.env.VUE_APP_API_KEY,
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            "loginToken": cookies.get('loginToken'),
+                            "tweetId": passedData[1]
+                        }
+                    }).then(() => {
+                        this.tweetLikeCount();
+                    }).catch((error) => {
+                        console.log(error);
+                    })               
+                } else {
+                    //delete tweet like
+                    axios.request({
+                        url: process.env.VUE_APP_API_SITE+'/api/tweet-likes',
+                        method: "DELETE",
+                        headers: {
+                            'X-Api-Key': process.env.VUE_APP_API_KEY,
+                            'Content-Type': 'application/json'
+                        },
+                        data: {
+                            "loginToken": cookies.get('loginToken'),
+                            "tweetId": passedData[1]
+                        }
+                }).then(() => {
+                    this.tweetLikeCount();
+                }).catch((error) => {
+                    console.log(error);
+                })
+            }
             },
             tweetLikeCount() {
                 axios.request({
