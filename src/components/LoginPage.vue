@@ -1,6 +1,6 @@
 <template>
-    <div id="loginContainer">
-        <v-form id="loginForm">
+    <div id="loginContainer" @click="hideErrorMsg">
+        <v-form id="loginForm" v-model="isFormValid">
             <v-text-field
                 v-model="email"
                 :rules="[emailRules.required, emailRules.valid]"
@@ -17,8 +17,12 @@
                 @click:append="show1 = !show1"
                 @keydown.enter="submitWithEnterButton"
             ></v-text-field>
+            <div id="errorLogin">
+                <h3>Invalid Credentials. Try again.</h3>
+            </div>
             <v-btn id="loginBtn"
                 depressed
+                :disabled="!isFormValid"
                 color="primary" 
                 @click="loginRequest">
                     Log In
@@ -54,7 +58,8 @@ import router from '../router'
                     required: value => !!value || 'Required.',
                     min: v => v.length >= 6 || 'Min 6 characters',
                     emailMatch: () => (`The email and password you entered don't match`),
-                }
+                },
+                isFormValid: false
             }
         },    
         methods: {
@@ -81,11 +86,15 @@ import router from '../router'
                     router.push('Home');
                 }).catch((error) => {
                     console.log(error);
+                    document.getElementById('errorLogin').style.display = "block";
                 })
             },
             //allows user to submit the form by hitting enter button while inputs are selected 
             submitWithEnterButton() {
                 this.loginRequest();
+            },
+            hideErrorMsg() {
+                document.getElementById('errorLogin').style.display = "none";
             }
         },
     }
@@ -104,6 +113,14 @@ import router from '../router'
         
         #loginBtn {
             margin: 0 15vw 0 15vw;
+        }
+
+        #errorLogin {
+            display: none;
+            
+            h3 {
+                color: red;
+            }
         }
     }
 

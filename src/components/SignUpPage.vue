@@ -1,6 +1,7 @@
 <template>
     <div id="signUpContainer">
-        <v-form id="signUpForm">
+        <v-form id="signUpForm"
+            v-model="isFormValid">
             <v-text-field
                 v-model="email"
                 :rules="[emailRules.required, emailRules.valid]"
@@ -39,6 +40,7 @@
             ></v-date-picker>
                 <v-btn id="signUpBtn"
                 depressed
+                :disabled="!isFormValid"
                 color="primary" 
                 @click="signUpRequest">
                     Sign Up
@@ -83,6 +85,7 @@ import router from '../router'
                 dateRules: [
                     v => !!v || 'Please enter your birthdate'
                 ],
+                isFormValid: false,
             }
         },
         methods: {
