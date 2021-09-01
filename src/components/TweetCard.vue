@@ -72,7 +72,7 @@
                 </v-btn>
                 <!--v-show will show the tweet comment of button with tweetID that matches-->
                 <div v-show="tweetInfo.tweetId == activeComment && isActive" :id="tweetInfo.tweetId">
-                    <TweetComments v-if="isActive" :tweetId="tweetInfo.tweetId"/>
+                    <CommentsContainer v-if="isActive" :tweetId="tweetInfo.tweetId"/>
                 </div>
             </v-card>
             <v-overlay
@@ -81,20 +81,29 @@
                 :opacity="opacity">
                 <v-form id=editTweetForm>
                     <h3>Change any field below to update it</h3>
-                    <v-text-field
+                    <v-text-field id="editInput"
                         v-model="updatedTweetContent"
                         :label="clickedTweetEditData.content"
                     ></v-text-field>
-                    <v-btn id="saveTweetBtn"
-                        color="primary" 
-                        @click="sendTweetUpdatedData(updatedTweetContent, clickedTweetEditData.tweetId), overlay = !overlay">
-                        Save
-                    </v-btn>
-                    <v-btn id="deleteTweetBtn"
-                        color="error"
-                        @click="deleteTweet(clickedTweetEditData.tweetId), overlay = !overlay">
-                        Delete Tweet
-                    </v-btn>
+                    <div id="btnGrid">
+                        <div id="saveAndBackBtns">
+                            <v-btn id="saveTweetBtn"
+                                color="primary" 
+                                @click="sendTweetUpdatedData(updatedTweetContent, clickedTweetEditData.tweetId), overlay = !overlay">
+                                Save
+                            </v-btn>
+                            <v-btn id="tweetOverlaybackBtn"
+                                color="primary" 
+                                @click="overlay = !overlay">
+                                    Back
+                            </v-btn>
+                        </div>
+                        <v-btn id="deleteTweetBtn"
+                            color="error"
+                            @click="deleteTweet(clickedTweetEditData.tweetId), overlay = !overlay">
+                            Delete
+                        </v-btn>
+                    </div>
                 </v-form>
             </v-overlay>
     </div>
@@ -103,14 +112,13 @@
 <script>
 import cookies from 'vue-cookies'
 import axios from 'axios'
-import router from '../router'
 import { eventBus } from '../main'
-import TweetComments from './TweetComments.vue'
+import CommentsContainer from './CommentsContainer.vue'
 
     export default {
         name: "TweetCard",
         components: {
-            TweetComments,
+            CommentsContainer,
         },
         props: ['tweetInfo'],
         beforeMount() {
@@ -164,7 +172,7 @@ import TweetComments from './TweetComments.vue'
                             'content': content
                         }
                     }).then(() => {
-                        router.go();
+                        eventBus.$emit('updateFeed');
                     }).catch((error) => {
                         console.log(error.response);
                     })
@@ -183,7 +191,7 @@ import TweetComments from './TweetComments.vue'
                         "tweetId": tweetId
                     }
                 }).then(() => {
-                    router.go();
+                    eventBus.$emit('updateFeed');
                 }).catch((error) => {
                     console.log(error);
                 })
@@ -244,20 +252,24 @@ import TweetComments from './TweetComments.vue'
     }
 
     #editTweetForm {
-            width: 90vw;
+        width: 90vw;
+        
+        #btnGrid {
             display: grid;
+            grid-template-columns: 1fr 1fr;
 
-            #saveTweetBtn {
-                width: fit-content;
-                display: inline;
+            #saveAndBackBtns {
+                grid-column: 1;
+
+                #tweetOverlaybackBtn {
+                    margin-left: 2vw;
+                }
             }
-
+            
             #deleteTweetBtn {
                 justify-self: end;
-                display: inline;
-                position: relative;
-                bottom: 4.2vh;
             }
+        }
     }
 
     @media screen and (min-width: 600px) {
