@@ -8,20 +8,21 @@
             >
                 <v-card-title>
                     <v-list-item-avatar color="grey darken-3">
-                    <v-img
-                        v-if="tweetInfo.userImageUrl == null"
-                        class="elevation-6"
-                        alt=""
-                        src="https://image.flaticon.com/icons/png/512/847/847969.png"
-                    ></v-img>
-                    <v-img
-                        v-else
-                        class="elevation-6"
-                        alt=""
-                        :src="tweetInfo.userImageUrl"
-                    ></v-img>
+                        <v-img
+                            v-if="tweetInfo.userImageUrl == null"
+                            class="elevation-6"
+                            alt="User avatar"
+                            src="https://image.flaticon.com/icons/png/512/847/847969.png"
+                        ></v-img>
+                        <v-img
+                            v-else
+                            class="elevation-6"
+                            alt="User avatar"
+                            :src="tweetInfo.userImageUrl"
+                        ></v-img>
                     </v-list-item-avatar>
                     <span 
+                        id="cardUsername"
                         class="text-h6 font-weight-light"
                         @click="goToProfile($event)"
                         >
@@ -328,21 +329,47 @@ import CommentsContainer from './CommentsContainer.vue'
         display: grid;
         width: 500px;
         
-        #createdAtDate {
-            font-size: 0.8em;
-        }
+            #createdAtDate {
+                font-size: 0.8em;
+            }
 
-        #cardLogo {
-            width: 50px;
-            margin-right: 2vw;
-        }
+            #cardLogo {
+                width: 50px;
+                margin-right: 2vw;
+            }
 
-        #tweeterImg {
-            height: 25vh;
-            width: 25vh;
-            object-fit: cover;
-            justify-self: center;
+            #tweeterImg {
+                height: 25vh;
+                width: 25vh;
+                object-fit: cover;
+                justify-self: center;
+            }
         }
     }
+
+    @media screen and (min-width: 768px) {
+        #tweeterCard {
+        width: 600px;
+        
+            #createdAtDate {
+                font-size: 1em;
+            }
+
+            #cardLogo {
+                width: 60px;
+                margin-right: 2vw;
+            }
+
+            #tweeterImg {
+                height: 25vh;
+                width: 25vh;
+                object-fit: cover;
+                justify-self: center;
+            }
+
+            #commentButton {
+                font-size: 1.1em;
+            }
+        }
     }
 </style>

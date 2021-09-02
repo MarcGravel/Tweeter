@@ -189,7 +189,7 @@ import NavBar from '../components/NavBar.vue'
         grid-row: 2;
         display: grid;
         grid-template-columns: 1fr 1fr;
-        grid-template-rows: 3fr 1fr auto;
+        grid-template-rows: 3fr auto auto;
 
         #bannerContainer {
             width: 100vw;
@@ -245,6 +245,41 @@ import NavBar from '../components/NavBar.vue'
                     object-fit: cover;
                     justify-self: center;
                 }
+            }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        #followsContainer {
+            width: 768px;
+
+            #bannerContainer {
+                display: grid;
+                justify-items: center;
+
+                img {
+                    width: 768px;
+                }
+            }
+
+            #displayBtns {
+                width: 768px;
+                justify-self: center;
+
+                #mainFeed {
+                    height: 7vh;
+                    border-bottom-left-radius: 20px;
+                }
+
+                #myFeed {
+                    height: 7vh;
+                    border-bottom-right-radius: 20px;
+                }
+            }
+
+            #followDisplay {
+                width: 768px;
+                justify-self: center;
             }
         }
     }

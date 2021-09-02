@@ -177,5 +177,30 @@ import TweetCard from './TweetCard.vue'
             margin: 1vh 0 1vh 0;
         }
     }
+
+    @media screen and (min-width: 768px) {
+        #feedContainer {
+
+            #displayBtns {
+                height: 7vh;
+                width: 768px;
+                justify-self: center;
+
+                #myFeed {
+                    height: 7vh;
+                    border-bottom-left-radius: 20px;
+                }
+
+                #mainFeed {
+                    height: 7vh;
+                    border-bottom-right-radius: 20px;
+                }
+            }
+
+            #tweeterDisplay {
+            margin: 1vh 0 1vh 0;
+            }
+        }
+    }
     
 </style>

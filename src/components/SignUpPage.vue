@@ -148,7 +148,7 @@ import router from '../router'
         }
     }
 
-    @media screen and (min-width: 900px) {
+    @media screen and (min-width: 768px) {
         #signUpContainer {
             display: grid;
 

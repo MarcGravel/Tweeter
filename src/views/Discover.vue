@@ -114,6 +114,26 @@ import router from '../router'
                 width: 768px;
                 justify-self: center;
             }
+
+            #featuredTweet {
+            
+                h3{
+                    font-size: 1.5em;
+                }
+            }
+
+            #discoverUsersContainer {
+                display: grid;
+
+                #discoverBanner {
+                    width: 768px;
+                    justify-self: center;
+                    
+                    h1 {
+                        font-size: 2.5em;
+                    }
+                }
+            }
         }
     }
 </style>

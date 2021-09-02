@@ -337,7 +337,6 @@ import NavBar from '../components/NavBar.vue'
     @media screen and (min-width: 768px) {
 
         #usersPage {
-            display: grid;
 
             #userPageContainer {
                 width: 768px;
@@ -347,6 +346,14 @@ import NavBar from '../components/NavBar.vue'
                 #othersContainer {
                     width: 768px;
                     justify-items: center;
+
+                    #bannerContainer {
+                        width: 768px;
+                        
+                        img {
+                            width: 768px;
+                        }
+                    }
 
                     #imageContainer {
                         grid-column: 2;
@@ -361,34 +368,39 @@ import NavBar from '../components/NavBar.vue'
 
                     #followBtn {
                         grid-column: 3 / 5;
-                        grid-row: 2;
                         justify-self: end;
                         align-self: start;
                     }
 
                     #unfollowBtn {
                         grid-column: 3 / 5;
-                        grid-row: 2;
                         justify-self: end;
                         align-self: start;
                     }
 
                     #userName {
-                        justify-self: center;
-                        align-self: end;
-                        color: white;                            margin: 0 0 0 0;
+                        justify-self: center;                      
+                        margin: 0 0 0 0;
+                        font-size: 1.8em;
                     }
 
                     #bioParagraph {
-                        grid-row: 4;
-                        grid-column: 1 / 5;
                         justify-self: center;
+                        font-size: 1.6em;
                     }
 
                     #birthdate{
                         justify-self: center;
+                        font-size: 1.2em;
                     }
                 }
+
+                 #displayBanner {
+
+                     h4 {
+                         font-size: 1.6em;
+                     }
+                 }
             }
         }
     }

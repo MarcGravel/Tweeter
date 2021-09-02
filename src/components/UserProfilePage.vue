@@ -419,10 +419,6 @@ import AsideMenu from './AsideMenu.vue'
 
             #userContainer {
                 width: 768px;
-                height: 100%;
-                display: grid;
-                grid-template-columns: 1fr 1fr 1fr;
-                grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
                 justify-self: center;
 
                 #bannerContainer {
@@ -446,18 +442,24 @@ import AsideMenu from './AsideMenu.vue'
                 #userName {
                     justify-self: center;
                     margin: 0 0 0 3vw;
+                    font-size: 1.8em;
                 }
 
                 #bioParagraph {
-                    grid-row: 4;
-                    grid-column: 1 / 5;
                     justify-self: center;
+                    font-size: 1.6em;
+                }
+
+                #birthdate {
+                    font-size: 1.2em;
+                }
+
+                #followFollowerBtns {
+                    font-size: 1.2em;
                 }
 
                 #editBtn {
-                    width: fit-content;
                     grid-column: 3 / 5;
-                    grid-row: 2;
                     justify-self: end;
                     align-self: start;
                     margin-top: 1vh;

@@ -136,7 +136,7 @@ import router from '../router'
         }
     }
 
-    @media screen and (min-width: 900px) {
+    @media screen and (min-width: 768px) {
         #loginForm {
             width: 70%;
             margin: 0 0 0 15%;
