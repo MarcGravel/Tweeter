@@ -285,6 +285,14 @@ import CommentsContainer from './CommentsContainer.vue'
     #tweeterCard {
         display: grid;
         width: 80vw;
+
+        #cardUsername {
+            cursor: pointer;
+        }
+
+        #cardUsername:hover {
+            color: #023E8A;
+        }
         
         #createdAtDate {
             font-size: 0.8em;

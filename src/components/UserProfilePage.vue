@@ -240,8 +240,19 @@ import AsideMenu from './AsideMenu.vue'
                 //parse object wrapped in observer to passable JSON for axios request 
                 var parseUserData = JSON.parse(JSON.stringify(userData))
                 
-                //send patch request to store for API call
-                return this.$store.dispatch('updateUserData', parseUserData)
+                axios.request({
+                    url: process.env.VUE_APP_API_SITE+'/api/users',
+                    method: "PATCH",
+                    headers: {
+                        'X-Api-Key': process.env.VUE_APP_API_KEY,
+                        'Content-Type': 'application/json'
+                    },
+                    data: parseUserData
+                }).then(() => {
+                    this.requestCurrentUserInfo(cookies.get('userId'));
+                }).catch((error) => {
+                    console.log(error.response);
+                })
             }, 
             deleteAccount() {
                 return this.$store.dispatch('deleteUser', this.deleteAccountPass); 
@@ -317,6 +328,7 @@ import AsideMenu from './AsideMenu.vue'
             height: fit-content;
 
             img {
+                cursor: pointer;
                 height: 15vh;
                 width: 15vh;
                 object-fit: cover;
@@ -335,12 +347,17 @@ import AsideMenu from './AsideMenu.vue'
         }
 
         #userName {
+            cursor: pointer;
             grid-column: 1 / 5;
             grid-row: 3;
             justify-self: start;
             align-self: end;
             color: white; 
             margin: 0 0 0 2vw;
+        }
+
+        #userName:hover {
+            color: #90E0EF;
         }
 
         #bioParagraph {

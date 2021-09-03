@@ -79,6 +79,7 @@ import AsideMenu from './AsideMenu.vue'
             width: 50%;
 
             img {
+                cursor: pointer;
                 height: 13vh;
                 width: 13vh;
                 object-fit: cover;
@@ -89,12 +90,17 @@ import AsideMenu from './AsideMenu.vue'
         }
 
         #userName {
+            cursor: pointer;
             grid-column: 2 / 5;
             grid-row: 1;
             justify-self: center;
             align-self: end;
             color: #023E8A; 
             margin: 0 4vw 1vh 0;
+        }
+
+        #userName:hover {
+            color: whitesmoke;
         }
 
         #bioParagraph {

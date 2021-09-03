@@ -16,6 +16,7 @@ import TweetCard from './TweetCard.vue'
         },
         computed: {
             featuredTweet() {
+                console.log(this.$store.state.featuredTweet);
                 return this.$store.state.featuredTweet;
             },
         },

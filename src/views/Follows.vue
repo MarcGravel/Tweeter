@@ -45,6 +45,7 @@
                         ></v-img>
                         </v-list-item-avatar>
                         <span 
+                            id="userName"
                             class="text-h6 font-weight-light"
                             @click="goToProfile($event)"
                             >
@@ -229,6 +230,14 @@ import NavBar from '../components/NavBar.vue'
 
             #followCard {
                 display: grid;
+
+                #userName {
+                    cursor: pointer;
+                }
+
+                #userName:hover {
+                    color: #023E8A;
+                }
                 
                 #createdAtDate {
                     font-size: 0.8em;

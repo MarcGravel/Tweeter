@@ -106,15 +106,14 @@ import router from '../router'
                         "birthdate": this.datePick,
                     }
                 }).then((response) => {
-                    console.log(response);
                     cookies.set('loginToken', response.data.loginToken);
                     cookies.set('userId', response.data.userId);
                     router.push('Home');
 
                 }).catch((error) => {
-                    console.log(error.response.status);
-                    this.email="This email already exists! Try Again";
-                    this.username="";
+                    console.log(error.response);
+                    this.email="Username or email already exists! Try Again";
+                    this.username="Username or email already exists! Try Again";
                     this.password="";
                     this.bio="";
                     this.datePick=(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);

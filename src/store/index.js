@@ -97,23 +97,6 @@ export default new Vuex.Store({
 
     //users GET - all Users
 
-    // /user PATCH - user data
-    updateUserData(state, userData) {
-      axios.request({
-        url: process.env.VUE_APP_API_SITE+'/api/users',
-        method: "PATCH",
-        headers: {
-            'X-Api-Key': process.env.VUE_APP_API_KEY,
-            'Content-Type': 'application/json'
-        },
-        data: userData
-    }).then(() => {
-        router.go();
-    }).catch((error) => {
-        console.log(error.response);
-    })
-    },
-
     //user DELETE - user data
     deleteUser(state, pass) {
       axios.request({

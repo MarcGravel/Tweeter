@@ -243,6 +243,7 @@ import NavBar from '../components/NavBar.vue'
                     height: fit-content;
 
                     img {
+                        cursor: pointer;
                         height: 15vh;
                         width: 15vh;
                         object-fit: cover;
@@ -269,12 +270,17 @@ import NavBar from '../components/NavBar.vue'
                 }
 
                 #userName {
+                    cursor: pointer;
                     grid-column: 1 / 5;
                     grid-row: 3;
                     justify-self: start;
                     align-self: end;
                     color: white; 
                     margin: 0 0 0 2vw;
+                }
+
+                #userName:hover {
+                    color: #90E0EF;
                 }
 
                 #bioParagraph {

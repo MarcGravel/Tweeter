@@ -3,7 +3,7 @@
         <v-toolbar id="toolbar"
             dark
             >
-            <v-list-item-avatar @click="routeToProfile">
+            <v-list-item-avatar @click="routeToProfile" id="navAvatar">
                 <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
                 <v-img v-else :src="userDataInfo.imageUrl"></v-img>
             </v-list-item-avatar>
@@ -69,6 +69,10 @@ import router from '../router';
         height: 56px;
         width: 100vw;
         box-shadow: 0 0 10px #000000;
+
+        #navAvatar {
+            cursor: pointer;
+        }
 
         #listItem {
             padding: 0;

@@ -118,7 +118,6 @@ import NavBar from '../components/NavBar.vue'
         height: fit-content;
         width: 100%;
         background-color: rgb(63, 63, 63); 
-        overflow: scroll;
       }
 
   @media screen and (min-width: 768px) {
