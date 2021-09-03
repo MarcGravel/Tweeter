@@ -196,10 +196,6 @@ import TweetCard from './TweetCard.vue'
                     border-bottom-right-radius: 20px;
                 }
             }
-
-            #tweeterDisplay {
-            margin: 1vh 0 1vh 0;
-            }
         }
     }
     

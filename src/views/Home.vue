@@ -7,9 +7,6 @@
       <div id="userInfo">
         <UserHomePage />
       </div>
-      <aside id="sideBar">
-
-      </aside>
       <div id="tweetInputContainer">
         <UserTweetInput />
       </div>
@@ -51,6 +48,13 @@ import NavBar from '../components/NavBar.vue'
 </script>
 
 <style lang="scss" scoped>
+  
+  #navBar {
+    position: fixed;
+    z-index: 99;
+    grid-row: 1;
+    height: 56px;
+  }
 
  #homePage {
    display: grid;
@@ -59,7 +63,7 @@ import NavBar from '../components/NavBar.vue'
    #homePageContainer {
     margin-top: 56px;
     grid-row: 1;
-    width: 100vw;
+    width: 100%;
     height: fit-content;
     display: grid;
     grid-template-rows: 15vh 21vh;
@@ -79,41 +83,8 @@ import NavBar from '../components/NavBar.vue'
         grid-row: 2; 
         background-color: #ADE8F4;
       }
-  }
+    }
  }
-
-  #navBar {
-    position: fixed;
-    z-index: 99;
-    grid-row: 1;
-    height: 56px;
-  }
-
-  #homePageContainer {
-    margin-top: 56px;
-    grid-row: 2;
-    width: 100vw;
-    height: 100vh;
-    display: grid;
-    grid-template-rows: 80% 20%;
-
-      #userInfo {
-        height: 100%;
-        width: 100%;
-        background-color: #0096C7;
-        grid-row: 1;
-      }
-
-      #sideBar {
-        display: none;
-      }
-
-      #tweetInputContainer {
-        grid-row: 2; 
-        background-color: #ADE8F4;
-      }
-  }
-
   #mainFeed {
         height: fit-content;
         width: 100%;
@@ -122,18 +93,17 @@ import NavBar from '../components/NavBar.vue'
 
   @media screen and (min-width: 768px) {
 
-        #homePage {
-          display: grid;
-          justify-items: center;
+    #homePage {
+      justify-items: center;
 
-          #homePageContainer, #tweetInputContainer{
-            width: 768px;
-          }
+      #homePageContainer, #tweetInputContainer{
+        width: 768px;
+      }
 
-          #homePageContainer {
-            grid-template-rows: 25vh 21vh;
-          }
-        }
+      #homePageContainer {
+        grid-template-rows: 25vh 21vh;
+      }
+    }
   }
     
 </style>

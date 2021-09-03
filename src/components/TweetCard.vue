@@ -1,81 +1,83 @@
 <template>
     <div>
         <v-card
-                id="tweeterCard"
-                class="mx-auto"
-                color="#26c6da"
-                dark
-            >
-                <v-card-title>
-                    <v-list-item-avatar color="grey darken-3">
-                        <v-img
-                            v-if="tweetInfo.userImageUrl == null"
-                            class="elevation-6"
-                            alt="User avatar"
-                            src="https://image.flaticon.com/icons/png/512/847/847969.png"
-                        ></v-img>
-                        <v-img
-                            v-else
-                            class="elevation-6"
-                            alt="User avatar"
-                            :src="tweetInfo.userImageUrl"
-                        ></v-img>
-                    </v-list-item-avatar>
-                    <span 
-                        id="cardUsername"
-                        class="text-h6 font-weight-light"
-                        @click="goToProfile($event)"
-                        >
-                        {{tweetInfo.username}}</span>
-                    <v-col 
-                        v-if="tweetInfo.userId == userId" 
-                        class="text-right"
-                        @click="editTweet(tweetInfo), overlay = !overlay">
-                        <v-icon class="mr-1">
-                            edit
-                        </v-icon>
-                    </v-col> 
-                </v-card-title>
-
-                <v-card-text class="text-h5 font-weight-bold">
-                {{tweetInfo.content}}
-                </v-card-text>
-
-                <img id="tweeterImg" v-if="tweetInfo.tweetImageUrl != ''" :src="tweetInfo.tweetImageUrl" alt="Tweet Image">
-
-                <v-card-actions>
-                <v-list-item class="grow">
-                <img id="cardLogo" src="@/assets/TweeterLogoWhite.png" alt="TweeterLogo">    
-                <v-list-item-content>
-                    <v-list-item-title
-                    id="createdAtDate">{{tweetInfo.createdAt}}</v-list-item-title>
-                </v-list-item-content>
-
-                    <v-row
-                    align="center"
-                    justify="end"
+            id="tweeterCard"
+            class="mx-auto"
+            color="#26c6da"
+            dark
+        >
+            <v-card-title>
+                <v-list-item-avatar color="grey darken-3">
+                    <v-img
+                        v-if="tweetInfo.userImageUrl == null"
+                        class="elevation-6"
+                        alt="User avatar"
+                        src="https://image.flaticon.com/icons/png/512/847/847969.png"
+                    ></v-img>
+                    <v-img
+                        v-else
+                        class="elevation-6"
+                        alt="User avatar"
+                        :src="tweetInfo.userImageUrl"
+                    ></v-img>
+                </v-list-item-avatar>
+                <span 
+                    id="cardUsername"
+                    class="text-h6 font-weight-light"
+                    @click="goToProfile($event)"
                     >
-                    <v-icon 
-                        class="mr-1"
-                        @click="likeTweet(tweetInfo.tweetId)"
-                        >
-                        mdi-heart
+                    {{tweetInfo.username}}</span>
+                <v-col 
+                    v-if="tweetInfo.userId == userId" 
+                    class="text-right"
+                    @click="editTweet(tweetInfo), overlay = !overlay">
+                    <v-icon class="mr-1">
+                        edit
                     </v-icon>
-                    <span class="subheading mr-2">{{likeCount}}</span>
-                    </v-row>
-                </v-list-item>
-                </v-card-actions>
-                <v-btn id="commentButton"
-                    color="primary"
-                    @click="showHideComments"
+                </v-col> 
+            </v-card-title>
+
+            <v-card-text class="text-h5 font-weight-bold">
+            {{tweetInfo.content}}
+            </v-card-text>
+
+            <img id="tweeterImg" 
+                v-if="tweetInfo.tweetImageUrl != ''" :src="tweetInfo.tweetImageUrl"
+                @click="imageOverlay = !imageOverlay" 
+                alt="Tweet Image">
+
+            <v-card-actions>
+            <v-list-item class="grow">
+            <img id="cardLogo" src="@/assets/TweeterLogoWhite.png" alt="TweeterLogo">    
+            <v-list-item-content>
+                <v-list-item-title
+                id="createdAtDate">{{tweetInfo.createdAt}}</v-list-item-title>
+            </v-list-item-content>
+
+                <v-row
+                align="center"
+                justify="end"
+                >
+                <v-icon 
+                    class="mr-1"
+                    @click="likeTweet(tweetInfo.tweetId)"
                     >
-                    Comments
-                </v-btn>
-                <!--v-show will show the tweet comment of button with tweetID that matches-->
-                <div v-show="tweetInfo.tweetId == activeComment && isActive" :id="tweetInfo.tweetId">
-                    <CommentsContainer v-if="isActive" :tweetId="tweetInfo.tweetId"/>
-                </div>
-            </v-card>
+                    mdi-heart
+                </v-icon>
+                <span class="subheading mr-2">{{likeCount}}</span>
+                </v-row>
+            </v-list-item>
+            </v-card-actions>
+            <v-btn id="commentButton"
+                color="primary"
+                @click="showHideComments"
+                >
+                Comments
+            </v-btn>
+            <!--v-show will show the tweet comment of button with tweetID that matches-->
+            <div v-show="tweetInfo.tweetId == activeComment && isActive" :id="tweetInfo.tweetId">
+                <CommentsContainer v-if="isActive" :tweetId="tweetInfo.tweetId"/>
+            </div>
             <v-overlay
                 :absolute="absolute"
                 :value="overlay"
@@ -106,6 +108,21 @@
                         </v-btn>
                     </div>
                 </v-form>
+            </v-overlay>
+        </v-card>
+            <v-overlay
+                :value="imageOverlay"
+                :opacity="imageOpacity">
+                <div id="tweetImageOverlay">
+                    <img :src="tweetInfo.tweetImageUrl" alt="The Clicked tweet image">
+                    <v-btn
+                        id="imageBack"
+                        color="error"
+                        @click="imageOverlay = !imageOverlay"
+                        >
+                        Back
+                    </v-btn>
+                </div>
             </v-overlay>
     </div>
 </template>
@@ -140,6 +157,8 @@ import CommentsContainer from './CommentsContainer.vue'
                 absolute: true,
                 activeComment: null,
                 isActive: false,
+                imageOverlay: false,
+                imageOpacity: 1,
             }
         },
         methods: {
@@ -308,6 +327,20 @@ import CommentsContainer from './CommentsContainer.vue'
             width: 25vh;
             object-fit: cover;
             justify-self: center;
+        }
+    }
+
+    #tweetImageOverlay {
+        display: grid;
+        justify-items: center;
+
+        img {
+            display: block;
+            width: 100%;
+        }
+
+        #imageBack {
+            margin-top: 2vh;
         }
     }
 

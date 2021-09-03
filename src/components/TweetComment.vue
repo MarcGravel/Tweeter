@@ -238,11 +238,16 @@ import { eventBus } from '../main'
             align-items: center;
 
             h4 {
+                cursor: pointer;
                 grid-row: 1;
                 grid-column: 1;
                 margin: 0.5vh 0 0 2vw;
                 font-size: 1.2em;
                 text-decoration: underline;
+            }
+
+            h4:hover {
+                color: #023E8A;
             }
 
             #commentContent {

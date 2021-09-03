@@ -1,12 +1,26 @@
 <template>
     <div id="userContainer" @click="flipMenu">
         <div id="imageContainer">
-            <img @click.stop="drawer = !drawer" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
-            <img @click.stop="drawer = !drawer" v-else :src="userDataInfo.imageUrl" alt="Users Image">
+            <img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
+            <img v-else @click="addUrlToClickedData(userDataInfo.imageUrl), imageOverlay = !imageOverlay" :src="userDataInfo.imageUrl" alt="Users Image">
         </div>
         <h2 id="userName" @click="goToProfile($event)">{{userDataInfo.username}}</h2>
         <p id="bioParagraph">{{userDataInfo.bio}}</p>
         <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
+        <v-overlay
+            :value="imageOverlay"
+            :opacity="imageOpacity">
+            <div id="imageOverlay">
+                <img :src="clickedImage" alt="The Clicked tweet image">
+                <v-btn
+                    id="imageBack"
+                    color="error"
+                    @click="imageOverlay = !imageOverlay"
+                    >
+                    Back
+                </v-btn>
+            </div>
+        </v-overlay>
     </div>
 </template>
 
@@ -33,6 +47,9 @@ import AsideMenu from './AsideMenu.vue'
         data () {
             return {
                 drawer: null,
+                imageOverlay: false,
+                imageOpacity: 1,
+                clickedImage: '',
             }
         },
         methods: {
@@ -61,6 +78,9 @@ import AsideMenu from './AsideMenu.vue'
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName)
             },
+            addUrlToClickedData(clickedUrl) {
+                this.clickedImage = clickedUrl;
+            }
         }
     }
 </script>
@@ -111,6 +131,22 @@ import AsideMenu from './AsideMenu.vue'
             font-size: 1.3em;
             font-style: italic;
             margin: 0 0 0 10vw;
+        }
+    }
+
+    #imageOverlay {
+        display: grid;
+        justify-items: center;
+
+        img {
+            display: block;
+            width: 100%;
+            max-height: 90vh;
+            object-fit: cover;
+        }
+
+        #imageBack {
+            margin-top: 2vh;
         }
     }
 

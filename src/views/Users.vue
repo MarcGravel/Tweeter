@@ -10,11 +10,11 @@ build views in a few different ways to practice structure-->
             <div id="othersContainer">
                 <div id="bannerContainer">
                     <img v-if="othersData.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
-                    <img v-else :src="othersData.bannerUrl" alt="Users Image">
+                    <img v-else @click="addUrlToClickedData(othersData.bannerUrl), imageOverlay = !imageOverlay" :src="othersData.bannerUrl" alt="Users Image">
                 </div>
                 <div id="imageContainer">
-                    <img @click.stop="drawer = !drawer" v-if="othersData.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
-                    <img @click.stop="drawer = !drawer" v-else :src="othersData.imageUrl" alt="Users Image">
+                    <img v-if="othersData.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" alt="No Image">
+                    <img v-else @click="addUrlToClickedData(othersData.imageUrl), imageOverlay = !imageOverlay" :src="othersData.imageUrl" alt="Users Image">
                 </div>
                 <h2 id="userName" @click="goToProfile($event)">{{othersData.username}}</h2>
                 <p id="bioParagraph">{{othersData.bio}}</p>
@@ -48,6 +48,20 @@ build views in a few different ways to practice structure-->
         <div id="feedDisplay">
             <OthersFeedDisplay :othersId="othersData.userId" />
         </div>
+        <v-overlay
+            :value="imageOverlay"
+            :opacity="imageOpacity">
+            <div id="imageOverlay">
+                <img :src="clickedImage" alt="The Clicked tweet image">
+                <v-btn
+                    id="imageBack"
+                    color="error"
+                    @click="imageOverlay = !imageOverlay"
+                    >
+                    Back
+                </v-btn>
+            </div>
+        </v-overlay>
     </div>
 </template>
 
@@ -89,7 +103,10 @@ import NavBar from '../components/NavBar.vue'
 
                 },
                 drawer: null,
-                isFollowing: null
+                isFollowing: null,
+                imageOverlay: false,
+                imageOpacity: 1,
+                clickedImage: '',
             }
         },
         methods: {
@@ -187,6 +204,9 @@ import NavBar from '../components/NavBar.vue'
                 }).catch((error) => {
                     console.log(error);
                 })
+            },
+            addUrlToClickedData(clickedUrl) {
+                this.clickedImage = clickedUrl;
             }
         }
     }
@@ -321,15 +341,31 @@ import NavBar from '../components/NavBar.vue'
         }
     }
 
+    #imageOverlay {
+        display: grid;
+        justify-items: center;
 
-        @media screen and (max-width: 400px) {
+        img {
+            display: block;
+            width: 100%;
+            max-height: 90vh;
+            object-fit: cover;
+        }
+
+        #imageBack {
+            margin-top: 2vh;
+        }
+    }
+
+
+    @media screen and (max-width: 400px) {
         #userPageContainer {
 
             #followFollowerBtns {
-            align-self: start;
-            justify-self: start;
-            position: relative;
-            left: 11vw;
+                align-self: start;
+                justify-self: start;
+                position: relative;
+                left: 11vw;
             }
 
             #followFollowerBtns {
