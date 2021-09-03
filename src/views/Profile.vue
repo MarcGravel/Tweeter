@@ -3,6 +3,9 @@
         <div id="navBar">
             <NavBar />
         </div>
+        <aside id="sideMenu">
+            <AsideMenu />
+        </aside>
         <div id="profileContainer">
             <div id="userProfile">
                 <UserProfilePage />
@@ -20,13 +23,15 @@ import FeedDisplay from '../components/FeedDisplay.vue'
 import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
+import AsideMenu from '../components/AsideMenu.vue'
 
     export default {
         name: "Profile",
         components: {
             UserProfilePage,
             FeedDisplay,
-            NavBar
+            NavBar,
+            AsideMenu
         },
         computed: {
             isUserProfile() {
@@ -53,6 +58,10 @@ import router from '../router'
       height: 56px;
     }
 
+    #sideMenu {
+        display: none;
+    }
+
     #profileContainer {
         margin-top: 56px;
         display: grid;
@@ -64,6 +73,34 @@ import router from '../router'
 
         #userEditInfo, #othersTweetDisplay {
             grid-row: 2;
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+
+        #navBar {
+            display: none;
+        }
+
+        #sideMenu {
+            display: block;
+            grid-column: 1;
+            width: 20%;
+            height: 100vh;
+            position: fixed;
+            background-color: #CAF0F8; 
+        }
+
+        #profilePage {
+            width: 100vw;
+            display: grid;
+            grid-template-columns: 20% 60% 20%;
+            justify-items: center;
+
+            #profileContainer {
+                grid-column: 2;
+                margin-top: 0;
+            }
         }
     }
 </style>

@@ -521,4 +521,8 @@ import AsideMenu from './AsideMenu.vue'
             }
         }
     }
+
+    @media screen and (min-width: 1100px) {
+        
+    }
 </style>

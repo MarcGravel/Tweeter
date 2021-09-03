@@ -1,44 +1,48 @@
 <template>
     <div>
-        <aside id="drawer">
-            <v-navigation-drawer
-            v-model="drawer"
-            color="#CAF0F8"
-            absolute
-            temporary
-            >
-            <v-list-item>
-                <v-list-item-avatar>
-                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                <v-img v-else :src="userDataInfo.imageUrl"></v-img>
-                </v-list-item-avatar>
-
-                <v-list-item-content>
-                <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-
-            <v-divider></v-divider>
-
-            <v-list dense>
-                <v-list-item
-                v-for="item in items"
-                :key="item.title"
-                :to="item.route"
-                @click="redirectPendingTitleName(item.title)"
-                link
+        <div id="sideContainer">
+            <h1 id="siteName">Tweeter</h1>
+            <aside id="sideMenu">
+                <v-navigation-drawer
+                color="#CAF0F8"
+                width="100%"
                 >
-                <v-list-item-icon>
-                    <v-icon>{{ item.icon }}</v-icon>
-                </v-list-item-icon>
+                <v-list-item>
+                    <v-list-item-avatar>
+                    <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
+                    <v-img v-else :src="userDataInfo.imageUrl"></v-img>
+                    </v-list-item-avatar>
 
-                <v-list-item-content>
-                    <v-list-item-title >{{ item.title }}</v-list-item-title>
-                </v-list-item-content>
-            </v-list-item>
-            </v-list>
-            </v-navigation-drawer>
-        </aside>
+                    <v-list-item-content>
+                    <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+
+                <v-divider></v-divider>
+
+                <v-list dense>
+                    <v-list-item
+                    v-for="item in items"
+                    :key="item.title"
+                    :to="item.route"
+                    @click="redirectPendingTitleName(item.title)"
+                    link
+                    >
+                    <v-list-item-icon>
+                        <v-icon>{{ item.icon }}</v-icon>
+                    </v-list-item-icon>
+
+                    <v-list-item-content>
+                        <v-list-item-title >{{ item.title }}</v-list-item-title>
+                    </v-list-item-content>
+                </v-list-item>
+                </v-list>
+                </v-navigation-drawer>
+            </aside>
+            <img id="logo" src="@/assets/TweeterLogo.png" alt="TweeterLogo">
+            <img id="logo2" src="@/assets/TweeterLogo.png" alt="TweeterLogo">
+            <img id="logo3" src="@/assets/TweeterLogo.png" alt="TweeterLogo">
+        </div>
     </div>
 </template>
 
@@ -87,7 +91,43 @@
 </script>
 
 <style lang="scss" scoped>
-    #drawer {
-        margin-top: 56px;
+@import url('https://fonts.googleapis.com/css2?family=Cedarville+Cursive&display=swap');
+
+    #sideContainer {
+        height: 100vh;
+        display: grid;
+        grid-template-rows: repeat(10, 10%);
+
+        #siteName {
+            grid-row: 1;
+            justify-self: center;
+            align-self: center;
+            font-family: 'Cedarville Cursive', cursive;
+            font-size: 4em;
+            color: #00B4D8;
+        }
+
+        #sideMenu {
+            grid-row: 2 / 5;
+            height: fit-content;
+        }
+
+        #logo {
+            width: 80%;
+            justify-self: center;
+            grid-row: 5;
+        }
+
+        #logo2 {
+            width: 40%;
+            justify-self: center;
+            grid-row: 8;
+        }
+
+        #logo3 {
+            width: 20%;
+            justify-self: center;
+            grid-row: 10;
+        }
     }
 </style>
