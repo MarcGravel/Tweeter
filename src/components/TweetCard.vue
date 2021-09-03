@@ -323,6 +323,7 @@ import CommentsContainer from './CommentsContainer.vue'
         }
 
         #tweeterImg {
+            cursor: pointer;
             height: 25vh;
             width: 25vh;
             object-fit: cover;

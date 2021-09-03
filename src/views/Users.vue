@@ -250,6 +250,7 @@ import NavBar from '../components/NavBar.vue'
                     grid-row: 1;
 
                     img {
+                        cursor: pointer;
                         width: 100vw;
                         height: 15vh;
                         object-fit: cover;

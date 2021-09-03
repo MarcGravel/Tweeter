@@ -1,10 +1,11 @@
 <template>
     <div>
-        <div id="commentBox">
+        <v-form id="commentBox" v-model="isFormValid">
             <v-col>
                 <v-textarea
                     v-model="commentInput"
                     :rules="textAmt"
+                    maxlength="150"
                     rows="1"
                     auto-grow
                     label="Say something..."
@@ -21,13 +22,14 @@
                 color="primary"
                 rounded
                 @click="postComment"
+                :disabled="!isFormValid"
                 >
                 Submit
             </v-btn>
             <div id="commentDisplay" v-for="comment in tweetComments" :key="comment.commentId">
                 <TweetComment :comment="comment" />
             </div>
-        </div>
+        </v-form>
     </div>
 </template>
 
@@ -66,6 +68,7 @@ import { eventBus } from '../main'
                 tweetComments: [],
                 userId: cookies.get('userId'),
                 commentCount: 0,
+                isFormValid: false,
             }
         },
         methods: {
