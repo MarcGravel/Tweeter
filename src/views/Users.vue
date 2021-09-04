@@ -6,6 +6,9 @@ build views in a few different ways to practice structure-->
         <div id="navBar">
             <NavBar />
         </div>
+        <aside id="sideMenu">
+            <AsideMenu />
+        </aside>
         <div id="userPageContainer" @click="flipMenu">
             <div id="othersContainer">
                 <div id="bannerContainer">
@@ -78,7 +81,7 @@ import NavBar from '../components/NavBar.vue'
         components: {
             OthersFeedDisplay,
             AsideMenu,
-            NavBar
+            NavBar,
         },
         props: ['username'],
         computed: {
@@ -223,6 +226,10 @@ import NavBar from '../components/NavBar.vue'
 
     #usersPage {
         display: grid;
+
+        #sideMenu {
+            display: none;
+        }
         
         #feedDisplay {
             margin-top: 7vh;
@@ -445,6 +452,62 @@ import NavBar from '../components/NavBar.vue'
                      }
                  }
             }
+        }
+    }
+
+    @media screen and (min-width: 1100px) { 
+        #navBar {
+            display: none;
+        }
+
+        #usersPage {
+            grid-template-columns: 20% 60% 20%;
+            grid-template-rows: auto auto;
+
+            #sideMenu {
+                display: block;
+                grid-column: 1;
+                width: 20%;
+                height: 100vh;
+                position: fixed;
+                right: 80%;
+                background-color: #CAF0F8; 
+            }
+
+            #userPageContainer {
+                margin-top: 0;
+                grid-column: 2;
+                justify-self: start;
+                margin-left: 1%;
+                height: fit-content;
+
+                #othersContainer {
+                    height: fit-content;
+
+                    #followBtn, #unfollowBtn {
+                        margin-top: 1vh;
+                    }
+
+                    #userName {
+                        grid-column: 1 / 5;
+                        justify-self: start;
+                        margin: 0 0 0 2vw;
+                    }
+
+                    #bioParagraph {
+                        grid-column: 1 / 5;
+                        justify-self: start;
+                        margin: 0 0 0 3vw;
+                    }
+                }
+
+                #displayBanner {
+                    margin-top: 2vh;
+                }
+            }
+        }
+        #feedDisplay {
+            grid-row: 2;
         }
     }
 </style>

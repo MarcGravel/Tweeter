@@ -90,13 +90,13 @@ import AsideMenu from './AsideMenu.vue'
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        grid-template-columns: 30% 70%;
         grid-template-rows: 1fr 1fr;
 
         #imageContainer {
-            grid-column: 1 / 3;
+            grid-column: 1;
             grid-row: 1 / 3;
-            width: 50%;
+            width: 100%;
 
             img {
                 cursor: pointer;
@@ -111,9 +111,9 @@ import AsideMenu from './AsideMenu.vue'
 
         #userName {
             cursor: pointer;
-            grid-column: 2 / 5;
+            grid-column: 2;
             grid-row: 1;
-            justify-self: center;
+            justify-self: start;
             align-self: end;
             color: #023E8A; 
             margin: 0 4vw 1vh 0;
@@ -125,8 +125,8 @@ import AsideMenu from './AsideMenu.vue'
 
         #bioParagraph {
             grid-row: 2;
-            grid-column: 2 / 5;
-            justify-self: center;
+            grid-column: 2;
+            justify-self: start;
             align-self: start;
             font-size: 1.3em;
             font-style: italic;
@@ -175,5 +175,34 @@ import AsideMenu from './AsideMenu.vue'
             }
         }
     }
-    
+
+    @media screen and (min-width: 1100px) {
+        #userContainer {
+            width: 100%;
+            grid-template-columns: 30% 70%;
+
+            #imageContainer {
+                grid-column: 1;
+                grid-row: 1 / 3;
+                width: 100%;
+
+                img {
+                    height: 23vh;
+                    width: 23vh;
+                }
+            }
+
+            #userName {
+                grid-column: 2;
+                justify-self: start;
+                margin-left: 3vw;
+            }
+
+            #bioParagraph {
+                justify-self: start;
+                grid-column: 2;
+                margin: 0 0 0 4vw;
+            }
+        }
+    }
 </style>

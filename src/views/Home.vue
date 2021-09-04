@@ -3,6 +3,9 @@
     <div id="navBar">
       <NavBar />
     </div>
+    <aside id="sideMenu">
+      <AsideMenu />
+    </aside>
     <div id="homePageContainer">
       <div id="userInfo">
         <UserHomePage />
@@ -24,6 +27,7 @@ import UserHomePage from '../components/UserHomePage.vue'
 import UserTweetInput from '../components/UserTweetInput.vue'
 import FeedDisplay from '../components/FeedDisplay.vue'
 import NavBar from '../components/NavBar.vue'
+import AsideMenu from '../components/AsideMenu.vue'
 
   export default {
     name: 'Home',
@@ -31,7 +35,8 @@ import NavBar from '../components/NavBar.vue'
         UserHomePage,
         UserTweetInput,
         FeedDisplay,
-        NavBar
+        NavBar,
+        AsideMenu
     },
     computed: {
       getLoginToken() {
@@ -56,6 +61,10 @@ import NavBar from '../components/NavBar.vue'
     height: 56px;
   }
 
+  #sideMenu {
+    display: none;
+  }
+
  #homePage {
    display: grid;
    grid-template-rows: auto auto;
@@ -75,10 +84,6 @@ import NavBar from '../components/NavBar.vue'
         grid-row: 1;
       }
 
-      #sideBar {
-        display: none;
-      }
-
       #tweetInputContainer {
         grid-row: 2; 
         background-color: #ADE8F4;
@@ -93,6 +98,10 @@ import NavBar from '../components/NavBar.vue'
 
   @media screen and (min-width: 768px) {
 
+    #navBar {
+    right: 0;
+  }
+
     #homePage {
       justify-items: center;
 
@@ -102,6 +111,47 @@ import NavBar from '../components/NavBar.vue'
 
       #homePageContainer {
         grid-template-rows: 25vh 21vh;
+      }
+    }
+  }
+
+  @media screen and (min-width: 1100px) {
+    #navBar {
+        display: none;
+    }
+
+    #homePage {
+      grid-template-rows: auto auto;
+      grid-template-columns: 20% 60% 20%;
+      justify-items: center;
+
+      #sideMenu {
+        display: block;
+        grid-column: 1;
+        width: 20%;
+        height: 100vh;
+        position: fixed;
+        right: 80%;
+        background-color: #CAF0F8;
+      }
+
+      #homePageContainer{
+        margin-top: 0;
+        width: 99%;
+        grid-column: 2;
+
+          #tweetInputContainer{
+            width: 100%;
+          }
+      }
+
+      #homePageContainer {
+        grid-row: 1;
+      }
+
+      #mainFeed {
+        grid-row: 2;
+        margin-top: 1vh;
       }
     }
   }

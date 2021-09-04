@@ -198,5 +198,22 @@ import TweetCard from './TweetCard.vue'
             }
         }
     }
+
+    @media screen and (min-width: 1100px) {
+        #feedContainer {
+
+            #displayBtns {
+                width: 59%;
+
+                #myFeed {
+                    border-radius: 40px;
+                }
+
+                #mainFeed {
+                    border-radius: 40px;
+                }
+            }
+        }
+    }
     
 </style>

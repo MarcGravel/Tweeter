@@ -95,6 +95,7 @@
 
     #sideContainer {
         height: 100vh;
+        width: 100%;
         display: grid;
         grid-template-rows: repeat(10, 10%);
 
@@ -116,12 +117,14 @@
             width: 80%;
             justify-self: center;
             grid-row: 5;
+            margin-top: 1vh;
         }
 
         #logo2 {
             width: 40%;
             justify-self: center;
             grid-row: 8;
+            margin-top: 3vh;
         }
 
         #logo3 {

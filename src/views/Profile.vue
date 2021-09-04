@@ -82,15 +82,6 @@ import AsideMenu from '../components/AsideMenu.vue'
             display: none;
         }
 
-        #sideMenu {
-            display: block;
-            grid-column: 1;
-            width: 20%;
-            height: 100vh;
-            position: fixed;
-            background-color: #CAF0F8; 
-        }
-
         #profilePage {
             width: 100vw;
             display: grid;
@@ -100,6 +91,20 @@ import AsideMenu from '../components/AsideMenu.vue'
             #profileContainer {
                 grid-column: 2;
                 margin-top: 0;
+
+                #userProfile {
+                    margin-left: 20%;
+                }
+            }
+
+            #sideMenu {
+                display: block;
+                grid-column: 1;
+                width: 20%;
+                height: 100vh;
+                position: fixed;
+                right: 80%;
+                background-color: #CAF0F8; 
             }
         }
     }

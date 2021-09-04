@@ -102,4 +102,10 @@ import TweetCard from './TweetCard.vue'
             }
         }
     }
+
+    @media screen and (min-width: 1100px) {
+        #othersFeedContainer {
+            width: 60%;
+        }
+    }
 </style>

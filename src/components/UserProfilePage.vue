@@ -325,7 +325,7 @@ import AsideMenu from './AsideMenu.vue'
         width: 100%;
         height: 100%;
         display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-columns: 33% 33% 33%;
         grid-template-rows: 15vh 15vh 8vh 8vh 4vh;
 
         #bannerContainer {
@@ -523,6 +523,46 @@ import AsideMenu from './AsideMenu.vue'
     }
 
     @media screen and (min-width: 1100px) {
-        
+        #userPage {
+            width: 80%;
+
+            #userContainer {
+                width: 100%;
+
+                #bannerContainer {
+                    display: grid;
+
+                    img {
+                        width: 99%;
+                        justify-self: center;
+                    }
+                }
+
+                #imageContainer {
+                    grid-column: 2;
+
+                    img {
+                        margin-left: 0;
+                        margin-right: 4vw;
+                        height: 22vh;
+                        width: 22vh;
+                    }
+                }
+
+                #userName {
+                    grid-column: 1 / 5;
+                    justify-self: start
+                }
+
+                #bioParagraph {
+                    grid-column: 1 / 5;
+                    justify-self: start
+                }
+
+                #editBtn {
+                    margin-right: 1vw;
+                }
+            }
+        }
     }
 </style>
