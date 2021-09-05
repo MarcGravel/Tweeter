@@ -477,12 +477,28 @@ import NavBar from '../components/NavBar.vue'
             #userPageContainer {
                 margin-top: 0;
                 grid-column: 2;
+                width: 100%;
                 justify-self: start;
-                margin-left: 1%;
-                height: fit-content;
+                margin-left: 0.2%;
 
                 #othersContainer {
-                    height: fit-content;
+                    width: 100%;
+
+                    #bannerContainer {
+                        width: 100%;
+
+                        img {
+                            width: 100%;
+                        }
+                    }
+
+                    #imageContainer {
+
+                        img {
+                            height: 22vh;
+                            width: 22vh;
+                        }
+                    }
 
                     #followBtn, #unfollowBtn {
                         margin-top: 1vh;

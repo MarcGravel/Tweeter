@@ -142,6 +142,8 @@ import AsideMenu from '../components/AsideMenu.vue'
 
           #tweetInputContainer{
             width: 100%;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
           }
       }
 

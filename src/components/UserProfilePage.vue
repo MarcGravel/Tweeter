@@ -551,12 +551,14 @@ import AsideMenu from './AsideMenu.vue'
 
                 #userName {
                     grid-column: 1 / 5;
-                    justify-self: start
+                    justify-self: start;
+                    margin: 0 0 0 2vw;
                 }
 
                 #bioParagraph {
                     grid-column: 1 / 5;
-                    justify-self: start
+                    justify-self: start;
+                    margin: 0 0 0 3vw;
                 }
 
                 #editBtn {

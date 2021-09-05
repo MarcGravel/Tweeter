@@ -3,6 +3,9 @@
         <div id="navBar">
             <NavBar />
         </div>
+        <aside id="sideMenu">
+            <AsideMenu />
+        </aside>
         <div id="discoverContainer">
             <div id="userInfo">
                 <UserHomePage />
@@ -28,6 +31,7 @@ import FeaturedTweet from '../components/FeaturedTweet.vue'
 import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
+import AsideMenu from '../components/AsideMenu.vue'
 
     export default {
         name: "Discover",
@@ -35,7 +39,8 @@ import router from '../router'
             DiscoverUsers,
             UserHomePage,
             FeaturedTweet,
-            NavBar
+            NavBar,
+            AsideMenu
         },
         computed: {
             getLoginToken() {
@@ -57,6 +62,10 @@ import router from '../router'
       z-index: 99;
       grid-row: 1;
       height: 56px;
+    }
+
+    #sideMenu {
+        display: none;
     }
     
     #discoverContainer {
@@ -113,6 +122,8 @@ import router from '../router'
             #userInfo{
                 width: 768px;
                 justify-self: center;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
             }
 
             #featuredTweet {
@@ -132,6 +143,46 @@ import router from '../router'
                     h1 {
                         font-size: 2.5em;
                     }
+                }
+            }
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+
+        #navBar {
+            display: none;
+        }
+
+        #discoverPage {
+            display: grid;
+            grid-template-columns: 20% 60% 20%;
+        }
+
+        #sideMenu {
+            display: block;
+            grid-column: 1;
+            width: 20%;
+            height: 100vh;
+            position: fixed;
+            right: 80%;
+            background-color: #CAF0F8; 
+        }
+
+        #discoverContainer {
+            grid-column: 2;
+            margin-top: 0;
+            width: 100%;
+
+            #userInfo{
+                width: 60%;
+                margin-left: 0.3vw;
+            }
+
+            #discoverUsersContainer {
+
+                #discoverBanner {
+                    width: 60%;
                 }
             }
         }

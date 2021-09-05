@@ -3,6 +3,9 @@
         <div id="navBar">
             <NavBar />
         </div>
+        <aside id="sideMenu">
+            <AsideMenu />
+        </aside>
         <div id='followsContainer' @click="flipMenu">
             <div id="bannerContainer">
                 <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
@@ -54,7 +57,7 @@
                             <v-btn
                             color="primary"
                             @click="goToFollowProfile(tweetInfo.username)">
-                                Visit Profile
+                                Visit
                             </v-btn>
                         </v-col>    
                     </v-card-title>
@@ -80,7 +83,7 @@ import NavBar from '../components/NavBar.vue'
         components: {
             TweeterFooter,
             AsideMenu,
-            NavBar
+            NavBar,
         },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
@@ -185,28 +188,30 @@ import NavBar from '../components/NavBar.vue'
       height: 56px;
     }
 
+    #sideMenu {
+        display: none;
+    }
+
     #followsContainer {
         margin-top: 56px;
         grid-row: 2;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
+        display: grid;  
         grid-template-rows: 3fr auto auto;
+        width: 100vw;
 
         #bannerContainer {
-            width: 100vw;
+            width: 100%;
             height: 15vh;
-            grid-column: 1 / 3;
             grid-row: 1;
 
             img {
-                width: 100vw;
+                width: 100%;
                 height: 15vh;
                 object-fit: cover;
             }
         }
 
         #displayBtns {
-            grid-column: 1 / 3;
             grid-row: 2;
             width: 100%;
 
@@ -225,7 +230,6 @@ import NavBar from '../components/NavBar.vue'
         }
 
         #followDisplay {
-            grid-column: 1 / 3;
             margin: 1vh 0 1vh 0;
 
             #followCard {
@@ -260,11 +264,12 @@ import NavBar from '../components/NavBar.vue'
 
     @media screen and (min-width: 768px) {
         #followsContainer {
-            width: 768px;
 
             #bannerContainer {
                 display: grid;
                 justify-items: center;
+                width: 768px;
+                justify-self: center;
 
                 img {
                     width: 768px;
@@ -289,6 +294,50 @@ import NavBar from '../components/NavBar.vue'
             #followDisplay {
                 width: 768px;
                 justify-self: center;
+            }
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+        #navBar {
+            display: none;
+        }
+
+        #followsPage {
+            display: grid;
+            grid-template-columns: 20% 60% 20%;
+
+            #sideMenu {
+                display: block;
+                grid-column: 1;
+                width: 20%;
+                height: 100vh;
+                position: fixed;
+                right: 80%;
+                background-color: #CAF0F8; 
+            }
+
+            #followsContainer {
+                grid-column: 1;
+                margin-top: 0;
+                margin-left: 0.3vw;
+                width: 100%;
+
+                #bannerContainer {
+                    width: 60%;
+
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                #displayBtns {
+                    width: 60%;
+                }
+            }
+
+            #followDisplay {
+                width: 60%;
             }
         }
     }

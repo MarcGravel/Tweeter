@@ -14,7 +14,10 @@
                     </v-list-item-avatar>
 
                     <v-list-item-content>
-                    <v-list-item-title>{{userDataInfo.username}}</v-list-item-title>
+                    <v-list-item-title 
+                        @click="goToProfile($event)"
+                        >
+                        {{userDataInfo.username}}</v-list-item-title>
                     </v-list-item-content>
                 </v-list-item>
 
@@ -72,6 +75,10 @@
             }
         },
         methods: {
+            goToProfile(event) {
+                let clickedUserName = event.srcElement.innerText;
+                return this.$store.dispatch('dataOfClickedName', clickedUserName);
+            },
             redirectPendingTitleName(itemTitle) {
                 if (itemTitle == 'Log Out') {
                     //checks if logout button clicked. if so, sends data to store for logout
