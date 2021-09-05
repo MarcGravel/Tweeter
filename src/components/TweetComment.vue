@@ -15,10 +15,18 @@
                 </v-col> 
                 <div id="commentLike">
                     <v-icon 
+                        v-if="isLiked == false"
                         class="mr-1"
                         @click="likeComment(comment.commentId)"
                         >
-                        mdi-heart
+                        favorite_border
+                    </v-icon>
+                    <v-icon
+                        v-else 
+                        class="mr-1"
+                        @click="likeComment(comment.commentId)"
+                        >
+                        favorite
                     </v-icon>
                     <span class="subheading mr-2">{{commentLikes}}</span>
                 </div>
@@ -90,6 +98,7 @@ import { eventBus } from '../main'
                 overlay: false,
                 opacity: 0.9,
                 absolute: true,
+                isLiked: false
             }
         },
         methods: {
@@ -213,6 +222,19 @@ import { eventBus } from '../main'
                     }
                 }).then((response) => {
                     this.commentLikes = response.data.length;
+                    
+                    //sets data variable for like unlink button if user already liked
+                    let counter = 0;
+                    for(let i=0; i<response.data.length; i++) {
+                        if(response.data[i].userId == cookies.get('userId')) {
+                            this.isLiked = true;
+                            counter++
+                        }
+                    }
+                    //ensures to set isLiked back to false to button changes on screen for user view.
+                    if(counter == 0) {
+                        this.isLiked = false;
+                    }
                 }).catch((error) => {
                     console.log(error);
                 })
