@@ -15,6 +15,7 @@
 
                     <v-list-item-content>
                     <v-list-item-title 
+                        id="menuUsername"
                         @click="goToProfile($event)"
                         >
                         {{userDataInfo.username}}</v-list-item-title>
@@ -113,6 +114,10 @@
             font-family: 'Cedarville Cursive', cursive;
             font-size: 4em;
             color: #00B4D8;
+        }
+
+        #menuUsername {
+            cursor: pointer;
         }
 
         #sideMenu {

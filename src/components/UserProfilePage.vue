@@ -543,7 +543,7 @@ import AsideMenu from './AsideMenu.vue'
 
                     img {
                         margin-left: 0;
-                        margin-right: 4vw;
+                        margin-right: 0;
                         height: 22vh;
                         width: 22vh;
                     }

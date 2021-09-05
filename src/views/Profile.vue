@@ -6,6 +6,9 @@
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
+        <aside id="advertBar">
+            <AdvertSidebar />
+        </aside>
         <div id="profileContainer">
             <div id="userProfile">
                 <UserProfilePage />
@@ -24,6 +27,7 @@ import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
 import AsideMenu from '../components/AsideMenu.vue'
+import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Profile",
@@ -31,7 +35,8 @@ import AsideMenu from '../components/AsideMenu.vue'
             UserProfilePage,
             FeedDisplay,
             NavBar,
-            AsideMenu
+            AsideMenu,
+            AdvertSidebar
         },
         computed: {
             isUserProfile() {
@@ -59,6 +64,10 @@ import AsideMenu from '../components/AsideMenu.vue'
     }
 
     #sideMenu {
+        display: none;
+    }
+
+    #advertBar {
         display: none;
     }
 
@@ -90,10 +99,15 @@ import AsideMenu from '../components/AsideMenu.vue'
 
             #profileContainer {
                 grid-column: 2;
+                grid-row: 1;
                 margin-top: 0;
 
                 #userProfile {
                     margin-left: 20%;
+                }
+
+                #userEditInfo {
+                    margin-left: 1.5%;
                 }
             }
 
@@ -105,6 +119,14 @@ import AsideMenu from '../components/AsideMenu.vue'
                 position: fixed;
                 right: 80%;
                 background-color: #CAF0F8; 
+            }
+
+            #advertBar {
+                display: inline-block;
+                grid-column: 3;
+                width: 17%;
+                justify-self: end;
+                position: fixed;
             }
         }
     }

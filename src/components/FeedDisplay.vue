@@ -206,11 +206,13 @@ import TweetCard from './TweetCard.vue'
                 width: 59%;
 
                 #myFeed {
-                    border-radius: 40px;
+                    border-bottom-left-radius: 40px;
+                    border-top-left-radius: 40px;
                 }
 
                 #mainFeed {
-                    border-radius: 40px;
+                    border-bottom-right-radius: 40px;
+                    border-top-right-radius: 40px;
                 }
             }
         }
