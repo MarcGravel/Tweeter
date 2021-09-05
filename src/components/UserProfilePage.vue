@@ -518,6 +518,10 @@ import AsideMenu from './AsideMenu.vue'
                     align-self: start;
                     margin-top: 1vh;
                 }
+
+                #editForm {
+                    width: 80vw;
+                }
             }
         }
     }
@@ -563,6 +567,10 @@ import AsideMenu from './AsideMenu.vue'
 
                 #editBtn {
                     margin-right: 1vw;
+                }
+
+                #editForm {
+                    width: 60vw;
                 }
             }
         }

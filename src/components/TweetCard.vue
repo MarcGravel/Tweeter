@@ -31,7 +31,7 @@
                     v-if="tweetInfo.userId == userId" 
                     class="text-right"
                     @click="editTweet(tweetInfo), overlay = !overlay">
-                    <v-icon class="mr-1">
+                    <v-icon id="editIcon" class="mr-1">
                         edit
                     </v-icon>
                 </v-col> 
@@ -328,6 +328,10 @@ import CommentsContainer from './CommentsContainer.vue'
             width: 25vh;
             object-fit: cover;
             justify-self: center;
+        }
+
+        #editIcon {
+            cursor: pointer;
         }
     }
 

@@ -6,6 +6,9 @@
     <aside id="sideMenu">
       <AsideMenu />
     </aside>
+    <aside id="advertBar">
+        <AdvertSidebar />
+    </aside>
     <div id="homePageContainer">
       <div id="userInfo">
         <UserHomePage />
@@ -28,6 +31,7 @@ import UserTweetInput from '../components/UserTweetInput.vue'
 import FeedDisplay from '../components/FeedDisplay.vue'
 import NavBar from '../components/NavBar.vue'
 import AsideMenu from '../components/AsideMenu.vue'
+import AdvertSidebar from '../components/AdvertSidebar.vue'
 
   export default {
     name: 'Home',
@@ -36,7 +40,8 @@ import AsideMenu from '../components/AsideMenu.vue'
         UserTweetInput,
         FeedDisplay,
         NavBar,
-        AsideMenu
+        AsideMenu,
+        AdvertSidebar
     },
     computed: {
       getLoginToken() {
@@ -65,6 +70,10 @@ import AsideMenu from '../components/AsideMenu.vue'
     display: none;
   }
 
+  #advertBar {
+      display: none;
+  }
+
  #homePage {
    display: grid;
    grid-template-rows: auto auto;
@@ -80,7 +89,8 @@ import AsideMenu from '../components/AsideMenu.vue'
       #userInfo {
         height: 100%;
         width: 100%;
-        background-color: #0096C7;
+        background-color: rgb(0,150,199);
+        background: linear-gradient(54deg, rgba(0,150,199,1) 0%, rgba(144,224,239,1) 35%, rgba(0,180,216,1) 100%);
         grid-row: 1;
       }
 
@@ -135,25 +145,36 @@ import AsideMenu from '../components/AsideMenu.vue'
         background-color: #CAF0F8;
       }
 
+      #advertBar {
+          display: inline-block;
+          grid-column: 3;
+          width: 20%;
+          justify-self: end;
+          position: fixed;
+      }
+
       #homePageContainer{
         margin-top: 0;
         width: 99%;
         grid-column: 2;
+        grid-row: 1;
+
+        #userInfo {
+          margin-left: 0.2vw;
+        }
 
           #tweetInputContainer{
             width: 100%;
             border-bottom-left-radius: 10px;
             border-bottom-right-radius: 10px;
+            margin-left: 0.2vw;
           }
-      }
-
-      #homePageContainer {
-        grid-row: 1;
       }
 
       #mainFeed {
         grid-row: 2;
         margin-top: 1vh;
+        margin-right: 0.5vw;
       }
     }
   }

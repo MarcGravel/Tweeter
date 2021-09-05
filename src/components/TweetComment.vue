@@ -276,6 +276,7 @@ import { eventBus } from '../main'
                 grid-column: 2;
                 justify-self: end;
                 margin-right: 9vw;
+                cursor: pointer;
             }
         }
     }
@@ -298,6 +299,18 @@ import { eventBus } from '../main'
             #deleteCommentBtn {
                 justify-self: end;
             }
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        #editCommentForm {
+            width: 70vw;
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+        #editCommentForm {
+            width: 50vw;
         }
     }
 </style>

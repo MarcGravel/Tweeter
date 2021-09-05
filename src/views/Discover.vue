@@ -6,6 +6,9 @@
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
+        <aside id="advertBar">
+            <AdvertSidebar />
+        </aside>
         <div id="discoverContainer">
             <div id="userInfo">
                 <UserHomePage />
@@ -32,6 +35,7 @@ import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
 import AsideMenu from '../components/AsideMenu.vue'
+import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Discover",
@@ -40,7 +44,8 @@ import AsideMenu from '../components/AsideMenu.vue'
             UserHomePage,
             FeaturedTweet,
             NavBar,
-            AsideMenu
+            AsideMenu,
+            AdvertSidebar
         },
         computed: {
             getLoginToken() {
@@ -67,6 +72,10 @@ import AsideMenu from '../components/AsideMenu.vue'
     #sideMenu {
         display: none;
     }
+
+    #advertBar {
+        display: none;
+    }
     
     #discoverContainer {
         grid-row: 2;
@@ -79,7 +88,8 @@ import AsideMenu from '../components/AsideMenu.vue'
         #userInfo {
             height: 100%;
             width: 100%;
-            background-color: #0096C7;
+            background-color: rgb(0,150,199);
+            background: linear-gradient(54deg, rgba(0,150,199,1) 0%, rgba(144,224,239,1) 35%, rgba(0,180,216,1) 100%);
             grid-row: 1;
         }
 
@@ -157,6 +167,15 @@ import AsideMenu from '../components/AsideMenu.vue'
         #discoverPage {
             display: grid;
             grid-template-columns: 20% 60% 20%;
+        }
+
+        #advertBar {
+            display: inline-block;
+            grid-column: 3;
+            width: 20%;
+            justify-self: end;
+            position: fixed;
+            left: 80vw;
         }
 
         #sideMenu {

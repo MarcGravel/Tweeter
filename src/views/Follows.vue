@@ -6,6 +6,9 @@
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
+        <aside id="advertBar">
+            <AdvertSidebar />
+        </aside>
         <div id='followsContainer' @click="flipMenu">
             <div id="bannerContainer">
                 <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
@@ -77,6 +80,7 @@ import axios from 'axios'
 import TweeterFooter from '../components/TweeterFooter.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import NavBar from '../components/NavBar.vue'
+import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Follows",
@@ -84,6 +88,7 @@ import NavBar from '../components/NavBar.vue'
             TweeterFooter,
             AsideMenu,
             NavBar,
+            AdvertSidebar
         },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
@@ -192,12 +197,16 @@ import NavBar from '../components/NavBar.vue'
         display: none;
     }
 
+    #advertBar {
+        display: none;
+    }
+
     #followsContainer {
         margin-top: 56px;
         grid-row: 2;
         display: grid;  
         grid-template-rows: 3fr auto auto;
-        width: 100vw;
+        width: 100%;
 
         #bannerContainer {
             width: 100%;
@@ -317,10 +326,18 @@ import NavBar from '../components/NavBar.vue'
                 background-color: #CAF0F8; 
             }
 
+            #advertBar {
+                display: inline-block;
+                grid-column: 3;
+                width: 19%;
+                justify-self: end;
+                position: fixed;
+            }
+
             #followsContainer {
                 grid-column: 1;
                 margin-top: 0;
-                margin-left: 0.3vw;
+                margin-left: 0.7vw;
                 width: 100%;
 
                 #bannerContainer {
