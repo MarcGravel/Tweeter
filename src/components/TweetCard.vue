@@ -59,10 +59,18 @@
                 justify="end"
                 >
                 <v-icon 
+                    v-if="isLiked == false"
                     class="mr-1"
                     @click="likeTweet(tweetInfo.tweetId)"
                     >
-                    mdi-heart
+                    favorite_border
+                </v-icon>
+                <v-icon 
+                    v-else
+                    class="mr-1"
+                    @click="likeTweet(tweetInfo.tweetId)"
+                    >
+                    favorite
                 </v-icon>
                 <span class="subheading mr-2">{{likeCount}}</span>
                 </v-row>
@@ -159,6 +167,7 @@ import CommentsContainer from './CommentsContainer.vue'
                 isActive: false,
                 imageOverlay: false,
                 imageOpacity: 1,
+                isLiked: false
             }
         },
         methods: {
@@ -283,6 +292,18 @@ import CommentsContainer from './CommentsContainer.vue'
                     }
                 }).then((response) => {
                     this.likeCount = response.data.length;
+                    //sets data variable for like unlink button if user already liked
+                    let counter = 0;
+                    for(let i=0; i<response.data.length; i++) {
+                        if(response.data[i].userId == cookies.get('userId')) {
+                            this.isLiked = true;
+                            counter++
+                        }
+                    }
+                    //ensures to set isLiked back to false to button changes on screen for user view.
+                    if(counter == 0) {
+                        this.isLiked = false;
+                    }
                 }).catch((error) => {
                     console.log(error);
                 })
