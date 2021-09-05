@@ -82,7 +82,7 @@
                 :absolute="absolute"
                 :value="overlay"
                 :opacity="opacity">
-                <v-form id=editTweetForm>
+                <v-form id="editTweetForm">
                     <h3>Change any field below to update it</h3>
                     <v-text-field id="editInput"
                         v-model="updatedTweetContent"
@@ -416,6 +416,13 @@ import CommentsContainer from './CommentsContainer.vue'
             #commentButton {
                 font-size: 1.1em;
             }
+        }
+    }
+
+    @media screen and (min-width: 1100px) {
+
+        #editTweetForm {
+            width: 40vw;
         }
     }
 </style>

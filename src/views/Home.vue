@@ -103,7 +103,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
   #mainFeed {
         height: fit-content;
         width: 100%;
-        background-color: rgb(63, 63, 63); 
       }
 
   @media screen and (min-width: 768px) {

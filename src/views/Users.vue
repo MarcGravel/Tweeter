@@ -9,6 +9,9 @@ build views in a few different ways to practice structure-->
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
+        <aside id="advertBar">
+            <AdvertSidebar />
+        </aside>
         <div id="userPageContainer" @click="flipMenu">
             <div id="othersContainer">
                 <div id="bannerContainer">
@@ -75,6 +78,7 @@ import router from '../router'
 import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import NavBar from '../components/NavBar.vue'
+import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Users",
@@ -82,6 +86,7 @@ import NavBar from '../components/NavBar.vue'
             OthersFeedDisplay,
             AsideMenu,
             NavBar,
+            AdvertSidebar
         },
         props: ['username'],
         computed: {
@@ -222,6 +227,10 @@ import NavBar from '../components/NavBar.vue'
       z-index: 99;
       grid-row: 1;
       height: 56px;
+    }
+
+    #advertBar {
+        display: none;
     }
 
     #usersPage {
@@ -472,6 +481,14 @@ import NavBar from '../components/NavBar.vue'
                 position: fixed;
                 right: 80%;
                 background-color: #CAF0F8; 
+            }
+
+            #advertBar {
+                display: inline-block;
+                grid-column: 3;
+                width: 20%;
+                justify-self: end;
+                position: fixed;
             }
 
             #userPageContainer {

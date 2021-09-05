@@ -155,6 +155,8 @@ import TweetCard from './TweetCard.vue'
 <style lang="scss" scoped>
     #feedContainer {
         display: grid;
+        background-color: rgb(34, 34, 34);
+        background: linear-gradient(0deg, rgba(34,34,34,1) 0%, rgba(40,39,39,1) 33%, rgba(63,63,63,1) 100%);
         
         #displayBtns {
         width: 100%;
