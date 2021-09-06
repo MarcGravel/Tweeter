@@ -12,7 +12,7 @@
         <div id='followsContainer' @click="flipMenu">
             <div id="bannerContainer">
                 <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
-                <img v-else :src="userDataInfo.bannerUrl" alt="Users Image">
+                <img v-else @click="imageOverlay = !imageOverlay" :src="userDataInfo.bannerUrl" alt="Users Image">
             </div>
             <div id="displayBtns">
                 <v-btn id="mainFeed" 
@@ -70,6 +70,20 @@
                     </v-card-text>
                 </v-card>
             </div>
+            <v-overlay
+                :value="imageOverlay"
+                :opacity="imageOpacity">
+                <div id="bannerImageOverlay">
+                    <img :src="userDataInfo.bannerUrl" alt="The Clicked tweet image">
+                    <v-btn
+                        id="imageBack"
+                        color="error"
+                        @click="imageOverlay = !imageOverlay"
+                        >
+                        Back
+                    </v-btn>
+                </div>
+            </v-overlay>
             <TweeterFooter />
         </div>
     </div>
@@ -120,6 +134,8 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
                 followerUsers: {
 
                 },
+                imageOverlay: false,
+                imageOpacity: 1,
             }
         },
         methods: {
@@ -268,6 +284,20 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
                     justify-self: center;
                 }
             }
+        }
+    }
+
+    #bannerImageOverlay {
+        display: grid;
+        justify-items: center;
+
+        img {
+            display: block;
+            width: 90%;
+        }
+
+        #imageBack {
+            margin-top: 2vh;
         }
     }
 
