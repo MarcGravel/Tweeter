@@ -55,7 +55,6 @@
 <script>
     export default {
         name: "AsideMenu",
-        props: ['drawerStatus'],
         computed: {
             userDataInfo() {
                 return this.$store.state.currentUser;
@@ -63,7 +62,6 @@
         },
         data() {
             return {
-                drawer: this.drawerStatus,
                 //items inside the side menu
                 items: [
                 { title: 'Home', icon: 'dashboard', route: '/home' },

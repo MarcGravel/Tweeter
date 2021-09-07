@@ -121,7 +121,6 @@ export default new Vuex.Store({
     //LogsOut if logout button is clicked
     logout(state, itemTitle) {
       if (itemTitle == "Log Out") {
-
         axios.request({
             url: process.env.VUE_APP_API_SITE+'/api/login',
             method: 'DELETE',

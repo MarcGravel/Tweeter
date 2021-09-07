@@ -45,7 +45,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             FeaturedTweet,
             NavBar,
             AsideMenu,
-            AdvertSidebar
+            AdvertSidebar,
         },
         computed: {
             getLoginToken() {

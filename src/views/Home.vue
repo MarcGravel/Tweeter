@@ -33,6 +33,7 @@ import NavBar from '../components/NavBar.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import AdvertSidebar from '../components/AdvertSidebar.vue'
 
+
   export default {
     name: 'Home',
     components: {
@@ -41,14 +42,14 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         FeedDisplay,
         NavBar,
         AsideMenu,
-        AdvertSidebar
+        AdvertSidebar,
     },
     computed: {
       getLoginToken() {
         return cookies.get('loginToken') 
       },
     },
-    //if login token not there, this will not allow home page to loat and will redirect to login
+    //if login token not there, this will not allow home page to load and will redirect to login
     beforeMount() {
         if (this.getLoginToken === null) {
           router.push('/');

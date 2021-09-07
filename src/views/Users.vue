@@ -45,7 +45,6 @@ build views in a few different ways to practice structure-->
                     </v-icon>
                 Unfollow
                 </v-btn>
-                <AsideMenu v-if="drawer == true" :drawerStatus="drawer"/>
             </div>
             <div id="displayBanner">
                 <h4>See what {{othersData.username}} is talking about</h4>

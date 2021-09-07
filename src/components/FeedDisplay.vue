@@ -30,7 +30,7 @@ import TweetCard from './TweetCard.vue'
         name: 'FeedDisplay',
         components: {
             TweeterFooter,
-            TweetCard
+            TweetCard,
         },
         beforeMount() {
             let theUserId = cookies.get('userId');
@@ -153,6 +153,7 @@ import TweetCard from './TweetCard.vue'
 </script>
 
 <style lang="scss" scoped>
+
     #feedContainer {
         display: grid;
         background-color: rgb(34, 34, 34);
