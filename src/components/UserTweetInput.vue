@@ -44,7 +44,8 @@ import { eventBus }  from '../main'
             return {
                 tweetInput: '',
                 textAmt: [v => v.length <= 139 || 'Max 140 characters'],
-                tweetImg: '',
+                //changed initial value to null due to backend/db url validation
+                tweetImg: null,
                 validateUrl: [
                     (value) => this.isURL(value) || 'Not a valid URL'
                 ]
@@ -70,11 +71,11 @@ import { eventBus }  from '../main'
                         //sends event to listener in feed display to update tweets on the page in real time
                         eventBus.$emit('updateFeed');
                     }).catch((error) => {
-                        console.log(error);
+                        console.log(error.response);
                     })
 
                     this.tweetInput = '';
-                    this.tweetImg = '';
+                    this.tweetImg = null;
                 }
 
                 

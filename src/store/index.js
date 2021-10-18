@@ -86,7 +86,7 @@ export default new Vuex.Store({
             'Content-Type': 'application/json'
         },
         params: {
-            userId: userId
+            "userId": userId
         }
     }).then((response) => {
       return this.commit('userData', response.data[0])

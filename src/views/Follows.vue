@@ -6,9 +6,6 @@
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
-        <aside id="advertBar">
-            <AdvertSidebar />
-        </aside>
         <div id='followsContainer' @click="flipMenu">
             <div id="bannerContainer">
                 <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
@@ -94,7 +91,6 @@ import axios from 'axios'
 import TweeterFooter from '../components/TweeterFooter.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import NavBar from '../components/NavBar.vue'
-import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Follows",
@@ -102,7 +98,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             TweeterFooter,
             AsideMenu,
             NavBar,
-            AdvertSidebar
         },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
@@ -203,18 +198,18 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 <style lang="scss" scoped>
 
     #navBar {
-      position: fixed;
-      z-index: 99;
-      grid-row: 1;
-      height: 56px;
+        position: fixed;
+        z-index: 99;
+        grid-row: 1;
+        height: 56px;
     }
 
     #sideMenu {
         display: none;
     }
 
-    #advertBar {
-        display: none;
+    #followsPage {
+        background-color: #3f3f3f;
     }
 
     #followsContainer {
@@ -344,7 +339,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 
         #followsPage {
             display: grid;
-            grid-template-columns: 20% 60% 20%;
+            grid-template-columns: 20% 80%;
 
             #sideMenu {
                 display: block;
@@ -356,19 +351,11 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
                 background-color: #CAF0F8; 
             }
 
-            #advertBar {
-                display: inline-block;
-                grid-column: 3;
-                width: 19%;
-                justify-self: end;
-                position: fixed;
-            }
-
             #followsContainer {
                 grid-column: 1;
                 margin-top: 0;
-                margin-left: 0.7vw;
-                width: 100%;
+                margin-left: 50%;
+                width: 80%;
 
                 #bannerContainer {
                     width: 60%;

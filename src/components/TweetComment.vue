@@ -77,6 +77,7 @@
 import axios from 'axios'
 import cookies from 'vue-cookies'
 import { eventBus } from '../main'
+import router from '../router'
 
     export default {
         name: "TweetComment",
@@ -104,7 +105,10 @@ import { eventBus } from '../main'
         methods: {
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
-                return this.$store.dispatch('dataOfClickedName', clickedUserName);
+                //checks username not same as current route to avoid NavigationDuplicated
+                if (router.currentRoute.path != "/users/"+clickedUserName) {
+                    return this.$store.dispatch('dataOfClickedName', clickedUserName)
+                }
             },
             editComment(comment) {
                 this.clickedCommentEditData.content = comment.content;

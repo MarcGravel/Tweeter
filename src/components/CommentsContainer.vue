@@ -107,7 +107,7 @@ import { eventBus } from '../main'
                         "tweetId": this.tweetId
                     }
                 }).then((response) => {
-                    this.tweetComments = response.data.reverse();
+                    this.tweetComments = response.data;
                 }).catch((error) => {
                     console.log(error);
                 })

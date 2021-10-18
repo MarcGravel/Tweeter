@@ -9,9 +9,6 @@ build views in a few different ways to practice structure-->
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
-        <aside id="advertBar">
-            <AdvertSidebar />
-        </aside>
         <div id="userPageContainer" @click="flipMenu">
             <div id="othersContainer">
                 <div id="bannerContainer">
@@ -77,7 +74,6 @@ import router from '../router'
 import OthersFeedDisplay from '../components/OthersFeedDisplay.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import NavBar from '../components/NavBar.vue'
-import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Users",
@@ -85,7 +81,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             OthersFeedDisplay,
             AsideMenu,
             NavBar,
-            AdvertSidebar
         },
         props: ['username'],
         computed: {
@@ -148,7 +143,10 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             //gets name clicked on and sends name to action to get user data
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
-                return this.$store.dispatch('dataOfClickedName', clickedUserName)
+                //checks username not same as current route to avoid NavigationDuplicated
+                if (router.currentRoute.path != "/users/"+clickedUserName) {
+                    return this.$store.dispatch('dataOfClickedName', clickedUserName)
+                }
             },
             //checks if logout button clicked. if so, sends data to store for logout
             checkForLogout(itemTitle) {
@@ -222,18 +220,15 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 <style lang="scss" scoped>
 
     #navBar {
-      position: fixed;
-      z-index: 99;
-      grid-row: 1;
-      height: 56px;
-    }
-
-    #advertBar {
-        display: none;
+        position: fixed;
+        z-index: 99;
+        grid-row: 1;
+        height: 56px;
     }
 
     #usersPage {
         display: grid;
+        background: linear-gradient(0deg, rgb(49, 49, 49) 0%, rgb(43, 42, 42) 33%, rgb(63, 63, 63) 100%);
 
         #sideMenu {
             display: none;
@@ -453,12 +448,12 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
                     }
                 }
 
-                 #displayBanner {
+                #displayBanner {
 
-                     h4 {
-                         font-size: 1.6em;
-                     }
-                 }
+                    h4 {
+                        font-size: 1.6em;
+                    }
+                }
             }
         }
     }
@@ -469,7 +464,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         }
 
         #usersPage {
-            grid-template-columns: 20% 60% 20%;
+            grid-template-columns: 20% 80%;
             grid-template-rows: auto auto;
 
             #sideMenu {
@@ -482,19 +477,11 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
                 background-color: #CAF0F8; 
             }
 
-            #advertBar {
-                display: inline-block;
-                grid-column: 3;
-                width: 20%;
-                justify-self: end;
-                position: fixed;
-            }
-
             #userPageContainer {
                 margin-top: 0;
                 grid-column: 2;
-                width: 100%;
-                justify-self: start;
+                width: 80%;
+                justify-self: center;
                 margin-left: 0.2%;
 
                 #othersContainer {
@@ -540,6 +527,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         }
         #feedDisplay {
             grid-row: 2;
+            margin-left: 50%;
         }
     }
 </style>

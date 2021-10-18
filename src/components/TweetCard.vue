@@ -42,7 +42,7 @@
             </v-card-text>
 
             <img id="tweeterImg" 
-                v-if="tweetInfo.tweetImageUrl != ''" :src="tweetInfo.tweetImageUrl"
+                v-if="tweetInfo.tweetImageUrl != null" :src="tweetInfo.tweetImageUrl"
                 @click="imageOverlay = !imageOverlay" 
                 alt="Tweet Image">
 
@@ -140,6 +140,7 @@ import cookies from 'vue-cookies'
 import axios from 'axios'
 import { eventBus } from '../main'
 import CommentsContainer from './CommentsContainer.vue'
+import router from '../router'
 
     export default {
         name: "TweetCard",
@@ -173,7 +174,10 @@ import CommentsContainer from './CommentsContainer.vue'
         methods: {
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
-                return this.$store.dispatch('dataOfClickedName', clickedUserName);
+                //checks username not same as current route to avoid NavigationDuplicated
+                if (router.currentRoute.path != "/users/"+clickedUserName) {
+                    return this.$store.dispatch('dataOfClickedName', clickedUserName)
+                }
             },
             editTweet(tweetInfo) {
                 this.clickedTweetEditData.content = tweetInfo.content;

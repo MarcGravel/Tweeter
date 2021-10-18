@@ -48,7 +48,7 @@ import router from '../router';
                 if (itemTitle == 'Log Out') {
                     //checks if logout button clicked. if so, sends data to store for logout
                     return this.$store.dispatch('logout', itemTitle);
-                } else if (itemTitle == 'Follows') {
+                } else if (itemTitle == 'Follows' && router.currentRoute.path !="/follows") {
                     //if follows button is clicked, sends data to store. this data is hard coded as 'follows'
                     //as it is using the same follow request as on the profile page
                     let passedData = ["Follows", this.userDataInfo.userId];
@@ -57,7 +57,9 @@ import router from '../router';
             },
             //goes to user profile page when clicked
             routeToProfile() {
-                router.push('/profile');
+                if (router.currentRoute.path !="/profile") {
+                    router.push('/profile');
+                }
             },
         }
     }

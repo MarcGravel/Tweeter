@@ -53,6 +53,7 @@
 <!-- <v-app-bar-nav-icon id="hamburgerIcon" color="black" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>-->
 
 <script>
+import router from '../router';
     export default {
         name: "AsideMenu",
         computed: {
@@ -82,14 +83,19 @@
                 if (itemTitle == 'Log Out') {
                     //checks if logout button clicked. if so, sends data to store for logout
                     return this.$store.dispatch('logout', itemTitle);
-                } else if (itemTitle == 'Follows') {
+
+                //ensures router is not current at /follows to avoid NavigationDuplicated
+                } else if (itemTitle == 'Follows' && router.currentRoute.path !="/follows") {
                     //if follows button is clicked, sends data to store. this data is hard coded as 'follows'
                     //as it is using the same follow request as on the profile page
+                    //ensures router is not current at /follows to avoid NavigationDuplicated
                     let passedData = ["Follows", this.userDataInfo.userId];
-                    return this.$store.commit('followLinkClick', passedData);
-                } else if (itemTitle == "My Profile") {
+                    return this.$store.commit('followLinkClick', passedData); 
+
+                //ensures router is not current at /profile to avoid NavigationDuplicated    
+                } else if (itemTitle == "My Profile" && router.currentRoute.path !="/profile") {
                     //goes to user profile page when clicked
-                     return this.$store.commit('loadUserProfile', true);
+                    return this.$store.commit('loadUserProfile', true);
                 }
             },
         }

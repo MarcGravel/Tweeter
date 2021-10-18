@@ -6,9 +6,6 @@
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
-        <aside id="advertBar">
-            <AdvertSidebar />
-        </aside>
         <div id="discoverContainer">
             <div id="userInfo">
                 <UserHomePage />
@@ -35,7 +32,6 @@ import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
 import AsideMenu from '../components/AsideMenu.vue'
-import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Discover",
@@ -45,7 +41,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             FeaturedTweet,
             NavBar,
             AsideMenu,
-            AdvertSidebar,
         },
         computed: {
             getLoginToken() {
@@ -63,18 +58,18 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 <style lang="scss" scoped>
 
     #navBar {
-      position: fixed;
-      z-index: 99;
-      grid-row: 1;
-      height: 56px;
+    position: fixed;
+    z-index: 99;
+    grid-row: 1;
+    height: 56px;
     }
 
     #sideMenu {
         display: none;
     }
 
-    #advertBar {
-        display: none;
+    #discoverPage {
+        background: linear-gradient(0deg, rgb(49, 49, 49) 0%, rgb(43, 42, 42) 33%, rgb(63, 63, 63) 100%);
     }
     
     #discoverContainer {
@@ -97,7 +92,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             height: auto;
             width: 100%;
             grid-row: 2;
-            background-color: rgb(63, 63, 63);
             display: grid;
             justify-items: center;
             
@@ -108,20 +102,20 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         }
 
         #discoverUsersContainer {
-          grid-row: 3;
+            grid-row: 3;
 
-          #discoverBanner {
-            background-color: #0096C7;
-            height: 8vh;
-            display: grid;
-            justify-items: center;
-            align-items: center;
-            box-shadow: 0 10px 20px #03045E ;
+            #discoverBanner {
+                background-color: #0096C7;
+                height: 8vh;
+                display: grid;
+                justify-items: center;
+                align-items: center;
+                box-shadow: 0 10px 20px #03045E ;
             
             h1 {
                 color: white;
             }
-          }
+        }
         }
     }
 
@@ -166,16 +160,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 
         #discoverPage {
             display: grid;
-            grid-template-columns: 20% 60% 20%;
-        }
-
-        #advertBar {
-            display: inline-block;
-            grid-column: 3;
-            width: 20%;
-            justify-self: end;
-            position: fixed;
-            left: 80vw;
+            grid-template-columns: 20% 80%;
         }
 
         #sideMenu {
@@ -191,7 +176,8 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         #discoverContainer {
             grid-column: 2;
             margin-top: 0;
-            width: 100%;
+            width: 80%;
+            margin-left: 10%;
 
             #userInfo{
                 width: 60%;

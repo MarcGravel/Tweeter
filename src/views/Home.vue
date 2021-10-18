@@ -6,9 +6,6 @@
     <aside id="sideMenu">
       <AsideMenu />
     </aside>
-    <aside id="advertBar">
-        <AdvertSidebar />
-    </aside>
     <div id="homePageContainer">
       <div id="userInfo">
         <UserHomePage />
@@ -31,7 +28,6 @@ import UserTweetInput from '../components/UserTweetInput.vue'
 import FeedDisplay from '../components/FeedDisplay.vue'
 import NavBar from '../components/NavBar.vue'
 import AsideMenu from '../components/AsideMenu.vue'
-import AdvertSidebar from '../components/AdvertSidebar.vue'
 
 
   export default {
@@ -42,7 +38,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         FeedDisplay,
         NavBar,
         AsideMenu,
-        AdvertSidebar,
     },
     computed: {
       getLoginToken() {
@@ -71,15 +66,12 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
     display: none;
   }
 
-  #advertBar {
-      display: none;
-  }
+  #homePage {
+    display: grid;
+    grid-template-rows: auto auto;
+    background: linear-gradient(0deg, rgb(49, 49, 49) 0%, rgb(43, 42, 42) 33%, rgb(63, 63, 63) 100%);
 
- #homePage {
-   display: grid;
-   grid-template-rows: auto auto;
-
-   #homePageContainer {
+  #homePageContainer {
     margin-top: 56px;
     grid-row: 1;
     width: 100%;
@@ -100,7 +92,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         background-color: #ADE8F4;
       }
     }
- }
+}
   #mainFeed {
         height: fit-content;
         width: 100%;
@@ -114,6 +106,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     #homePage {
       justify-items: center;
+      background: transparent;
 
       #homePageContainer, #tweetInputContainer{
         width: 768px;
@@ -132,7 +125,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     #homePage {
       grid-template-rows: auto auto;
-      grid-template-columns: 20% 60% 20%;
+      grid-template-columns: 20% 80%;
       justify-items: center;
 
       #sideMenu {
@@ -145,17 +138,9 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         background-color: #CAF0F8;
       }
 
-      #advertBar {
-          display: inline-block;
-          grid-column: 3;
-          width: 20%;
-          justify-self: end;
-          position: fixed;
-      }
-
       #homePageContainer{
         margin-top: 0;
-        width: 99%;
+        width: 80%;
         grid-column: 2;
         grid-row: 1;
 
@@ -174,7 +159,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
       #mainFeed {
         grid-row: 2;
         margin-top: 1vh;
-        margin-right: 0.5vw;
+        margin-left: 90%;
       }
     }
   }

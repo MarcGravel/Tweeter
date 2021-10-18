@@ -6,9 +6,6 @@
         <aside id="sideMenu">
             <AsideMenu />
         </aside>
-        <aside id="advertBar">
-            <AdvertSidebar />
-        </aside>
         <div id="profileContainer">
             <div id="userProfile">
                 <UserProfilePage />
@@ -27,7 +24,6 @@ import NavBar from '../components/NavBar.vue'
 import cookies from 'vue-cookies'
 import router from '../router'
 import AsideMenu from '../components/AsideMenu.vue'
-import AdvertSidebar from '../components/AdvertSidebar.vue'
 
     export default {
         name: "Profile",
@@ -36,7 +32,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
             FeedDisplay,
             NavBar,
             AsideMenu,
-            AdvertSidebar
         },
         computed: {
             isUserProfile() {
@@ -57,17 +52,17 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
 <style lang="scss" scoped>
 
     #navBar {
-      position: fixed;
-      z-index: 99;
-      grid-row: 1;
-      height: 56px;
+        position: fixed;
+        z-index: 99;
+        grid-row: 1;
+        height: 56px;
+    }
+
+    #profilePage {
+        background: linear-gradient(0deg, rgb(49, 49, 49) 0%, rgb(43, 42, 42) 33%, rgb(63, 63, 63) 100%);
     }
 
     #sideMenu {
-        display: none;
-    }
-
-    #advertBar {
         display: none;
     }
 
@@ -94,7 +89,7 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
         #profilePage {
             width: 100vw;
             display: grid;
-            grid-template-columns: 20% 60% 20%;
+            grid-template-columns: 20% 80%;
             justify-items: center;
 
             #profileContainer {
@@ -119,14 +114,6 @@ import AdvertSidebar from '../components/AdvertSidebar.vue'
                 position: fixed;
                 right: 80%;
                 background-color: #CAF0F8; 
-            }
-
-            #advertBar {
-                display: inline-block;
-                grid-column: 3;
-                width: 17%;
-                justify-self: end;
-                position: fixed;
             }
         }
     }
