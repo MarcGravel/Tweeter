@@ -117,7 +117,7 @@ import axios from 'axios'
             },
             //gets a length of max 20 characters for a preview on the notification
             getTweetSumry(content) {
-                this.tweetContentSum = content.slice(0, 20);
+                this.tweetContentSum = content.slice(0, 15);
             },
             loadComments(tweetId) {
                 if (tweetId != null) {
@@ -146,7 +146,7 @@ import axios from 'axios'
                 }
             },
             getCommentSumry(content) {
-                this.commentContentSum = content.slice(0, 20);
+                this.commentContentSum = content.slice(0, 15);
             },
         }
     }
@@ -154,7 +154,7 @@ import axios from 'axios'
 
 <style lang="scss" scoped>
     #notePanel {
-        height: 8vh;
+        height: 10vh;
         padding: 1vh 1vw 1vh 0.5vw;
         border-bottom: 1px solid black;
         background-color:#26c6da;
@@ -174,7 +174,7 @@ import axios from 'axios'
     }
 
     #noteUnseen {
-        height: 8vh;
+        height: 10vh;
         padding: 1vh 1vw 1vh 0.5vw;
         border-bottom: 1px solid black;
         background-color:#078494;
@@ -190,5 +190,10 @@ import axios from 'axios'
         p {
             margin-left: 0.5vw;
         }
+    }
+
+    #notePanel:hover, #noteUnseen:hover {
+        cursor: pointer;
+        background-color:#6cdceb; 
     }
 </style>

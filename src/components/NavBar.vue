@@ -3,7 +3,18 @@
         <v-toolbar id="toolbar"
             dark
             >
-            <v-list-item-avatar @click="routeToProfile" id="navAvatar">
+            <v-navigation-drawer
+                id="notificationDrawer"
+                v-model="noteDrawer"
+                absolute
+                temporary
+                color="#00B4D8"
+                width="70%"
+                height="80vh"
+                >
+                <NotificationMenu />
+            </v-navigation-drawer>
+            <v-list-item-avatar @click="notificationDrawer(); updateNoteSeen()" id="navAvatar">
                 <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
                 <v-img v-else :src="userDataInfo.imageUrl"></v-img>
             </v-list-item-avatar>
@@ -24,10 +35,14 @@
 
 <script>
 import router from '../router';
-
+import { eventBus } from '../main'
+import NotificationMenu from './NotificationMenu.vue'
 
     export default {
         name: "NavBar",
+        components: {
+            NotificationMenu,
+        },
         computed: {
             userDataInfo() {
                 return this.$store.state.currentUser;
@@ -41,9 +56,19 @@ import router from '../router';
                 { title: 'Follows', icon: 'follow_the_signs' },
                 { title: 'Log Out', icon: 'logout' },
                 ],
+                absolute: true,
+                noteDrawer: null,
             }
         },
         methods: {
+            updateNoteSeen() {
+                setTimeout(function() {
+                    eventBus.$emit("patchNotifications");
+                }, 5000);
+            },
+            notificationDrawer() {
+                this.noteDrawer = !this.noteDrawer;
+            },
             redirectPendingTitleName(itemTitle) {
                 if (itemTitle == 'Log Out') {
                     //checks if logout button clicked. if so, sends data to store for logout
