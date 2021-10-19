@@ -1,6 +1,16 @@
 <template>
     <div>
         <div id="sideContainer">
+            <v-navigation-drawer
+                id="notificationDrawer"
+                v-model="noteDrawer"
+                absolute
+                temporary
+                color="#00B4D8"
+                width="100%"
+                >
+                <NotificationMenu />
+            </v-navigation-drawer>
             <h1 id="siteName">Tweeter</h1>
             <aside id="sideMenu">
                 <v-navigation-drawer
@@ -9,8 +19,8 @@
                 >
                 <v-list-item>
                     <v-list-item-avatar>
-                    <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                    <v-img v-else :src="userDataInfo.imageUrl"></v-img>
+                    <v-img id="avatar" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" @click="notificationDrawer(); updateNoteSeen()"></v-img>
+                    <v-img id="avatar" v-else :src="userDataInfo.imageUrl" @click="notificationDrawer(); updateNoteSeen()"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
@@ -53,9 +63,14 @@
 <!-- <v-app-bar-nav-icon id="hamburgerIcon" color="black" @click.stop="drawer = !drawer"></v-app-bar-nav-icon>-->
 
 <script>
-import router from '../router';
+import router from '../router'
+import { eventBus } from '../main'
+import NotificationMenu from './NotificationMenu.vue'
     export default {
         name: "AsideMenu",
+        components: {
+            NotificationMenu,
+        },
         computed: {
             userDataInfo() {
                 return this.$store.state.currentUser;
@@ -72,9 +87,18 @@ import router from '../router';
                 { title: 'Log Out', icon: 'logout' },
                 ],
                 absolute: true,
+                noteDrawer: null,
             }
         },
         methods: {
+            updateNoteSeen() {
+                setTimeout(function() {
+                    eventBus.$emit("patchNotifications");
+                }, 5000);
+            },
+            notificationDrawer() {
+                this.noteDrawer = !this.noteDrawer;
+            },
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
@@ -118,6 +142,10 @@ import router from '../router';
             font-family: 'Cedarville Cursive', cursive;
             font-size: 4em;
             color: #00B4D8;
+        }
+
+        #avatar {
+            cursor: pointer;
         }
 
         #menuUsername {
