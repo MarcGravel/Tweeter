@@ -101,6 +101,10 @@ import NotificationMenu from './NotificationMenu.vue'
             cursor: pointer;
         }
 
+        #notificationDrawer {
+            border-bottom-right-radius: 20px;
+        }
+
         #listItem {
             padding: 0;
             margin: 0;
