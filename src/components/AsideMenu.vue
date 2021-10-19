@@ -1,7 +1,9 @@
 <template>
     <div>
         <div id="sideContainer">
+            <!-- @transitionend fires when nav draw is closed --> 
             <v-navigation-drawer
+                @transitionend="patchNotification"
                 id="notificationDrawer"
                 v-model="noteDrawer"
                 absolute
@@ -19,8 +21,8 @@
                 >
                 <v-list-item>
                     <v-list-item-avatar>
-                    <v-img id="avatar" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" @click="notificationDrawer(); updateNoteSeen()"></v-img>
-                    <v-img id="avatar" v-else :src="userDataInfo.imageUrl" @click="notificationDrawer(); updateNoteSeen()"></v-img>
+                    <v-img id="avatar" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" @click="notificationDrawer"></v-img>
+                    <v-img id="avatar" v-else :src="userDataInfo.imageUrl" @click="notificationDrawer"></v-img>
                     </v-list-item-avatar>
 
                     <v-list-item-content>
@@ -91,15 +93,19 @@ import NotificationMenu from './NotificationMenu.vue'
             }
         },
         methods: {
-            updateNoteSeen() {
-                setTimeout(function() {
+            patchNotification() {
+                //only runs when noteification drawer closes
+                if (this.noteDrawer == false) {
                     eventBus.$emit("patchNotifications");
-                }, 5000);
+                }
             },
             notificationDrawer() {
                 this.noteDrawer = !this.noteDrawer;
+                //loads all notifications again when clicked to check for updated IsSeen
+                eventBus.$emit("loadNotifications");
             },
             goToProfile(event) {
+                console.log(this.noteDrawer);
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
             },

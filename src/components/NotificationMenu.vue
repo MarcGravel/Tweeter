@@ -33,11 +33,13 @@ import NotificationItem from './NotificationItem.vue'
         beforeMount() {
             this.loadNotifications()
         },
-        updated() {
+        mounted() {
             //event called from AsideMenu when clicking avatar to check notifications
-            //eventBus is seet on a timeout so patch does not run for 3 seconds past click
             eventBus.$on('patchNotifications', () => {
                 this.patchNotifications()
+            })
+            eventBus.$on('loadNotifications', () => {
+                this.loadNotifications()
             })
         },
         data() {
@@ -80,7 +82,7 @@ import NotificationItem from './NotificationItem.vue'
                             'loginToken': token
                         }
                     }).then(() => {
-                        this.loadNotifications(this.userId, this.token);
+
                     }).catch((error) => {
                         console.log(error);
                     })
