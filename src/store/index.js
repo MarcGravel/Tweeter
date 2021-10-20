@@ -134,11 +134,10 @@ export default new Vuex.Store({
         }).then(() => {
             cookies.remove('loginToken');
             cookies.remove('userId');
+            router.push('/')
         }).catch((error) => {
             console.log(error + ' error');
         })
-
-        router.push('/')
       }
     },
 
