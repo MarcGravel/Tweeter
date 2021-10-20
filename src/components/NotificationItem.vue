@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="this.note.typeOf == 'like'" id="likeNote">
+        <div v-if="this.note.typeOf == 'like'" id="likeNote" @click="sendTweetData">
             <div v-if="this.note.isSeen == 1" id="notePanel">
                 <h5 id="username">{{this.userInfo.username}} </h5>
                 <h5>has liked your tweet.</h5>
@@ -22,7 +22,7 @@
                 <h5>has started following you.</h5>
             </div>
         </div>
-        <div v-if="this.note.typeOf == 'comment'" id="commentNote">
+        <div v-if="this.note.typeOf == 'comment'" id="commentNote" @click="sendTweetData">
             <div v-if="this.note.isSeen == 1" id="notePanel">
                 <h5 id="username">{{this.userInfo.username}} </h5>
                 <h5>commented on your tweet.</h5>
@@ -34,7 +34,7 @@
                 <p><i>{{this.commentContentSum}}...</i></p>
             </div>
         </div>
-        <div v-if="this.note.typeOf == 'reply'" id="replyNote">
+        <div v-if="this.note.typeOf == 'reply'" id="replyNote" @click="sendTweetData">
             <div v-if="this.note.isSeen == 1" id="notePanel">
                 <h5 id="username">{{this.userInfo.username}} </h5>
                 <h5>has replied to your comment.</h5>
@@ -51,6 +51,7 @@
 
 <script>
 import axios from 'axios'
+import router from '../router'
 
     export default {
         name: "NotificationItem",
@@ -77,6 +78,13 @@ import axios from 'axios'
             }
         },
         methods: {
+            sendTweetData() {
+                if (router.currentRoute.path != '/tweet/'+this.note.tweetId) {
+                    this.$router.push('/tweet/'+this.note.tweetId);
+                } else {
+                    router.go();
+                }
+            },
             loadOthersInfo(othersId) {
                 axios.request({
                         url: process.env.VUE_APP_API_SITE+'/api/users',

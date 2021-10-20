@@ -109,7 +109,7 @@ import { eventBus } from '../main'
                 }).then((response) => {
                     this.tweetComments = response.data;
                 }).catch((error) => {
-                    console.log(error);
+                    console.log(error.response);
                 })
             },
             commentLikeCount() {

@@ -101,8 +101,8 @@ import AsideMenu from '../components/AsideMenu.vue'
   @media screen and (min-width: 768px) {
 
     #navBar {
-    right: 0;
-  }
+      right: 0;
+    }
 
     #homePage {
       justify-items: center;

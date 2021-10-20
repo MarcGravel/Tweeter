@@ -6,6 +6,7 @@ import Discover from '../views/Discover.vue'
 import Profile from '../views/Profile.vue'
 import Users from '../views/Users.vue'
 import Follows from '../views/Follows.vue'
+import Tweet from '../views/Tweet.vue'
 
 Vue.use(VueRouter)
 
@@ -41,6 +42,12 @@ const routes = [
     path: '/follows',
     name: "Follows",
     component: Follows
+  },
+  {
+    path: '/tweet/:tweetId',
+    name: "Tweet",
+    props: true,
+    component: Tweet
   }
 ]
 
