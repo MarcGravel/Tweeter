@@ -11,7 +11,7 @@
                 color="#00B4D8"
                 width="100%"
                 >
-                <NotificationMenu />
+                <NotificationMenu @newNotificationCount="updateNew" />
             </v-navigation-drawer>
             <h1 id="siteName">Tweeter</h1>
             <aside id="sideMenu">
@@ -19,11 +19,22 @@
                 color="#CAF0F8"
                 width="100%"
                 >
-                <v-list-item>
-                    <v-list-item-avatar>
-                    <v-img id="avatar" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" @click="notificationDrawer"></v-img>
-                    <v-img id="avatar" v-else :src="userDataInfo.imageUrl" @click="notificationDrawer"></v-img>
-                    </v-list-item-avatar>
+                <v-list-item id="userAvatarName">
+                    <v-badge
+                    id="badge"
+                    overlap
+                    bordered
+                    color="error"
+                    offset-x="30"
+                    offset-y="20"
+                    :value="notes"
+                    :content="notes"
+                    >
+                        <v-list-item-avatar>
+                        <v-img id="avatar" v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png" @click="notificationDrawer"></v-img>
+                        <v-img id="avatar" v-else :src="userDataInfo.imageUrl" @click="notificationDrawer"></v-img>
+                        </v-list-item-avatar>
+                    </v-badge>
 
                     <v-list-item-content>
                     <v-list-item-title 
@@ -90,13 +101,22 @@ import NotificationMenu from './NotificationMenu.vue'
                 ],
                 absolute: true,
                 noteDrawer: null,
+                notes: 0,
+                show: false,
             }
         },
         methods: {
+            //updates the unseen notifications from note menu emit
+            updateNew(count){
+                this.notes = count;
+            },
             patchNotification() {
                 //only runs when noteification drawer closes
                 if (this.noteDrawer == false) {
                     eventBus.$emit("patchNotifications");
+
+                    //then cleanrs notification badge after patch
+                    this.notes = 0;
                 }
             },
             notificationDrawer() {
@@ -105,7 +125,6 @@ import NotificationMenu from './NotificationMenu.vue'
                 eventBus.$emit("loadNotifications");
             },
             goToProfile(event) {
-                console.log(this.noteDrawer);
                 let clickedUserName = event.srcElement.innerText;
                 return this.$store.dispatch('dataOfClickedName', clickedUserName);
             },
@@ -148,6 +167,10 @@ import NotificationMenu from './NotificationMenu.vue'
             font-family: 'Cedarville Cursive', cursive;
             font-size: 4em;
             color: #00B4D8;
+        }
+
+        #userAvatarName {
+            padding-left: 0;
         }
 
         #avatar {

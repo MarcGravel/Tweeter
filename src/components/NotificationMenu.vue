@@ -65,6 +65,16 @@ import NotificationItem from './NotificationItem.vue'
                 }).then((response) => {
                     //do not reverse order, order will be reversed when making api calls in item component
                     this.allNotifications = response.data;
+                    
+                    //get new notification count for badge display
+                    let newNoteCount = 0;
+                    for (let i=0; i<this.allNotifications.length; i++) {
+                        if (this.allNotifications[i].isSeen == 0) {
+                            newNoteCount++
+                        }
+                    }
+                    //send to components displaying badge for count
+                    this.$emit('newNotificationCount', newNoteCount)
                 }).catch((error) => {
                     console.log(error);
                 })
