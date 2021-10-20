@@ -424,7 +424,7 @@ import AsideMenu from './AsideMenu.vue'
         }
 
         #deleteBtn {
-           margin: 1vh 0 0 20vw;
+            margin: 1vh 0 0 20vw;
         }
 
         #confirmDeleteBtn {

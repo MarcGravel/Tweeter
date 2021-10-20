@@ -98,6 +98,8 @@ import router from '../router'
                         }
                     }).then((response) => {
                         this.userInfo = response.data[0];
+                        //emits all data loaded to notification menu
+                        this.$emit("fullLoaded")
                     }).catch((error) => {
                         console.log(error.response);
                     })

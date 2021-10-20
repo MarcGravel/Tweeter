@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="mainMenu">
         <v-list-item>
             <v-list-item-content id="noteHeader">
             <v-list-item-title id="noteTitle">Notifications</v-list-item-title>
@@ -12,10 +12,16 @@
                     </v-btn>
             </v-list-item-content>
         </v-list-item>
-
         <v-divider></v-divider>
-        <div id="tweeterDisplay" v-for="note in this.allNotifications" :key="note.notificationId">
-            <NotificationItem :note="note"/>
+        <!--style bindings to display loader or notifications based on loaded value-->
+        <div :style="{'display': loadStyle}" id="spinner">
+            <!-- Pulse loader is a package for spinner animations (npm install vue-spinner)) -->
+            <PulseLoader :color="spinColor" :size="size" />
+        </div>
+        <div :style="{'display': displayStyle}">
+            <div id="tweeterDisplay" v-for="note in this.allNotifications" :key="note.notificationId">
+                <NotificationItem :note="note" @fullLoaded="updateLoadValue" />
+            </div>
         </div>
     </div>
 </template>
@@ -25,10 +31,14 @@ import axios from 'axios'
 import cookies from 'vue-cookies'
 import { eventBus } from '../main'
 import NotificationItem from './NotificationItem.vue'
+//Pulse loader is a package for spinner animations (npm install vue-spinner))
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
+
     export default {
         name: "NotificationMenu",
         components: {
             NotificationItem,
+            PulseLoader
         },
         beforeMount() {
             this.loadNotifications()
@@ -44,10 +54,19 @@ import NotificationItem from './NotificationItem.vue'
         },
         data() {
             return {
-                allNotifications: []
+                allNotifications: [],
+                spinColor: "#FFF",
+                size: "1.5em",
+                displayStyle: "none",
+                loadStyle: "block"
             }
         },
         methods: {
+            //changes the display values of loader and notifications once $emit received
+            updateLoadValue() {
+                this.displayStyle = "block";
+                this.loadStyle = "none";
+            },
             loadNotifications() {
                 let userId = cookies.get('userId');
                 let token = cookies.get('loginToken');
@@ -74,7 +93,7 @@ import NotificationItem from './NotificationItem.vue'
                         }
                     }
                     //send to components displaying badge for count
-                    this.$emit('newNotificationCount', newNoteCount)
+                    this.$emit('newNotificationCount', newNoteCount);
                 }).catch((error) => {
                     console.log(error);
                 })
@@ -132,5 +151,18 @@ import NotificationItem from './NotificationItem.vue'
         #clearBtn {
             justify-self: end;
         }
+    }
+
+    #mainMenu {
+        display: grid;
+
+        #spinner {
+            justify-self: center;
+            margin-top: 5vh;
+        }
+    }
+
+    [v-cloak] {
+        display: none;
     }
 </style>
