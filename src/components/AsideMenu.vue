@@ -11,6 +11,7 @@
                 color="#00B4D8"
                 width="100%"
                 >
+                <!-- receives emit data for notification count --> 
                 <NotificationMenu @newNotificationCount="updateNew" />
             </v-navigation-drawer>
             <h1 id="siteName">Tweeter</h1>
@@ -114,15 +115,15 @@ import NotificationMenu from './NotificationMenu.vue'
                 //only runs when noteification drawer closes
                 if (this.noteDrawer == false) {
                     eventBus.$emit("patchNotifications");
+                    //reloads notifications after patch to change notification background color to "seen"
+                    eventBus.$emit("loadNotifications");
 
-                    //then cleanrs notification badge after patch
+                    //then clears notification badge after patch
                     this.notes = 0;
                 }
             },
             notificationDrawer() {
-                this.noteDrawer = !this.noteDrawer;
-                //loads all notifications again when clicked to check for updated IsSeen
-                eventBus.$emit("loadNotifications");
+                this.noteDrawer = !this.noteDrawer;  
             },
             goToProfile(event) {
                 let clickedUserName = event.srcElement.innerText;

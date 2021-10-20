@@ -3,7 +3,9 @@
         <v-toolbar id="toolbar"
             dark
             >
+            <!-- @transitionend fires when nav draw is closed --> 
             <v-navigation-drawer
+                @transitionend="patchNotification"
                 id="notificationDrawer"
                 v-model="noteDrawer"
                 absolute
@@ -12,12 +14,24 @@
                 width="70%"
                 height="80vh"
                 >
-                <NotificationMenu />
+                <!-- receives emit data for notification count --> 
+                <NotificationMenu @newNotificationCount="updateNew" />
             </v-navigation-drawer>
-            <v-list-item-avatar @click="notificationDrawer(); updateNoteSeen()" id="navAvatar">
-                <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
-                <v-img v-else :src="userDataInfo.imageUrl"></v-img>
-            </v-list-item-avatar>
+                <v-badge
+                    id="badge"
+                    overlap
+                    bordered
+                    color="error"
+                    offset-x="30"
+                    offset-y="20"
+                    :value="notes"
+                    :content="notes"
+                    >
+                        <v-list-item-avatar @click="notificationDrawer" id="navAvatar">
+                            <v-img v-if="userDataInfo.imageUrl == null" src="https://image.flaticon.com/icons/png/512/847/847969.png"></v-img>
+                            <v-img v-else :src="userDataInfo.imageUrl"></v-img>
+                        </v-list-item-avatar>
+                    </v-badge>
             <v-list-item id="listItem"
                 v-for="item in items"
                 :key="item.title"
@@ -58,13 +72,25 @@ import NotificationMenu from './NotificationMenu.vue'
                 ],
                 absolute: true,
                 noteDrawer: null,
+                notes: 0,
+                show: false,
             }
         },
         methods: {
-            updateNoteSeen() {
-                setTimeout(function() {
+            //updates the unseen notifications from note menu emit
+            updateNew(count){
+                this.notes = count;
+            },
+            patchNotification() {
+                //only runs when noteification drawer closes
+                if (this.noteDrawer == false) {
                     eventBus.$emit("patchNotifications");
-                }, 5000);
+                    //reloads notifications after patch to change notification background color to "seen"
+                    eventBus.$emit("loadNotifications");
+
+                    //then clears notification badge after patch
+                    this.notes = 0;
+                }
             },
             notificationDrawer() {
                 this.noteDrawer = !this.noteDrawer;
