@@ -20,7 +20,7 @@
         </div>
         <div :style="{'display': displayStyle}">
             <div id="tweeterDisplay" v-for="note in this.allNotifications" :key="note.notificationId">
-                <NotificationItem :note="note" @fullLoaded="updateLoadValue" />
+                <NotificationItem :note="note" @fullLoaded="checkNoteCount" />
             </div>
         </div>
     </div>
@@ -58,12 +58,23 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
                 spinColor: "#FFF",
                 size: "1.5em",
                 displayStyle: "none",
-                loadStyle: "block"
+                loadStyle: "block",
+                noteCounter: 0
             }
         },
         methods: {
+            //adds 1 to the note counter. when note counter = same amount of notifications
+            //will fire the update for display
+            //this ensures all notifications are loaded before loader animation stops.
+            checkNoteCount() {
+                this.noteCounter++;
+
+                if(this.noteCounter == this.allNotifications.length) {
+                    this.updateMenuView();
+                }
+            },
             //changes the display values of loader and notifications once $emit received
-            updateLoadValue() {
+            updateMenuView() {
                 this.displayStyle = "block";
                 this.loadStyle = "none";
             },
