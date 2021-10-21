@@ -147,9 +147,22 @@ import router from '../router'
         components: {
             CommentsContainer,
         },
-        props: ['tweetInfo'],
+        props: {
+            tweetInfo: [Object, Array],
+            openComments: Boolean,
+        },
         beforeMount() {
             this.tweetLikeCount();
+        },
+        mounted() {
+            //checks if tweet card is being rendered on tweet vue from prop passed
+            //if it is, it will activate the show comments function so comments are open.
+            this.$nextTick(function () {
+                if(this.openComments == true) {
+                    console.log(this.openComments, this.tweetInfo.tweetId);
+                    this.showHideComments();
+                }
+            })
         },
         data() {
             return {
@@ -168,7 +181,7 @@ import router from '../router'
                 isActive: false,
                 imageOverlay: false,
                 imageOpacity: 1,
-                isLiked: false
+                isLiked: false,
             }
         },
         methods: {
@@ -308,6 +321,7 @@ import router from '../router'
                     if(counter == 0) {
                         this.isLiked = false;
                     }
+                    this.$emit("tweetLoaded");
                 }).catch((error) => {
                     console.log(error);
                 })
@@ -320,7 +334,7 @@ import router from '../router'
                 if(this.isActive == true) {
                     this.activeComment = this.tweetInfo.tweetId;
                 }
-            }
+            },
         }
     }
 </script>

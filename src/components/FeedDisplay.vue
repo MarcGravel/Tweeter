@@ -12,8 +12,17 @@
                 >Following
             </v-btn>
         </div>
-        <div id="tweeterDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
-            <TweetCard :tweetInfo="tweetInfo" />
+        <div id="spinContainer">
+            <!--style bindings to display loader or notifications based on loaded value-->
+            <div :style="{'display': loadStyle}" id="spinner">
+                <!-- Pulse loader is a package for spinner animations (npm install vue-spinner)) -->
+                <PulseLoader :color="spinColor" :size="size" />
+            </div>
+        </div>
+        <div :style="{'display': displayStyle}">
+            <div id="tweeterDisplay" v-for="tweetInfo in theDisplayStatus" :key="tweetInfo.tweetId">
+                <TweetCard :tweetInfo="tweetInfo" @tweetLoaded="checkTweetCount" />
+            </div>
         </div>
         <TweeterFooter />
     </div>
@@ -25,12 +34,15 @@ import cookies from 'vue-cookies'
 import { eventBus } from '../main'
 import TweeterFooter from './TweeterFooter.vue'
 import TweetCard from './TweetCard.vue'
+//Pulse loader is a package for spinner animations (npm install vue-spinner))
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
         name: 'FeedDisplay',
         components: {
             TweeterFooter,
             TweetCard,
+            PulseLoader
         },
         beforeMount() {
             let theUserId = cookies.get('userId');
@@ -76,9 +88,31 @@ import TweetCard from './TweetCard.vue'
                 followingTweets: {
 
                 },
+                displayStyle: "none",
+                loadStyle: "block",
+                tweetCounter: 0,
+                spinColor: "#FFF",
+                size: "3em",
             }
         },
         methods: {
+            checkTweetCount() {
+                this.tweetCounter++;
+
+                if (this.displayFeedOption == true) {
+                    if(this.tweetCounter == this.userTweets.length) {
+                        this.updateMenuView();
+                    }
+                } else if (this.displayFeedOption == false) {
+                    if(this.tweetCounter == this.followingTweets.length) {
+                        this.updateMenuView();
+                    }
+                }
+            },
+            updateMenuView() {
+                this.loadStyle = "none";
+                this.displayStyle = "block";
+            },
             loadUserTweets(theUserId) {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/tweets',
@@ -173,6 +207,14 @@ import TweetCard from './TweetCard.vue'
                 width: 50%;
                 background-color: #0096C7;
                 color: white;
+            }
+        }
+        #spinContainer {
+            display: grid;
+            
+            #spinner {
+                justify-self: center;
+                margin-top: 8vh;
             }
         }
 

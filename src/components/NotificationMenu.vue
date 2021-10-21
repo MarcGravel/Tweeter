@@ -75,8 +75,8 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
             },
             //changes the display values of loader and notifications once $emit received
             updateMenuView() {
-                this.displayStyle = "block";
                 this.loadStyle = "none";
+                this.displayStyle = "block";
             },
             loadNotifications() {
                 let userId = cookies.get('userId');
@@ -171,9 +171,5 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
             justify-self: center;
             margin-top: 5vh;
         }
-    }
-
-    [v-cloak] {
-        display: none;
     }
 </style>

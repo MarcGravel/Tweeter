@@ -11,7 +11,7 @@
             <img v-else @click="addUrlToClickedData(userDataInfo.bannerUrl), imageOverlay = !imageOverlay" :src="userDataInfo.bannerUrl" alt="Users Image">
         </div>
         <div id="tweetPageContainer">
-            <TweetCard id="card" :tweetInfo="this.tweetInfo" />
+            <TweetCard id="card" :tweetInfo="this.tweetInfo" :openComments="true"/>
         </div>
         <v-overlay
             :value="imageOverlay"
@@ -69,8 +69,8 @@ import TweetCard from '../components/TweetCard.vue'
             },
             userDataInfo() {
                 return this.$store.state.currentUser;
-            }
-        }, 
+            },
+        },
         data() {
             return {
                 tweetInfo: '',

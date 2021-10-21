@@ -1,7 +1,16 @@
 <template>
     <div id="dicoverContainer">
-        <div id="discoverTweeterDisplay" v-for="tweetInfo in discoverTweets" :key="tweetInfo.tweetId">
-            <TweetCard :tweetInfo="tweetInfo" />
+        <div id="spinContainer">
+            <!--style bindings to display loader or notifications based on loaded value-->
+            <div :style="{'display': loadStyle}" id="spinner">
+                <!-- Pulse loader is a package for spinner animations (npm install vue-spinner)) -->
+                <PulseLoader :color="spinColor" :size="size" />
+            </div>
+        </div>
+        <div :style="{'display': displayStyle}">
+            <div id="discoverTweeterDisplay" v-for="tweetInfo in discoverTweets" :key="tweetInfo.tweetId">
+                <TweetCard :tweetInfo="tweetInfo" @tweetLoaded="checkTweetCount"/>
+            </div>
         </div>
         <TweeterFooter />
     </div>
@@ -12,12 +21,15 @@ import axios from 'axios'
 import cookies from 'vue-cookies'
 import TweeterFooter from './TweeterFooter.vue'
 import TweetCard from './TweetCard.vue'
+//Pulse loader is a package for spinner animations (npm install vue-spinner))
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
         name: "DiscoverUsers",
         components: {
             TweeterFooter,
-            TweetCard
+            TweetCard,
+            PulseLoader
         },
         beforeMount() {
             this.loadAllTweets();
@@ -46,9 +58,25 @@ import TweetCard from './TweetCard.vue'
                 followingTweets: {
 
                 },
+                displayStyle: "none",
+                loadStyle: "block",
+                tweetCounter: 0,
+                spinColor: "#FFF",
+                size: "3em",
             }
         },
         methods: {
+            checkTweetCount() {
+                this.tweetCounter++;
+
+                if(this.tweetCounter == this.discoverTweetArray.length) {
+                        this.updateMenuView();
+                    }
+            },
+            updateMenuView() {
+                this.loadStyle = "none";
+                this.displayStyle = "block";
+            },
             loadAllTweets() {
                 axios.request({
                     url: process.env.VUE_APP_API_SITE+'/api/tweets',
@@ -113,6 +141,15 @@ import TweetCard from './TweetCard.vue'
         justify-items: center;
         background-color: rgb(34, 34, 34);
         background: linear-gradient(0deg, rgba(34,34,34,1) 0%, rgba(40,39,39,1) 33%, rgba(63,63,63,1) 100%);
+
+        #spinContainer {
+            display: grid;
+            
+            #spinner {
+                justify-self: center;
+                margin-top: 8vh;
+            }
+        }
 
         #discoverTweeterDisplay {
             margin: 1vh 0 1vh 0;
