@@ -39,13 +39,15 @@
                     <v-text-field
                         v-model="updatedUserData.imageUrl"
                         :rules="validateUrl"
-                        :label="userDataInfo.imageUrl"
+                        :label="profileImagePlaceholder"
+                        placeholder="Add a profile picture Url here"
                         hint="A photo of yourself. Must be a valid https:// URL"
                     ></v-text-field>
                     <v-text-field
                         v-model="updatedUserData.bannerUrl"
                         :rules="validateUrl"
-                        :label="userDataInfo.bannerUrl"
+                        :label="bannerImagePlaceholder"
+                        placeholder="Add a banner image Url here"
                         hint="Your Banner Image. Must be a valid https:// URL link"
                     ></v-text-field>
                     <v-text-field
@@ -185,6 +187,8 @@ import AsideMenu from './AsideMenu.vue'
                 imageOverlay: false,
                 imageOpacity: 1,
                 clickedImage: '',
+                profileImagePlaceholder: "Profile picture: add new url here",
+                bannerImagePlaceholder: "Banner image: add new url here"
             }
         },
         methods: {
@@ -462,6 +466,11 @@ import AsideMenu from './AsideMenu.vue'
                 grid-column: 1 / 5;
                 position: relative;
                 bottom: 18vh;
+            }
+
+            #editForm {
+                height: 80vh;
+                overflow-y: scroll;
             }
         }
     }

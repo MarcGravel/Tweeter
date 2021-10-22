@@ -1,20 +1,20 @@
 <template>
   <div id="homePage">
-    <div id="navBar">
+    <div id="navBar" @click="changeNormalView">
       <NavBar />
     </div>
     <aside id="sideMenu">
       <AsideMenu />
     </aside>
     <div id="homePageContainer">
-      <div id="userInfo">
+      <div id="userInfo" @click="changeNormalView">
         <UserHomePage />
       </div>
       <div id="tweetInputContainer">
-        <UserTweetInput />
+        <UserTweetInput @mobileTextInput="changeMobileView" @returnNormal="changeNormalView"/>
       </div>
     </div>
-    <main id="mainFeed">
+    <main id="mainFeed" :style="{'margin-top': displayStyle}" @click="changeNormalView">
         <FeedDisplay />
     </main>
   </div>
@@ -50,6 +50,19 @@ import AsideMenu from '../components/AsideMenu.vue'
           router.push('/');
         }
     },
+    data() {
+      return {
+        displayStyle: "56px",
+      }
+    },
+    methods: {
+      changeMobileView() {
+        this.displayStyle = "30vh";
+      },
+      changeNormalView() {
+        this.displayStyle = "56px";
+      }
+    }
   }
 </script>
 

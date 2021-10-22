@@ -2,6 +2,7 @@
     <div id="tweetContainer">
         <div id="textArea" >
             <v-textarea
+                @click="mobileClick"
                 label="What's happening?"
                 v-model="tweetInput"
                 :rules="textAmt"
@@ -26,7 +27,7 @@
             rounded
             color="primary"
             dark
-            @click="postTweet(tweetInput, tweetImg)"
+            @click="postTweet(tweetInput, tweetImg), mobileUpdate()"
             >
             Tweet!
         </v-btn>
@@ -52,6 +53,17 @@ import { eventBus }  from '../main'
             }
         },
         methods: {
+            //sends emit to home view to deal with mobile keyboards breaking flow
+            mobileClick() {
+                if (screen.width < 768) {
+                    this.$emit("mobileTextInput");
+                }
+            },
+            mobileUpdate() {
+                if (screen.width < 768) {
+                    this.$emit("returnNormal");
+                }
+            },
             //sends API call to post the users tweet and optional image link
             postTweet(tweet, imgLink) {
                 if(tweet != '') {
@@ -100,7 +112,7 @@ import { eventBus }  from '../main'
         display: grid;
         grid-template-columns: 2fr 1fr;
         grid-template-rows: 0.2fr 5fr 4fr;
-     
+    
         #textArea {
             grid-row: 2;
             grid-column: 1 / 3;
