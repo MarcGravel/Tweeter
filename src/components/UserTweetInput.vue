@@ -53,7 +53,7 @@ import { eventBus }  from '../main'
             }
         },
         methods: {
-            //sends emit to home view to deal with mobile keyboards breaking flow
+            //sends emit to home view to deal with mobile keyboards breaking flow.
             mobileClick() {
                 if (screen.width < 768) {
                     this.$emit("mobileTextInput");

@@ -63,7 +63,8 @@ import AsideMenu from '../components/AsideMenu.vue'
         this.displayStyle = "56px";
       }
     }
-  }
+  } 
+  
 </script>
 
 <style lang="scss" scoped>
