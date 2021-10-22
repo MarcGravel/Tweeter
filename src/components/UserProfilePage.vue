@@ -461,7 +461,7 @@ import AsideMenu from './AsideMenu.vue'
             #followFollowerBtns {
                 grid-column: 1 / 5;
                 position: relative;
-                bottom: 15vh;
+                bottom: 18vh;
             }
         }
     }

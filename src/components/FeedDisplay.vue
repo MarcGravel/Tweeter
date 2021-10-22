@@ -14,7 +14,8 @@
         </div>
         <div id="spinContainer">
             <!--style bindings to display loader or notifications based on loaded value-->
-            <div :style="{'display': loadStyle}" id="spinner">
+            <!--v-if stops loader from running when no notifications exist-->
+            <div v-if="tweetCounter != 0" :style="{'display': loadStyle}" id="spinner">
                 <!-- Pulse loader is a package for spinner animations (npm install vue-spinner)) -->
                 <PulseLoader :color="spinColor" :size="size" />
             </div>

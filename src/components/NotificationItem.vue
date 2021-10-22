@@ -206,4 +206,14 @@ import router from '../router'
         cursor: pointer;
         background-color:#6cdceb; 
     }
+
+    @media screen and (max-width: 768px) {
+        #notePanel {
+            height: 13vh;
+        }
+
+        #noteUnseen {
+            height: 13vh;
+        }
+    }
 </style>

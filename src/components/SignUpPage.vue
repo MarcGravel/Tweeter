@@ -137,7 +137,7 @@ import router from '../router'
         }
 
         #datePicker{
-            width: 70vw;
+            width: 90vw;
             justify-self: center;
         }
 

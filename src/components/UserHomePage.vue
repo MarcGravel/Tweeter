@@ -128,9 +128,9 @@ import AsideMenu from './AsideMenu.vue'
             grid-column: 2;
             justify-self: start;
             align-self: start;
-            font-size: 1.3em;
+            font-size: 0.9em;
             font-style: italic;
-            margin: 0 0 0 10vw;
+            margin: 0 0 0 1vw;
         }
     }
 
@@ -148,6 +148,15 @@ import AsideMenu from './AsideMenu.vue'
         #imageBack {
             margin-top: 2vh;
         }
+    }
+
+    @media screen and (min-width: 500px) {
+        #userContainer {
+    
+            #bioParagraph {
+                font-size: 1.3em;
+            }
+        }   
     }
 
     @media screen and (min-width: 768px) {
@@ -171,7 +180,6 @@ import AsideMenu from './AsideMenu.vue'
                 grid-column: 1 / 5;
                 font-size: 1.6em;
                 margin: 0 0 0 27vw;
-
             }
         }
     }

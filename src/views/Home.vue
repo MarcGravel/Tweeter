@@ -54,7 +54,7 @@ import AsideMenu from '../components/AsideMenu.vue'
 </script>
 
 <style lang="scss" scoped>
-  
+
   #navBar {
     position: fixed;
     z-index: 99;
@@ -93,10 +93,29 @@ import AsideMenu from '../components/AsideMenu.vue'
       }
     }
 }
-  #mainFeed {
+      #mainFeed {
         height: fit-content;
         width: 100%;
       }
+
+  //fixes page scaled on small phones
+  @media screen and (max-width: 768px) {
+    #homePageContainer {
+      height: 45vh;
+
+      #userInfo {
+        height: 15vh;
+      }
+
+      #tweetInputContainer {
+        height: 30vh;
+      }
+    }
+    
+    #mainFeed {
+        margin-top: 8vh;
+      }
+  }
 
   @media screen and (min-width: 768px) {
 

@@ -14,7 +14,8 @@
         </v-list-item>
         <v-divider></v-divider>
         <!--style bindings to display loader or notifications based on loaded value-->
-        <div :style="{'display': loadStyle}" id="spinner">
+        <!--v-if stops loader from running when no notifications exist-->
+        <div v-if="noteCounter != 0" :style="{'display': loadStyle}" id="spinner">
             <!-- Pulse loader is a package for spinner animations (npm install vue-spinner)) -->
             <PulseLoader :color="spinColor" :size="size" />
         </div>
