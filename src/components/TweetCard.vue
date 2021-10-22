@@ -152,14 +152,13 @@ import router from '../router'
             openComments: Boolean,
         },
         beforeMount() {
-            this.tweetLikeCount();
+            this.tweetLikeCount(); 
         },
         mounted() {
             //checks if tweet card is being rendered on tweet vue from prop passed
             //if it is, it will activate the show comments function so comments are open.
             this.$nextTick(function () {
                 if(this.openComments == true) {
-                    console.log(this.openComments, this.tweetInfo.tweetId);
                     this.showHideComments();
                 }
             })

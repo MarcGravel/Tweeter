@@ -10,8 +10,17 @@
             <img v-if="userDataInfo.bannerUrl == null" src="@/assets/TweeterBanner.png" alt="No Image">
             <img v-else @click="addUrlToClickedData(userDataInfo.bannerUrl), imageOverlay = !imageOverlay" :src="userDataInfo.bannerUrl" alt="Users Image">
         </div>
-        <div id="tweetPageContainer">
-            <TweetCard id="card" :tweetInfo="this.tweetInfo" :openComments="true"/>
+        <div id="spinContainer">
+            <!--style bindings to display loader or notifications based on loaded value-->
+            <div :style="{'display': loadStyle}" id="spinner">
+                <!-- Pulse loader is a package for spinner animations (npm install vue-spinner)) -->
+                <PulseLoader :color="spinColor" :size="size" />
+            </div>
+        </div>
+        <div :style="{'display': displayStyle}" id="tweetCont">
+            <div id="tweetPageContainer" v-if="this.tweetInfo.tweetId">
+                <TweetCard id="card" :tweetInfo="this.tweetInfo" :openComments="true" @tweetLoaded="checkTweetLoaded"/>
+            </div>
         </div>
         <v-overlay
             :value="imageOverlay"
@@ -37,6 +46,8 @@ import AsideMenu from '../components/AsideMenu.vue'
 import cookies from 'vue-cookies'
 import axios from 'axios'
 import TweetCard from '../components/TweetCard.vue'
+//Pulse loader is a package for spinner animations (npm install vue-spinner))
+import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
 
     export default {
         name: "Tweet",
@@ -45,6 +56,7 @@ import TweetCard from '../components/TweetCard.vue'
             NavBar,
             AsideMenu,
             TweetCard,
+            PulseLoader
         },
         beforeMount() {
             axios.request({
@@ -77,9 +89,23 @@ import TweetCard from '../components/TweetCard.vue'
                 clickedImage: '',
                 imageOverlay: false,
                 imageOpacity: 1,
+                displayStyle: "none",
+                loadStyle: "block",
+                tweetCounter: 0,
+                spinColor: "#FFF",
+                size: "3em",
             }
         },
         methods: {
+            checkTweetLoaded() {
+                if (this.tweetInfo != '') {
+                    this.updateMenuView();
+                }
+            },
+            updateMenuView() {
+                this.loadStyle = "none";
+                this.displayStyle = "block";
+            },
             addUrlToClickedData(clickedUrl) {
                 this.clickedImage = clickedUrl;
             }
@@ -90,6 +116,7 @@ import TweetCard from '../components/TweetCard.vue'
 <style lang="scss" scoped>
 
     #tweetPage {
+        display: grid;
         
         #navBar {
             position: fixed;
@@ -107,6 +134,14 @@ import TweetCard from '../components/TweetCard.vue'
                 width: 100vw;
                 height: 20vh;
                 object-fit: cover;
+            }
+        }
+
+        #spinContainer {
+            justify-self: center;
+            
+            #spinner {
+                margin-top: 30vh;
             }
         }
 
@@ -159,10 +194,18 @@ import TweetCard from '../components/TweetCard.vue'
                 }
             }
 
+            #tweetCont {
+                grid-column: 2;
+            }
+
             #tweetPageContainer {
                 grid-column: 2;
                 justify-self: center;
                 margin-top: 10vh;
+            }
+
+            #spinContainer {
+                grid-column: 2;
             }
         }
     }
