@@ -11,21 +11,21 @@
             <v-text-field
                 v-model="password"
                 :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                :rules="[rules.required, rules.min]"
+                :rules="[rules.required, rules.passmin, rules.passmax]"
                 :type="show1 ? 'text' : 'password'"
                 label="Create a password"
-                hint="At least 6 characters"
+                hint="Between 6 and 50 characters"
                 @click:append="show1 = !show1"
             ></v-text-field>
             <v-text-field
                 v-model="username"
-                :rules="usernameRules"
+                :rules="[usernameRules, rules.required, rules.usermin, rules.passmax]"
                 label="Pick a username"
                 required
             ></v-text-field>
             <v-text-field
                 v-model="bio"
-                :rules="[bioRules.required, bioRules.min]"
+                :rules="[bioRules.required, rules.usermin, bioRules.max]"
                 label="Give us a short bio"
                 required
             ></v-text-field>
@@ -70,11 +70,14 @@ import router from '../router'
                 password: '',
                 rules: {
                     required: value => !!value || 'Required.',
-                    min: v => v.length >= 6 || 'Min 6 characters',
+                    passmin: v => v.length >= 6 || 'Min 6 characters',
+                    passmax: v => v.length <= 50 || 'Max 50 characters',
+                    usermin: v => v.length >= 1 || 'Min 1 character',
+                    biomax: v => v.length <= 70 || 'Max 70 characters',
                 },
                 username: '',
                 usernameRules: [
-                    v => !!v || 'Username is required'
+                    v => !!v || 'Username is required',
                 ],
                 bio: '',
                 bioRules: {
@@ -111,12 +114,19 @@ import router from '../router'
                     router.push('Home');
 
                 }).catch((error) => {
-                    console.log(error.response);
-                    this.email="Username or email already exists! Try Again";
-                    this.username="Username or email already exists! Try Again";
-                    this.password="";
-                    this.bio="";
-                    this.datePick=(new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10);
+                    let msg = error.response.data;
+
+                    if (msg.includes("Email") || msg.includes("email")) {
+                        this.email=msg;
+                    } else if (msg.includes("Username") || msg.includes("username")) {
+                        this.username="";
+                    } else if (msg.includes("Password") || msg.includes("password")) {
+                        this.password="";
+                    } else if (msg.includes("Bio") || msg.includes("bio")) {
+                        this.bio="";
+                    } else {
+                        console.log(error.response);
+                    }
                 })
             },
         }

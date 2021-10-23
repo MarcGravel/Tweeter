@@ -64,7 +64,6 @@ import AsideMenu from '../components/AsideMenu.vue'
       }
     }
   } 
-  
 </script>
 
 <style lang="scss" scoped>
