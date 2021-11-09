@@ -59,6 +59,9 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
             PulseLoader
         },
         beforeMount() {
+            if (this.getLoginToken === null) {
+                router.push('/');
+            }
             axios.request({
                 url: process.env.VUE_APP_API_SITE+'/api/tweets',
                 method: "GET",

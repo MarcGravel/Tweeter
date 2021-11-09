@@ -20,7 +20,7 @@ export default {
         margin: 0;
         padding: 0;
         font-family:  'Merriweather', serif;
-        background-color: rgb(63, 63, 63);
+        background-color: #CAF0F8; 
     }
 
 </style>

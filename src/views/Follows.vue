@@ -99,6 +99,11 @@ import NavBar from '../components/NavBar.vue'
             AsideMenu,
             NavBar,
         },
+        beforeMount() {
+            if (this.getLoginToken === null) {
+                router.push('/');
+            }
+        },
         mounted() {
             this.getFollowData(this.$store.state.followsPageUserId);
             this.getFollowerData(this.$store.state.followsPageUserId);
@@ -118,6 +123,9 @@ import NavBar from '../components/NavBar.vue'
                 } else {
                     return this.followerUsers;
                 }
+            },
+            getLoginToken() {
+                return cookies.get('loginToken') 
             },
         },
         data() {

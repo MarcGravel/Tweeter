@@ -49,7 +49,7 @@ import AsideMenu from '../components/AsideMenu.vue'
         },
         beforeMount() {
             if (this.getLoginToken === null) {
-                router.push('/');
+                router.push('/'); 
             }
         }
     }
