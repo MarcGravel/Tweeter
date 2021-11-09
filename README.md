@@ -39,7 +39,7 @@ npm run lint
 # Pages
 
 ### Login/Sign-up
-![Login-Page](src\assets\readmeScreens\tweeterLogin.png)
+![Login-Page](./src\assets\readmeScreens\tweeterLogin.png)
 
 
 If user does not have a current valid session token, they will be directed log in. If no account exists, clicking on sign-up will direct user to signup page.
