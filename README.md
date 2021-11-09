@@ -1,4 +1,4 @@
-# tweeter
+# Tweeter
 
 Tweeter is a deployed social media website based off existing social media services.
 
@@ -127,15 +127,27 @@ All images on the site (profile images, user banner images, and all posts images
 
 Some examples of the web site in mobile view
 
+Login View:
+
 ![Mobile-Login](./src/assets/readmeScreens/mobileLogin2.png)
+
+Home View:
 
 ![Mobile-Home](./src/assets/readmeScreens/mobileHome.png)
 
+Discover View:
+
 ![Mobile-Discover](./src/assets/readmeScreens/mobileDiscover.png)
+
+Comments View:
 
 ![Mobile-Comments](./src/assets/readmeScreens/mobileComments.png)
 
+An example of an edit view:
+
 ![Mobile-Edit](./src/assets/readmeScreens/mobileEdit.png)
+
+Notification View:
 
 ![Mobile-Notifications](./src/assets/readmeScreens/mobileNotes.png)
 
