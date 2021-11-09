@@ -16,7 +16,7 @@ This website is deployed using Apache.
 
 Tech stack: 
 
-Backend: Python, Flask, MariaDb [API repo](https://github.com/MarcGravel/TweeterBackendApi)
+Backend: Python, Flask, MariaDb // [API repo](https://github.com/MarcGravel/TweeterBackendApi)
 
 Frontend (this repo): Javascript, Vue.js, HTML, CSS, and SASS.
 
