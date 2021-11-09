@@ -94,7 +94,7 @@ Users have the ability to create new posts from their home page, the posts can i
 
 ### Likes and Comments
 
-![Likes-Comments](./src/assets/readmeScreens/tweeterComments.png)
+![Likes-Comments](./src/assets/readmeScreens/tweeterComments2.png)
 
 All posts have an open to click the heart icon to "like" the post. When a post is liked, the heart icon is filled in giving the user an easy way to view previously liked content.
 
@@ -123,7 +123,7 @@ All images on the site (profile images, user banner images, and all posts images
 
 Some examples of the web site in mobile view
 
-![Mobile-Login](./src/assets/readmeScreens/mobileLogin.png)
+![Mobile-Login](./src/assets/readmeScreens/mobileLogin2.png)
 
 ![Mobile-Home](./src/assets/readmeScreens/mobileHome.png)
 
