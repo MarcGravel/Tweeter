@@ -14,7 +14,11 @@ Tweeter is mobile, tablet, and desktop friendly.
 
 This website is deployed using Apache.
 
-Tech stack: Python, Flask, Javascript, Vue.js, MariaDB, HTML, CSS, and SASS.
+Tech stack: 
+
+Backend: Python, Flask, MariaDb [API repo](https://github.com/MarcGravel/TweeterBackendApi)
+
+Frontend (this repo): Javascript, Vue.js, HTML, CSS, and SASS.
 
 ## Project setup
 ```
