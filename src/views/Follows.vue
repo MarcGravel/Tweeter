@@ -91,6 +91,8 @@ import axios from 'axios'
 import TweeterFooter from '../components/TweeterFooter.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import NavBar from '../components/NavBar.vue'
+import router from '../router'
+import cookies from 'vue-cookies'
 
     export default {
         name: "Follows",
@@ -217,7 +219,7 @@ import NavBar from '../components/NavBar.vue'
     }
 
     #followsPage {
-        background-color: #3f3f3f;
+        background-color: #2e2d2d;
     }
 
     #followsContainer {

@@ -59,7 +59,7 @@ import AsideMenu from '../components/AsideMenu.vue'
     }
 
     #profilePage {
-        background: linear-gradient(0deg, rgb(49, 49, 49) 0%, rgb(43, 42, 42) 33%, rgb(63, 63, 63) 100%);
+        background-color: #2e2d2d;
     }
 
     #sideMenu {

@@ -140,8 +140,7 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
     #dicoverContainer {
         display: grid;
         justify-items: center;
-        background-color: rgb(34, 34, 34);
-        background: linear-gradient(0deg, rgba(34,34,34,1) 0%, rgba(40,39,39,1) 33%, rgba(63,63,63,1) 100%);
+        background-color: #2e2d2d;
 
         #spinContainer {
             display: grid;
