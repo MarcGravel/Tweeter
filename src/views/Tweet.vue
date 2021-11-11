@@ -45,6 +45,7 @@ import NavBar from '../components/NavBar.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import cookies from 'vue-cookies'
 import axios from 'axios'
+import router from '../router'
 import TweetCard from '../components/TweetCard.vue'
 //Pulse loader is a package for spinner animations (npm install vue-spinner))
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
