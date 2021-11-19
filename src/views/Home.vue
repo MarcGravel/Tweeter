@@ -46,7 +46,7 @@ import AsideMenu from '../components/AsideMenu.vue'
     },
     //if login token not there, this will not allow home page to load and will redirect to login
     beforeMount() {
-        if (this.getLoginToken === null) {
+        if (this.getLoginToken == undefined) {
           router.push('/');
         }
     },

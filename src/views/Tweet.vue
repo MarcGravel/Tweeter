@@ -45,7 +45,6 @@ import NavBar from '../components/NavBar.vue'
 import AsideMenu from '../components/AsideMenu.vue'
 import cookies from 'vue-cookies'
 import axios from 'axios'
-import router from '../router'
 import TweetCard from '../components/TweetCard.vue'
 //Pulse loader is a package for spinner animations (npm install vue-spinner))
 import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
@@ -59,10 +58,16 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
             TweetCard,
             PulseLoader
         },
+        computed: {
+            getLoginToken() {
+                return cookies.get('loginToken') 
+            },
+            userDataInfo() {
+                return this.$store.state.currentUser;
+            },
+        },
         beforeMount() {
-            if (this.getLoginToken === null) {
-                router.push('/');
-            }
+            if (this.getLoginToken != undefined)
             axios.request({
                 url: process.env.VUE_APP_API_SITE+'/api/tweets',
                 method: "GET",
@@ -78,14 +83,6 @@ import PulseLoader from 'vue-spinner/src/PulseLoader.vue'
             }).catch((error) => {
                 console.log(error.response);
             })
-        },
-        computed: {
-            getLoginToken() {
-                return cookies.get('loginToken') 
-            },
-            userDataInfo() {
-                return this.$store.state.currentUser;
-            },
         },
         data() {
             return {

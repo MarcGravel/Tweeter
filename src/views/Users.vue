@@ -165,7 +165,7 @@ import NavBar from '../components/NavBar.vue'
                         'followId': this.othersData.userId
                     }
                 }).then(() => {
-                   this.isFollowing = true;
+                    this.isFollowing = true;
                 }).catch((error) => {
                     console.log(error);
                 })

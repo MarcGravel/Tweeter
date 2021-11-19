@@ -18,7 +18,7 @@ Tech stack:
 
 Backend: Python, Flask, MariaDb // [API repo](https://github.com/MarcGravel/TweeterBackendApi)
 
-Frontend (this repo): Javascript, Vue.js, HTML, CSS, and SASS.
+Frontend (this repo): Javascript, Vue.js, HTML, CSS, and SCSS.
 
 ## Project setup
 ```
